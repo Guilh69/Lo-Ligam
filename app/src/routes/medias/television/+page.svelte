@@ -4,14 +4,14 @@
 	// téléviseur, carte) ; Romain a choisi le téléviseur : l'écran à gauche, la
 	// télécommande à droite, on zappe de 1 à 6 avec un éclair de neige. Aucun
 	// lecteur intégré : chaque chaîne mène à son site (rien ne se charge chez
-	// un tiers sans clic). Données dans $lib/data/medias.js.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { TELES } from '$lib/data/medias.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	// un tiers sans clic). Données dans #lib/data/medias.js.
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import Icona from '#lib/components/Icona.svelte';
+	import { TELES } from '#lib/data/medias.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('television', data.elements);

@@ -1,5 +1,5 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	// Lecteur de la vidéo d'une fiche. Deux cas, deux comportements.
 	//
 	// LOGIQUE DU SON — les navigateurs refusent de démarrer une vidéo sonore
@@ -9,7 +9,7 @@
 	// dès que le visiteur l'active, les fiches suivantes démarrent sonores.
 	// Si le navigateur refuse malgré tout, on repasse en muet sans rien casser
 	// — jamais d'écran noir parce que le son a été bloqué.
-	import { menaVideo, ligamCanvaEmbed, sonVolgut, gardarSon } from '$lib/videos';
+	import { menaVideo, ligamCanvaEmbed, sonVolgut, gardarSon } from '#lib/videos.js';
 
 	let { ficha, lang = 'oc' } = $props();
 

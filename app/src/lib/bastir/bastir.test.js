@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { UNITATS_A1, MODALITATS, MODALITAT, leiçon, elementsDe, brolhonPropre, escriureBrolhon, legirBrolhon, slugDeClau, clauBastir } from './bastir.js';
-import { moduls } from '$lib/lesson/moduls/index.js';
+import { moduls } from '#lib/lesson/moduls/index.js';
 
 describe('Bastir : la matière lue dans le registre', () => {
 	it('huit unités de quatre leçons, chacune présente dans le registre', () => {

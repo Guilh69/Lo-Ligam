@@ -1,7 +1,7 @@
 // Lire et ranger les brouillons de l'atelier Bastir dans la base (table
 // pagina_elements, « page » bastir, état brouillon : lisible et modifiable par
 // l'administrateur seul). Le contenu passe par escriureBrolhon / legirBrolhon.
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '#lib/supabaseClient.js';
 import { PAGINA_BASTIR, clauBastir, slugDeClau, escriureBrolhon, legirBrolhon } from './bastir.js';
 
 /** tous les brouillons : { slug: brouillon } */

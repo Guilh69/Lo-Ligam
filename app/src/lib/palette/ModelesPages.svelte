@@ -6,8 +6,8 @@
 	// réduites à l'essentiel et des textes déjà présents sur le site. Rien n'est modifié sur le
 	// site : les variables ne sont posées que sur le cadre.
 	import { onMount } from 'svelte';
-	import Crotz from '$lib/components/Crotz.svelte';
-	import Icona from '$lib/components/Icona.svelte';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import PaletteOutil from './PaletteOutil.svelte';
 	import { analyser, accorderTuiles, hexValide } from './coherence.js';
 	import { PISTES, variablesCss, copierPiste } from './pistes.js';

@@ -3,17 +3,17 @@
 	// les murs. Elle était sur /obras jusqu'au 2026-10-25 ; Òbras y est devenue
 	// une porte par art (cahier §11), et la case « Pintura e afichas » mène ici.
 	// La grande image se charge seulement à l'ouverture.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import Icona from '#lib/components/Icona.svelte';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('afichas', data.elements);
 	$effect(() => () => lèvaEdicion?.());
-	import { afichas } from '$lib/data/afichas.js';
+	import { afichas } from '#lib/data/afichas.js';
 
 	let lang = $derived(langStore.current);
 

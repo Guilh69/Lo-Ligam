@@ -1,16 +1,16 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	// La ficha d'una comuna causida sus la carta (retorn de Romain, 2026-10-11) :
 	// son nom, sa silhoeta, una fòto, las chifras de basa (populacion e son
 	// annada, susfàcia, altitud, gentilici), las primièras frasas de l'article
 	// de Wikipèdia e lo ligam cap a l'article entièr. Las donadas venon de
 	// /api/comuna (Wikidata e Wikipèdia, relaiats per nòstre servidor).
 	import { fly, slide } from 'svelte/transition';
-	import { VILAS_FICHAS } from '$lib/carta/vilasFichas.js';
+	import { VILAS_FICHAS } from '#lib/carta/vilasFichas.js';
 	import TriaLenga from './TriaLenga.svelte';
 	import VotzFicha from './VotzFicha.svelte';
 	import { flushSync } from 'svelte';
-	import { sonClic } from '$lib/carta/sons.js';
+	import { sonClic } from '#lib/carta/sons.js';
 
 	let {
 		comuna,

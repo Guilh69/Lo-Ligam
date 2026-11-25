@@ -1,39 +1,39 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import { onMount, onDestroy, untrack } from 'svelte';
-	import { cargarFranca, francaCargada, dinsFranca } from '$lib/carta/franca.js';
-	import { crearDonadasLengas } from '$lib/carta/donadasLengas.js';
-	import { zoomDoç } from '$lib/carta/zoomDoc.js';
-	import { crearNomsComunas } from '$lib/carta/nomsComunas.js';
-	import { contornComuna } from '$lib/carta/contornComuna.js';
+	import { cargarFranca, francaCargada, dinsFranca } from '#lib/carta/franca.js';
+	import { crearDonadasLengas } from '#lib/carta/donadasLengas.js';
+	import { zoomDoç } from '#lib/carta/zoomDoc.js';
+	import { crearNomsComunas } from '#lib/carta/nomsComunas.js';
+	import { contornComuna } from '#lib/carta/contornComuna.js';
 	import FichaComuna from './FichaComuna.svelte';
 	import { fly } from 'svelte/transition';
-	import { tria } from '$lib/stores/lang.svelte.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
 	import 'leaflet/dist/leaflet.css';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import { supabase } from '$lib/supabaseClient';
-	import { cargarColas } from '$lib/carta/colasBasa.js';
-	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { estatCarta, ecranCarta } from '$lib/carta/estatCarta.svelte.js';
-	import { crearColaMar } from '$lib/carta/colaMar.js';
-	import { crearColaEstelas, estilVila, rencVila } from '$lib/carta/colaEstelas.js';
-	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, fixarLatEscala, fixarEcran, nivèlsDezoom, aDetalh, aTenchas } from '$lib/carta/escalas.js';
-	import { sonsEntrada } from '$lib/carta/sons.js';
-	import { crearColaDonadas, COLORS as COLORS_DIAL } from '$lib/carta/colaDonadas.js';
-	import { crearColaTematica } from '$lib/carta/colaTematica.js';
-	import { crearColaLenga } from '$lib/carta/colaLenga.js';
-	import { LENGAS, esOccitan, fonsLenga } from '$lib/carta/lengas.js';
-	import { JACES_DONADAS, JACES_TEMATICAS, JACES_LENGAS, ICONAS_JACES } from '$lib/carta/catalogue.js';
-	import { ICONAS } from '$lib/carta/iconas.js';
-	import { degatjar, zonaEtiqueta, zonaCaixa, placeVisible, DEFAUT } from '$lib/carta/degatjament.js';
-	import { NOMS_FRANCES } from '$lib/carta/nomsFrances.js';
-	import { LUOCS } from '$lib/acuelh/carta-estelas.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { cargarColas } from '#lib/carta/colasBasa.js';
+	import { tampaDefòra } from '#lib/tampaDefora.js';
+	import { estatCarta, ecranCarta } from '#lib/carta/estatCarta.svelte.js';
+	import { crearColaMar } from '#lib/carta/colaMar.js';
+	import { crearColaEstelas, estilVila, rencVila } from '#lib/carta/colaEstelas.js';
+	import { Z, KM, zDès, zCran, zPlaja, OCCITANAS, PLAJAS, fixarLatEscala, fixarEcran, nivèlsDezoom, aDetalh, aTenchas } from '#lib/carta/escalas.js';
+	import { sonsEntrada } from '#lib/carta/sons.js';
+	import { crearColaDonadas, COLORS as COLORS_DIAL } from '#lib/carta/colaDonadas.js';
+	import { crearColaTematica } from '#lib/carta/colaTematica.js';
+	import { crearColaLenga } from '#lib/carta/colaLenga.js';
+	import { LENGAS, esOccitan, fonsLenga } from '#lib/carta/lengas.js';
+	import { JACES_DONADAS, JACES_TEMATICAS, JACES_LENGAS, ICONAS_JACES } from '#lib/carta/catalogue.js';
+	import { ICONAS } from '#lib/carta/iconas.js';
+	import { degatjar, zonaEtiqueta, zonaCaixa, placeVisible, DEFAUT } from '#lib/carta/degatjament.js';
+	import { NOMS_FRANCES } from '#lib/carta/nomsFrances.js';
+	import { LUOCS } from '#lib/acuelh/carta-estelas.js';
 	import CercaCarta from './CercaCarta.svelte';
 	import VotzAtlas from './VotzAtlas.svelte';
-	import { cargarVotz } from '$lib/carta/votz.js';
-	import { ponchesEnsenhament, ponchesCorses } from '$lib/carta/ensenhament.js';
-	import { crearPonchs } from '$lib/carta/colaPonchs.js';
+	import { cargarVotz } from '#lib/carta/votz.js';
+	import { ponchesEnsenhament, ponchesCorses } from '#lib/carta/ensenhament.js';
+	import { crearPonchs } from '#lib/carta/colaPonchs.js';
 
 	// Los punts e las jaces de l'admin venon de Supabase (taulas carta_luocs,
 	// carta_colas — geridas dins /admin/carta) puslèu que
@@ -1682,7 +1682,7 @@
 		else if (e.key === 'Enter' && n) causirComuna(comunasTrobadas[Math.max(0, comunaActiva)]), e.preventDefault();
 		else if (e.key === 'Escape') (comunasTrobadas.length ? (comunasTrobadas = []) : (menuPròcha = false)), e.preventDefault();
 	}
-	// un clic defòra tampa la lista (principi del site, $lib/tampaDefora.js)
+	// un clic defòra tampa la lista (principi del site, #lib/tampaDefora.js)
 	$effect(() => {
 		if (!menuPròcha) return;
 		return tampaDefòra((t) => !!t.closest('.procha'), () => (menuPròcha = false));

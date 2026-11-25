@@ -8,9 +8,9 @@
 	// Page de travail, non indexée. Aucun texte d'ambiance inventé : les phrases
 	// sous les fenêtres sont des exemples, à écrire par Romain.
 	import { onMount } from 'svelte';
-	import Crotz from '$lib/components/Crotz.svelte';
+	import Crotz from '#lib/components/Crotz.svelte';
 	import { ESTELAS, VISTA, COSTA_D } from '../blanc/donadas.js';
-	import { AMASSA } from '$lib/acuelh/amassa.js';
+	import { AMASSA } from '#lib/acuelh/amassa.js';
 
 	// Sur fond sombre, la croix en or et rouge (recettes de Romain)
 	const CROTZ = { traç: '#eeaf34', ponch: '#b53d17', moieu: '#eeaf34' };

@@ -11,12 +11,12 @@
 	// page n'en est que le visage. Aucun texte venu de la base n'est injecté
 	// en HTML. Page non indexée.
 	import { untrack } from 'svelte';
-	import PaginaSimpla from '$lib/components/PaginaSimpla.svelte';
+	import PaginaSimpla from '#lib/components/PaginaSimpla.svelte';
 	import ComunaCausir from './ComunaCausir.svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { session, authReady } from '$lib/authStore';
-	import { coordsComuna } from '$lib/comunas.js';
-	import { AGRADA, CERCA, NIVELS, nomLigne, nomDe } from '$lib/grops/grops.svelte.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { session, authReady } from '#lib/authStore.js';
+	import { coordsComuna } from '#lib/comunas.js';
+	import { AGRADA, CERCA, NIVELS, nomLigne, nomDe } from '#lib/grops/grops.svelte.js';
 
 	// Goûts, ce qu'on cherche, niveaux : les listes du profil du compte (une seule
 	// source), en français : [valeur, libellé]

@@ -1,5 +1,5 @@
 <script>
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 
 	// Tunnel infini : les fiches défilent vers le spectateur en profondeur.
 	// Même principe que la « infinite gallery » de motion-core (fondu et

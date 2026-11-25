@@ -6,8 +6,8 @@
 	// réponse : personne ne reste bloqué.
 	import { tick } from 'svelte';
 	import Ecran from './Ecran.svelte';
-	import { corregir, remarca, netejar, LETRAS } from '$lib/lesson/escriure.js';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { corregir, remarca, netejar, LETRAS } from '#lib/lesson/escriure.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { demanda, answers, indici = '', explic = '', avança = 0.6, oncontunhar } = $props();
 

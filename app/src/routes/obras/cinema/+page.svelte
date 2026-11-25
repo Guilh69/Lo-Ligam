@@ -5,15 +5,15 @@
 	// d'affiches des plateformes et des carnets de cinéphiles, le plus récent
 	// en grand, un motif lié au sujet de chaque film. Puis où voir les films
 	// (des billets). Chaque film mène à sa page Wikipèdia. Données dans
-	// $lib/data/arts.js.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { PALETAS } from '$lib/apren/teulas.js';
-	import { FILMES } from '$lib/data/arts.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	// #lib/data/arts.js.
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import Icona from '#lib/components/Icona.svelte';
+	import { PALETAS } from '#lib/apren/teulas.js';
+	import { FILMES } from '#lib/data/arts.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('cinema', data.elements);

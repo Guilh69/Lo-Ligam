@@ -16,7 +16,7 @@
 	// position relative). Couleurs : --mencion-tinta, --mencion-tinta-fort,
 	// --mencion-fons (sinon celles du thème).
 	// Occitan passé à lo Congrès le 06-11 ; es, en, ca, ar par Aran (06-11).
-	import { tria, lang } from '$lib/stores/lang.svelte.js';
+	import { tria, lang } from '#lib/stores/lang.svelte.js';
 
 	let { quina = 'illustracion', cadre = false, class: classa = '' } = $props();
 

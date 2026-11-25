@@ -1,6 +1,6 @@
 // Les fiches viennent de la base, avec repli sur le catalogue gelé.
-// Voir $lib/data/fichasFont.js pour le pourquoi du filet de secours.
-import { cargarCatalog } from '$lib/data/fichasFont';
+// Voir #lib/data/fichasFont.js pour le pourquoi du filet de secours.
+import { cargarCatalog } from '#lib/data/fichasFont.js';
 
 export async function load() {
 	return await cargarCatalog();

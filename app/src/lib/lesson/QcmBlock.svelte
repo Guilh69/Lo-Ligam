@@ -2,7 +2,7 @@
 	// Exercice à choix : un item à la fois, retour immédiat, explication d'une
 	// ligne après la bonne réponse (gabarit du cursus §5). L'item suivant
 	// n'apparaît qu'une fois l'item courant réussi.
-	import { rich, insecable } from '$lib/lesson/rich.js';
+	import { rich, insecable } from '#lib/lesson/rich.js';
 
 	// item.ditz = { qui, oc } : quelqu'un te parle (jeu « Escota e causís ») ;
 	// la question devient une bulle, et l'on choisit sa réponse.

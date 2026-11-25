@@ -5,7 +5,7 @@
 // couleur, filtre en haut, ordre du parcours).
 //
 // Une fiche = un encart « Cultura » d'une leçon (bloc `variant: 'culture'`
-// de $lib/lesson/moduls/) : le texte n'est écrit qu'une fois, dans la leçon,
+// de #lib/lesson/moduls/) : le texte n'est écrit qu'une fois, dans la leçon,
 // et la fiche le lit tel quel (côté serveur, voir encart.server.js). Ici,
 // seulement le thème et le titre dans chaque langue. « fr » est le titre de
 // l'encart, sans « Cultura : » : c'est lui qui retrouve l'encart dans le
@@ -17,13 +17,13 @@
 // en français. Occitan vérifié par lo Congrès, À VALIDER par Romain.
 
 // la couleur de chaque thème (case, texte posé dessus) : les accents de la
-// charte et la terre du jeu « terra » ($lib/apren/teulas.js), sans le rouge du
+// charte et la terre du jeu « terra » (#lib/apren/teulas.js), sans le rouge du
 // logo (réservé à ce qui se clique) ; la langue prend le pétrole de la case
 // Cultura de Se parla. Contraste du texte : 5,0 à 8,6 (comme la grammaire),
 // 5,9 pour la terre. Depuis le 2026-11-06 (photos teintées, allure B choisie
 // par Romain), la musique passe de l'or (#eeaf34, texte foncé) à un or brun :
 // le texte est crème partout, 4,65 sur l'aplat seul.
-import { TEINTES } from '$lib/styles/palette.js';
+import { TEINTES } from '#lib/styles/palette.js';
 
 // les teintes : lib/styles/palette.js, lues au moment de s'en servir (Romain les change depuis le site,
 // lib/colors, 2026-11-13) ; l'or brun et la terre restent ici
@@ -86,7 +86,7 @@ export const TEMAS = [
 ];
 
 // dans l'ordre du parcours (celui des modules) ; « modul » : la clé du module
-// ($lib/lesson/moduls/index.js)
+// (#lib/lesson/moduls/index.js)
 export const FICHAS = [
 	{ id: 'nou-punts', modul: '0', tema: 'lenga', titol: { oc: 'L’occitan en nòu punts', fr: 'L’occitan en neuf points', es: 'El occitano en nueve puntos', en: 'Occitan in nine points', ca: 'L’occità en nou punts', ar: 'اللغة الأوكسيتانية في تسع نقاط' } },
 	{ id: 'amor-d-aussau', modul: '0', tema: 'musica', titol: { oc: 'Amor d’Aussau', fr: 'Amor d’Aussau', es: 'Amor d’Aussau', en: 'Amor d’Aussau', ca: 'Amor d’Aussau', ar: 'Amor d’Aussau' } },
@@ -128,14 +128,14 @@ export const titolEncart = (t = '') => t.replace(/^(Cultura|À écouter)\s*:\s*/
 /** même titre, à la majuscule près */
 export const memeTitol = (a, b) => a.localeCompare(b, 'fr', { sensitivity: 'accent' }) === 0;
 
-/** « 5-1 » → « Modul 5.1 » dans chaque langue (comme le parcours, $lib/parcors/textes.js) */
+/** « 5-1 » → « Modul 5.1 » dans chaque langue (comme le parcours, #lib/parcors/textes.js) */
 export function nomModul(clau) {
 	const n = clau.replace('-', '.');
 	return { oc: `Modul ${n}`, fr: `module ${n}`, es: `módulo ${n}`, en: `module ${n}`, ca: `mòdul ${n}`, ar: `الوحدة ${n}` };
 }
 
 // Les textes de l'interface (ceux de la grammaire pour le filtre :
-// $lib/gramatica/lengas.js, IU.triarTema, totVeire, estat, perExemple)
+// #lib/gramatica/lengas.js, IU.triarTema, totVeire, estat, perExemple)
 export const IU = {
 	frasa: {
 		oc: (n) => `${n} fichas cortas sus la lenga, lo país, sos poètas e sas cançons. Cada ficha ven d’una leiçon del parcors.`,

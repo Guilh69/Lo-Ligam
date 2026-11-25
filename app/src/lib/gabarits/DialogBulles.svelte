@@ -13,7 +13,7 @@
 	import Bulla from './Bulla.svelte';
 	import BotonSon from './BotonSon.svelte';
 	import { seguirFil } from './fil.js';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { replicas, personatges, son, avança = 0.4, oncontunhar } = $props();
 	let traduccion = $state(true);

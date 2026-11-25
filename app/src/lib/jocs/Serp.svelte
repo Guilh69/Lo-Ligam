@@ -2,7 +2,7 @@
 	// La sèrp de las letras (chantier 27, idée de Romain du 2026-11-04 ; option A
 	// sur 3). On lit le sens en français, la sèrp mange les lettres du mot dans
 	// l'ordre et sa queue écrit le mot. Seulement les mots des unités 1 et 2
-	// ($lib/jocs/serp-mots.js, vérifiés contre les modules par serp.test.js) ;
+	// (#lib/jocs/serp-mots.js, vérifiés contre les modules par serp.test.js) ;
 	// ni score, ni classement, ni chronomètre, ni partie perdue (cahier §11,
 	// 2026-10-25). Depuis le 2026-11-05 (Romain) : la sèrp mange aussi les
 	// lettres fausses, qu'on recrache avec Espace, le bouton du milieu ou un
@@ -14,14 +14,14 @@
 	// sont fabriqués dans le navigateur). Composant affiché par la page
 	// /apren/jocs, à côté de Los panièrs (Paniers.svelte).
 	import { onMount, tick } from 'svelte';
-	import { tria, lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { UNITATS, copar, letrasDe } from '$lib/jocs/serp-mots.js';
+	import { tria, lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { UNITATS, copar, letrasDe } from '#lib/jocs/serp-mots.js';
 	// l'espace avant « ? ! : » ne coupe jamais la ligne (le « ? » restait seul, 06-11)
-	import { insecable } from '$lib/jocs/paniers-pila.js';
-	import { novelaPartida, virar, pas, posicions, letraAttesa, escupir, coa, DIRS } from '$lib/jocs/serp.js';
-	import { playTick, playNota, playSorda, playArpegi } from '$lib/lesson/sounds.js';
-	import Reglatges from '$lib/jocs/Reglatges.svelte';
-	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
+	import { insecable } from '#lib/jocs/paniers-pila.js';
+	import { novelaPartida, virar, pas, posicions, letraAttesa, escupir, coa, DIRS } from '#lib/jocs/serp.js';
+	import { playTick, playNota, playSorda, playArpegi } from '#lib/lesson/sounds.js';
+	import Reglatges from '#lib/jocs/Reglatges.svelte';
+	import BotonEcran from '#lib/jocs/BotonEcran.svelte';
 
 	// Occitan passé à lo Congrès les 2026-11-04 et 05, à valider par Romain.
 	const T = {

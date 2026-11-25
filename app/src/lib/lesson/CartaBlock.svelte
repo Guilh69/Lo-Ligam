@@ -9,9 +9,9 @@
 	//
 	// block = { title, intro, items: [{ fr, oc, sound, lon, lat, cap, nota? }],
 	//   choses?, lien?: { href, texte } }
-	import { rich } from '$lib/lesson/rich.js';
-	import { animat } from '$lib/actions/animarText.js';
-	import { vista, proj, zonas } from '$lib/lesson/contorn-occitania.js';
+	import { rich } from '#lib/lesson/rich.js';
+	import { animat } from '#lib/actions/animarText.js';
+	import { vista, proj, zonas } from '#lib/lesson/contorn-occitania.js';
 
 	let { block, onCorrect = () => {}, onComplete = () => {}, onResult = () => {} } = $props();
 

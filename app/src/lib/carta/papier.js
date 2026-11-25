@@ -98,7 +98,7 @@ export function crearColaPapier(L, { mode = 'costura' } = {}) {
 			// le papier, préparé une fois par vue (ce que l'écran affiche ensuite)
 			this._base = document.createElement('canvas');
 			this._bx2 = this._base.getContext('2d');
-			Promise.all([json('/data/dialectes.geojson'), json('/data/transicions.geojson'), json('/data/limits-carta.json'), import('$lib/acuelh/carta-estelas.js')]).then(
+			Promise.all([json('/data/dialectes.geojson'), json('/data/transicions.geojson'), json('/data/limits-carta.json'), import('#lib/acuelh/carta-estelas.js')]).then(
 				([dial, trans, lim, est]) => {
 					if (!this._map) return;
 					this._G = {

@@ -2,8 +2,8 @@
 // charge. La palette (lib/styles/palette.js) le lit à chaque accès ; quand Romain change une
 // couleur depuis le site (lib/colors/colors.svelte.js, chargé pour lui seul), le signal avance
 // et les pages qui lisent la palette se redessinent. Pour un visiteur, il ne bouge jamais.
-import { browser } from '$app/environment';
-import { brancarSenhal } from '$lib/styles/palette.js';
+import { browser } from '$app/env';
+import { brancarSenhal } from '#lib/styles/palette.js';
 
 function crear() {
 	const e = $state({ version: 0 });

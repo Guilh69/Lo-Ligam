@@ -1,17 +1,17 @@
 <script>
-	import AdminTete from '$lib/talhier/AdminTete.svelte';
+	import AdminTete from '#lib/talhier/AdminTete.svelte';
 	// Le tri des artistes de l'espace musique (Romain, 2026-10-25, option A :
 	// « liste préparée, tu tries »). La liste vient de MusicBrainz (disques
 	// chantés en occitan) croisée avec Deezer (scripts/musica-candidats.mjs).
 	// Romain coche ceux qui vont dans le journal du café, étoile ses coups de
 	// cœur, ajoute au besoin un artiste par son nom, puis enregistre : la liste
 	// part dans pagina_elements (page « musica ») et elle est publiée d'un coup,
-	// avec une photographie pour revenir en arrière ($lib/musica.js).
+	// avec une photographie pour revenir en arrière (#lib/musica.js).
 	import { onMount } from 'svelte';
 	import { SvelteSet } from 'svelte/reactivity';
-	import { supabase } from '$lib/supabaseClient';
-	import candidats from '$lib/data/musica-candidats.json';
-	import { PAGINA, LISTA, CÒRS, EXEMPLES, CÒRS_EXEMPLES, ligamDeezer, idsDe, fotoVuèja } from '$lib/musica.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import candidats from '#lib/data/musica-candidats.json';
+	import { PAGINA, LISTA, CÒRS, EXEMPLES, CÒRS_EXEMPLES, ligamDeezer, idsDe, fotoVuèja } from '#lib/musica.js';
 
 	const causits = new SvelteSet();
 	const còrs = new SvelteSet();

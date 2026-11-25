@@ -13,19 +13,19 @@
 	// l'ordre (mots, puis lettres), relier les paires, écrire la réponse, carte de
 	// mot, texte à lire, bilan, audace.
 	import { onMount, setContext } from 'svelte';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import EscotarRepetir from '$lib/gabarits/EscotarRepetir.svelte';
-	import DialogBulles from '$lib/gabarits/DialogBulles.svelte';
-	import DialogTraucs from '$lib/gabarits/DialogTraucs.svelte';
-	import VertatFals from '$lib/gabarits/VertatFals.svelte';
-	import CausidaMultipla from '$lib/gabarits/CausidaMultipla.svelte';
-	import RemetreOrdre from '$lib/gabarits/RemetreOrdre.svelte';
-	import Parelhs from '$lib/gabarits/Parelhs.svelte';
-	import Escriure from '$lib/gabarits/Escriure.svelte';
-	import CartaMot from '$lib/gabarits/CartaMot.svelte';
-	import TextLegir from '$lib/gabarits/TextLegir.svelte';
-	import Bilanc from '$lib/gabarits/Bilanc.svelte';
-	import Audacia from '$lib/gabarits/Audacia.svelte';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import EscotarRepetir from '#lib/gabarits/EscotarRepetir.svelte';
+	import DialogBulles from '#lib/gabarits/DialogBulles.svelte';
+	import DialogTraucs from '#lib/gabarits/DialogTraucs.svelte';
+	import VertatFals from '#lib/gabarits/VertatFals.svelte';
+	import CausidaMultipla from '#lib/gabarits/CausidaMultipla.svelte';
+	import RemetreOrdre from '#lib/gabarits/RemetreOrdre.svelte';
+	import Parelhs from '#lib/gabarits/Parelhs.svelte';
+	import Escriure from '#lib/gabarits/Escriure.svelte';
+	import CartaMot from '#lib/gabarits/CartaMot.svelte';
+	import TextLegir from '#lib/gabarits/TextLegir.svelte';
+	import Bilanc from '#lib/gabarits/Bilanc.svelte';
+	import Audacia from '#lib/gabarits/Audacia.svelte';
 	import {
 		SON_EXEMPLE,
 		FOTO_EXEMPLE,
@@ -43,7 +43,7 @@
 		TÈXT,
 		BILANÇ,
 		AUDÀCIA
-	} from '$lib/gabarits/exemples.js';
+	} from '#lib/gabarits/exemples.js';
 
 	const ECRANS = [
 		{ id: 'escotar', nom: 'Écouter et répéter' },

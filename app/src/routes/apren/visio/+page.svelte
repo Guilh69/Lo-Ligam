@@ -11,14 +11,14 @@
 	// le formulaire part de la même façon (mêmes noms de champs, même serveur).
 	import { tick } from 'svelte';
 	import { enhance } from '$app/forms';
-	import { editor } from '$lib/data/legal.js';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { edicion, iniciar, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import { desplegar } from '$lib/actions/desplegar.js';
-	import { segments } from '$lib/edicion/marcat.js';
+	import { editor } from '#lib/data/legal.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { edicion, iniciar, txt, ligam, lista, amagat, apondre } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import { desplegar } from '#lib/actions/desplegar.js';
+	import { segments } from '#lib/edicion/marcat.js';
 
 	let { data, form } = $props();
 	const lèvaEdicion = iniciar('visio', data.elements);
@@ -379,7 +379,7 @@
 			use:enhance={() => {
 				mandant = true;
 				return async ({ update }) => {
-					await update({ reset: false, invalidateAll: false });
+					await update({ reset: false, refreshAll: false });
 					mandant = false;
 					// une erreur se lit sur le dernier écran, celui du contact
 					if (form?.error && pasAPas) anar(ecrans.length);

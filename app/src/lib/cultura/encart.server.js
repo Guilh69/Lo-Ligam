@@ -1,7 +1,7 @@
 // Retrouver l'encart « Cultura » d'une fiche dans sa leçon, côté serveur :
 // la page ne reçoit que l'encart, pas les 39 modules du parcours (poids de
 // la page).
-import { moduls } from '$lib/lesson/moduls/index.js';
+import { moduls } from '#lib/lesson/moduls/index.js';
 import { titolEncart, memeTitol } from './index.js';
 
 /** les encarts « Cultura » d'un module, dans l'ordre de la leçon */

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { etiqueta } from './etiquetas.js';
-import filet from '$lib/data/elements-filet.json';
+import filet from '#lib/data/elements-filet.json';
 
 // (15-11 : une virgule manquante entre deux lignes de la liste cassait tout le
 // site sans que le build ne dise rien)

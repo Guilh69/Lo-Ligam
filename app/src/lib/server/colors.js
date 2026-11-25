@@ -5,8 +5,8 @@
 // entrer dans la page), puis posées sur la palette du serveur et rendues sous
 // deux formes pour app.html : la feuille de style et la liste.
 import { legirElements } from './elements.js';
-import { PAGINA, surchargesDe, cssColors } from '$lib/colors/registre.js';
-import { fixarColors } from '$lib/styles/palette.js';
+import { PAGINA, surchargesDe, cssColors } from '#lib/colors/registre.js';
+import { fixarColors } from '#lib/styles/palette.js';
 
 let memòria = { rows: null, css: '', json: '{}' };
 

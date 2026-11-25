@@ -7,7 +7,7 @@
 	// Repliée en une ligne sous les informations de la ville (Romain,
 	// 2026-10-23 : « on devrait d'abord voir les informations sur la ville ») :
 	// un toucher lit la voix et déplie la phrase, sans second geste.
-	import { cargarVotz, pròcha, sonDe, frasas, frasaAra, sonSol } from '$lib/carta/votz.js';
+	import { cargarVotz, pròcha, sonDe, frasas, frasaAra, sonSol } from '#lib/carta/votz.js';
 
 	let { comuna, lang = 'oc', nomDe = (p) => p.n, colorDe = () => '#eeaf34', onCarta = null } = $props();
 

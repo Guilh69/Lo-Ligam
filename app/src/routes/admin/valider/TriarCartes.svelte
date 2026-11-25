@@ -3,14 +3,14 @@
 	// cœur garde tel quel, la croix renvoie à refaire avec un commentaire
 	// (dicté ou écrit). On glisse la carte (doigt, souris) ou on touche les
 	// boutons ; au clavier : flèche gauche = croix, flèche droite = cœur.
-	// Logique et format d'enregistrement : $lib/triar/triar.js ; lots :
-	// $lib/triar/lots.js ; lecture côté Claude : scripts/triar.mjs.
+	// Logique et format d'enregistrement : #lib/triar/triar.js ; lots :
+	// #lib/triar/lots.js ; lecture côté Claude : scripts/triar.mjs.
 	import { onMount, tick } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { LOTS } from '$lib/triar/lots.js';
-	import CartaReleu from '$lib/paisatges/CartaReleu.svelte';
-	import CartaPausar from '$lib/paisatges/CartaPausar.svelte';
-	import { PAGINA, estatDe, aTriar, comptes, paquetsGardats, tèxteGardats, tèxteRefar, tèxtePausats } from '$lib/triar/triar.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { LOTS } from '#lib/triar/lots.js';
+	import CartaReleu from '#lib/paisatges/CartaReleu.svelte';
+	import CartaPausar from '#lib/paisatges/CartaPausar.svelte';
+	import { PAGINA, estatDe, aTriar, comptes, paquetsGardats, tèxteGardats, tèxteRefar, tèxtePausats } from '#lib/triar/triar.js';
 
 	// le lot vient de la page « A validar » (?vue=triar&lot=…), qui remonte ce composant quand il change
 	let { lotId = null } = $props();

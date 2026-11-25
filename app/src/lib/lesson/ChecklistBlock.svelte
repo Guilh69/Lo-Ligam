@@ -1,8 +1,8 @@
 <script>
 	// Cases à cocher (critères de réussite, bilan « je peux… »). L'état est
 	// gardé dans le navigateur : c'est une auto-évaluation, pas une note.
-	import { browser } from '$app/environment';
-	import { rich } from '$lib/lesson/rich.js';
+	import { browser } from '$app/env';
+	import { rich } from '#lib/lesson/rich.js';
 
 	let { block, storagePrefix = '' } = $props();
 

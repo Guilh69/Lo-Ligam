@@ -15,11 +15,11 @@
 	import { quartOut } from 'svelte/easing';
 	import Icona from './Icona.svelte';
 	import Crotz from './Crotz.svelte';
-	import { PLAN, LO_LIGAM, VISIO } from '$lib/data/planSite.js';
+	import { PLAN, LO_LIGAM, VISIO } from '#lib/data/planSite.js';
 	import PastilleAviat from './PastilleAviat.svelte';
-	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { portal } from '$lib/actions/portal.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
+	import { tampaDefòra } from '#lib/tampaDefora.js';
+	import { portal } from '#lib/actions/portal.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
 
 	let { dobèrt = $bindable(false), lang = 'oc', boton = null } = $props();
 	let panel = $state(null);

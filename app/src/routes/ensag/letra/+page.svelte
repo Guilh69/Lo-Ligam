@@ -3,7 +3,7 @@
 	// las « suggestions » de Canva, reproduchas dins lo site) : cada vinheta
 	// tòrna jogar son efèct a cada clic. Pagina de trabalh, pas indexada.
 	import { onMount } from 'svelte';
-	import { animarText } from '$lib/actions/animarText.js';
+	import { animarText } from '#lib/actions/animarText.js';
 
 	const LISTA = [
 		['maquina', 'Machine à écrire'],

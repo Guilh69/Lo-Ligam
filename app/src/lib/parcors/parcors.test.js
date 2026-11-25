@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { camin, estatParcors, comptarBits, simular, seguentaClavada, numero, glosaCorta, NIVELS } from './parcors.js';
 import { contrast, nuanças, UNITATS, AUR, teula } from './colors.js';
-import { moduls, ordre } from '$lib/lesson/moduls/index.js';
+import { moduls, ordre } from '#lib/lesson/moduls/index.js';
 
 const etapas = camin(moduls, ordre);
 const totalModuls = ordre.length;

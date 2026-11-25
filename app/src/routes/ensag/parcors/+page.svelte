@@ -4,9 +4,9 @@
 	// ligne, les niveaux n'ont plus de cases, et le chemin est replié sur la
 	// suite immédiate (« Veire tot lo parcors » l'ouvre). Le chemin lui-même est
 	// celui de /aprene. Avec « essai », ?simul=6 simule un avancement de six modules.
-	import ParcorsPagina from '$lib/parcors/ParcorsPagina.svelte';
-	import CaminAuca from '$lib/parcors/CaminAuca.svelte';
-	import { iniciar } from '$lib/edicion/edicion.svelte.js';
+	import ParcorsPagina from '#lib/parcors/ParcorsPagina.svelte';
+	import CaminAuca from '#lib/parcors/CaminAuca.svelte';
+	import { iniciar } from '#lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('parcors', data.elements);

@@ -6,7 +6,7 @@
 	// chapitre. Fond léger (≈ 15 Ko compressé), chargé quand la carte approche.
 	// Données : etapas.js (lieux, étapes) ; fond : carta-fons.js (généré).
 	import { onMount } from 'svelte';
-	import { tria } from '$lib/stores/lang.svelte.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
 	import { LUÒCS, ETAPAS, etapaDe, vol, escalaRedona } from './etapas.js';
 
 	/** racina : l'élément qui contient les chapitres, marqués data-etapa={clé} ;
@@ -209,7 +209,7 @@
 			async ([en]) => {
 				if (!en.isIntersecting || fons) return;
 				io.disconnect();
-				const [f, { LUOCS }] = await Promise.all([import('./carta-fons.js'), import('$lib/acuelh/carta-estelas.js')]);
+				const [f, { LUOCS }] = await Promise.all([import('./carta-fons.js'), import('#lib/acuelh/carta-estelas.js')]);
 				P = f.PROJ;
 				estelas = LUOCS.map(([lon, lat], i) => [...proj(lon, lat), (i * 37) % 900]);
 				// pas de repère qui recoupe le récit (lieux du récit, et la ville de la

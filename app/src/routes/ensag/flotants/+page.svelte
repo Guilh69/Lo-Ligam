@@ -4,9 +4,9 @@
 	// restent en option (« Aucun », « Confettis », « Objets »), comme elles le seraient dans le réglage
 	// d'ambiance du site. Rien d'occitan écrit ici n'est du texte du site, sauf les noms d'objets
 	// (objets.js), vérifiés par l'API de lo Congrès, à valider par Romain.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Flotants from '$lib/flotants/Flotants.svelte';
-	import { OBJETS } from '$lib/flotants/objets.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Flotants from '#lib/flotants/Flotants.svelte';
+	import { OBJETS } from '#lib/flotants/objets.js';
 
 	let mode = $state('objets');
 	let attrapes = $state([]);

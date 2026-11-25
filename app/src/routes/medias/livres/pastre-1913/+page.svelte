@@ -1,12 +1,12 @@
 <script>
 	// Le livre de Louis Pastre (1913) à feuilleter : pages qui tournent, bruit
 	// du papier désactivable, mode texte. Le lecteur est dans
-	// $lib/components/LecteurLivre.svelte ; les pages dans static/livres/.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import LecteurLivre from '$lib/components/LecteurLivre.svelte';
-	import { LIVRES } from '$lib/data/livres.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	// #lib/components/LecteurLivre.svelte ; les pages dans static/livres/.
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import LecteurLivre from '#lib/components/LecteurLivre.svelte';
+	import { LIVRES } from '#lib/data/livres.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
 
 	const livre = LIVRES.find((l) => l.id === 'pastre-1913');
 	const t = {

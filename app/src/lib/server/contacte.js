@@ -16,10 +16,10 @@
 //   CONTACTE_DE   (facultatif) l'expéditeur, sur le domaine vérifié ; formulari@loligam.eu par défaut
 // Sans clé : en local, l'envoi est simulé (affiché dans la console) ; en
 // ligne, le formulaire dit qu'il n'est pas branché et donne l'adresse.
-import { env } from '$env/dynamic/private';
-import { dev } from '$app/environment';
+import * as env from '$app/env/private';
+import { dev } from '$app/env';
 import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
-import { editor } from '$lib/data/legal.js';
+import { editor } from '#lib/data/legal.js';
 
 const API = 'https://api.scaleway.com/transactional-email/v1alpha1/regions/fr-par/emails';
 const MIN_SEGONDAS = 3;

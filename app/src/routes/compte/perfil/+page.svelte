@@ -8,16 +8,16 @@
 	// commune d'Occitanie porte la croix du logo) ; le texte libre vient en dernier,
 	// facultatif. Les réponses du questionnaire d'accueil (âge, genre,
 	// profession) n'y paraissent pas.
-	import { browser } from '$app/environment';
-	import Icona from '$lib/components/Icona.svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { session, authReady } from '$lib/authStore';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { DIALECTES, NIVELS, CERCA, AGRADA, nomLigne } from '$lib/grops/grops.svelte.js';
-	import { cargarComunas, cercarComunas, cercarMonde, normC, luòcAfichat } from '$lib/comunas.js';
-	import Crotz from '$lib/components/Crotz.svelte';
-	import Avatar from '$lib/grops/Avatar.svelte';
+	import { browser } from '$app/env';
+	import Icona from '#lib/components/Icona.svelte';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { session, authReady } from '#lib/authStore.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import { DIALECTES, NIVELS, CERCA, AGRADA, nomLigne } from '#lib/grops/grops.svelte.js';
+	import { cargarComunas, cercarComunas, cercarMonde, normC, luòcAfichat } from '#lib/comunas.js';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import Avatar from '#lib/grops/Avatar.svelte';
 
 	let fr = $derived(langStore.current === 'fr');
 	const MAX = 600;

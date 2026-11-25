@@ -5,8 +5,8 @@
 	// numéro en or et le titre en grand, posés sur le fond du site.
 	//
 	// ouverture = { numero, bloc: { oc, fr }, titre, fr, phrase }
-	import { rich, insecable } from '$lib/lesson/rich.js';
-	import { animat } from '$lib/actions/animarText.js';
+	import { rich, insecable } from '#lib/lesson/rich.js';
+	import { animat } from '#lib/actions/animarText.js';
 
 	let { ouverture } = $props();
 </script>

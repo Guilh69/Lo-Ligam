@@ -16,7 +16,7 @@
 	import Bulla from './Bulla.svelte';
 	import BotonSon from './BotonSon.svelte';
 	import { seguirFil } from './fil.js';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { replicas, tèulas, explics, personatges, son, avança = 0.6, oncontunhar } = $props();
 

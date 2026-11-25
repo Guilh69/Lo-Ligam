@@ -22,11 +22,11 @@
 	// Adresses utiles : ?leger=1 ; ?p=0.5 fige l'avancement (pour les captures).
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Crotz from '$lib/components/Crotz.svelte';
-	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import '$lib/styles/papier.css';
-	import { CARTE, TEINTES as T } from '$lib/styles/palette.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import { ambianca } from '#lib/stores/ambianca.svelte.js';
+	import '#lib/styles/papier.css';
+	import { CARTE, TEINTES as T } from '#lib/styles/palette.js';
 
 	const Q = page.url.searchParams;
 	let leger = $state(Q.get('leger') === '1');

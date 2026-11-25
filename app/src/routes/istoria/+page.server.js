@@ -1,10 +1,10 @@
 // Mon istòria (2026-10-24, option A de Romain : une seule page, le récit puis
 // le contact en fin de page ; /contacte y renvoie). Les textes se modifient
-// sur place ($lib/server/elements.js) ; le formulaire part par courriel
-// ($lib/server/contacte.js) et marche aussi sans JavaScript.
+// sur place (#lib/server/elements.js) ; le formulaire part par courriel
+// (#lib/server/contacte.js) et marche aussi sans JavaScript.
 import { fail } from '@sveltejs/kit';
-import { legirElements } from '$lib/server/elements.js';
-import { geton, mandarContacte } from '$lib/server/contacte.js';
+import { legirElements } from '#lib/server/elements.js';
+import { geton, mandarContacte } from '#lib/server/contacte.js';
 
 export async function load() {
 	return { elements: await legirElements('istoria'), geton: geton() };

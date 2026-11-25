@@ -5,7 +5,7 @@
 import { describe, it, expect } from 'vitest';
 import { FICHAS, TEMAS, IU, titolEncart, memeTitol } from './index.js';
 import { encart, encartsDe } from './encart.server.js';
-import { moduls } from '$lib/lesson/moduls/index.js';
+import { moduls } from '#lib/lesson/moduls/index.js';
 
 const LENGAS = ['oc', 'fr', 'es', 'en', 'ca', 'ar'];
 
@@ -32,7 +32,7 @@ describe('les fiches de Cultura', () => {
 		for (const [clau, mod] of Object.entries(moduls))
 			for (const b of encartsDe(mod)) {
 				const rangat = FICHAS.some((f) => f.modul === clau && memeTitol(titolEncart(b.title), f.titol.fr));
-				expect(rangat, `encart « ${b.title} » du module ${clau} : à ranger dans $lib/cultura/index.js`).toBe(true);
+				expect(rangat, `encart « ${b.title} » du module ${clau} : à ranger dans #lib/cultura/index.js`).toBe(true);
 			}
 	});
 
@@ -81,7 +81,7 @@ describe('l’interface de Cultura', () => {
 describe('les images de Cultura', async () => {
 	const { existsSync } = await import('node:fs');
 	const { FOTOS, COMMONS, STOCK, DESSENHS, AMPLES, amples, srcset } = await import('./imatges.js');
-	const { PAISATGES } = await import('$lib/paisatges/paisatges.js');
+	const { PAISATGES } = await import('#lib/paisatges/paisatges.js');
 	const { dessenh } = await import('./dessenhs.server.js');
 	const ids = new Set(FICHAS.map((f) => f.id));
 

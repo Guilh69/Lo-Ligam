@@ -1,5 +1,5 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	// Série « Officialitat » : 9 visuels qui forment une démonstration
 	// suivie sur le statut officiel de l'occitan. L'ordre compte (c'est un
 	// raisonnement, pas une galerie).

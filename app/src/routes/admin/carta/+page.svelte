@@ -10,7 +10,7 @@
 	// zone, voir plus bas). On ne peut pas changer son fichier ici. (Les
 	// « despartaments » à 3 niveaux ont été retirés le 2026-10-12, cahier §11.)
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '#lib/supabaseClient.js';
 
 	const ESPECIALAS = ['dialectes'];
 	const TIPES = [

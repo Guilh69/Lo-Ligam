@@ -4,10 +4,10 @@
 	// l'accueil, qui nomme les portes : ici, chaque porte en case de couleur,
 	// avec une ligne sur ce qu'on y trouve (la carte en grand, le wiki, Òbras,
 	// Articles, les musiques ; Cultura à la place du wiki le 2026-11-04).
-	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
-	import { PLAN } from '$lib/data/planSite.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar } from '$lib/edicion/edicion.svelte.js';
+	import PaginaTeulas from '#lib/apren/PaginaTeulas.svelte';
+	import { PLAN } from '#lib/data/planSite.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar } from '#lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('parla', data.elements);

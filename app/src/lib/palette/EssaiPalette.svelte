@@ -4,8 +4,8 @@
 	// Romain peut retoucher en direct, clair et sombre. Aucun jeton du site n'est
 	// modifié : les variables sont posées sur la scène seulement.
 	import { onMount } from 'svelte';
-	import Crotz from '$lib/components/Crotz.svelte';
-	import Icona from '$lib/components/Icona.svelte';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import PaletteOutil from './PaletteOutil.svelte';
 	import { analyser, accorderTuiles, hexValide } from './coherence.js';
 	import { PISTES, variablesCss, copierPiste } from './pistes.js';

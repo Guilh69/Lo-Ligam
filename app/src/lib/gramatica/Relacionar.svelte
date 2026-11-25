@@ -5,8 +5,8 @@
 	// montre la réponse d'une ligne (elle ne compte plus dans le score).
 	import { copa, classeColor } from './marcar.js';
 	import { IU } from './lengas.js';
-	import Bulla from '$lib/components/Bulla.svelte';
-	import { lang, tria } from '$lib/stores/lang.svelte.js';
+	import Bulla from '#lib/components/Bulla.svelte';
+	import { lang, tria } from '#lib/stores/lang.svelte.js';
 	// l'habillage suit la langue choisie (lengas.js, Romain 2026-11-04) ; les
 	// trois boutons restent en occitan, comme dans le parcours, avec leur
 	// traduction en bulle dans une autre langue

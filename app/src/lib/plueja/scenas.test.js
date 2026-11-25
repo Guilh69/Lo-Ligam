@@ -4,8 +4,8 @@
 // chose (ou dans ses exemples). Si une leçon change, ce test le dit.
 import { describe, it, expect } from 'vitest';
 import { SCENAS, motsDelQuasernet } from './scenas.js';
-import { listerChoses } from '$lib/carnet/choses.js';
-import { idCarte } from '$lib/carnet/regles.js';
+import { listerChoses } from '#lib/carnet/choses.js';
+import { idCarte } from '#lib/carnet/regles.js';
 
 const choses = listerChoses();
 const norm = (s) =>

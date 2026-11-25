@@ -7,22 +7,21 @@
 //   → { resultats: [{ oc: 'la nívol', fr: 'le nuage', var: 'lengadoc', font: 'basic' }],
 //       estats: { basic: 'ok', wikidata: 'ok', revirada: 'sens-clau' } }
 //
-// Logique et règles de lo Congrès : $lib/server/congres.js.
-import { json } from '@sveltejs/kit';
-import { dev } from '$app/environment';
-import { cercarTot } from '$lib/server/congres.js';
-import { esAdmin } from '$lib/server/esadmin.js';
+// Logique et règles de lo Congrès : #lib/server/congres.js.
+import { dev } from '$app/env';
+import { cercarTot } from '#lib/server/congres.js';
+import { esAdmin } from '#lib/server/esadmin.js';
 
 const SENS_CACHE = { 'cache-control': 'no-store' }; // rien n'est gardé (CGU de lo Congrès)
 
 export async function GET({ url, request }) {
 	// en développement, la simulation de l'espace admin (?edicion=simular) n'a pas de session
-	if (!dev && !(await esAdmin(request))) return json({ error: 'reservat' }, { status: 403, headers: SENS_CACHE });
+	if (!dev && !(await esAdmin(request))) return Response.json({ error: 'reservat' }, { status: 403, headers: SENS_CACHE });
 	const q = (url.searchParams.get('q') ?? '').trim().replace(/\s+/g, ' ').slice(0, 60);
-	if (q.length < 2) return json({ resultats: [], estats: {} }, { headers: SENS_CACHE });
+	if (q.length < 2) return Response.json({ resultats: [], estats: {} }, { headers: SENS_CACHE });
 	const r = await cercarTot(q);
 	// aucune source n'a répondu : c'est une panne, pas une absence
 	const totasEnPana = Object.values(r.estats).every((e) => e !== 'ok');
-	if (totasEnPana && Object.values(r.estats).includes('error')) return json({ error: 'congres', estats: r.estats }, { status: 502, headers: SENS_CACHE });
-	return json(r, { headers: SENS_CACHE });
+	if (totasEnPana && Object.values(r.estats).includes('error')) return Response.json({ error: 'congres', estats: r.estats }, { status: 502, headers: SENS_CACHE });
+	return Response.json(r, { headers: SENS_CACHE });
 }

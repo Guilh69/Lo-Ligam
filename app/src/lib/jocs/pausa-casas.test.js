@@ -2,7 +2,7 @@
 // cachent aucun point d'or et restent dans la photo, sur un grand écran comme
 // sur un téléphone (mêmes tailles de texte que le jeu : casaDe()).
 import { describe, it, expect } from 'vitest';
-import { PAISATGES } from '$lib/paisatges/paisatges.js';
+import { PAISATGES } from '#lib/paisatges/paisatges.js';
 import { plaçarCasas, recobriment, casaDe } from './pausa-casas.js';
 
 const ECRANS = [

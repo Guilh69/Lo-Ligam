@@ -2,8 +2,8 @@
 	// La pastille « Aviat » (bientôt) des pages pas encore ouvertes : la pièce ocre de la
 	// langue choisie, texte encre (5,3:1). Romain, 2026-11-07 (option 3 pour Articles et
 	// Fòrum). « aviat » vérifié par l'API de lo Congrès ; es/en/ca/ar : à relire par Aran.
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { AVIAT } from '$lib/data/planSite.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { AVIAT } from '#lib/data/planSite.js';
 </script>
 
 <span class="aviat-pastille">{tria(AVIAT)}</span>

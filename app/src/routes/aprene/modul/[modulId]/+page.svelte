@@ -1,38 +1,38 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
-	import { browser } from '$app/environment';
-	import { page } from '$app/stores';
-	import Crotz from '$lib/components/Crotz.svelte';
-	import FougasseIcon from '$lib/components/FougasseIcon.svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { session, authReady } from '$lib/authStore';
-	import { esAdmin } from '$lib/adminStore';
-	import { PALETAS } from '$lib/apren/teulas.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
-	import { playTick, playChime } from '$lib/lesson/sounds.js';
-	import { jogarEfiech } from '$lib/efiech/efiech.js';
-	import QcmBlock from '$lib/lesson/QcmBlock.svelte';
-	import RevealBlock from '$lib/lesson/RevealBlock.svelte';
-	import OrderBlock from '$lib/lesson/OrderBlock.svelte';
-	import DialogueBlock from '$lib/lesson/DialogueBlock.svelte';
-	import ChunksBlock from '$lib/lesson/ChunksBlock.svelte';
-	import TableBlock from '$lib/lesson/TableBlock.svelte';
-	import NoteBlock from '$lib/lesson/NoteBlock.svelte';
-	import ChecklistBlock from '$lib/lesson/ChecklistBlock.svelte';
-	import EscriureBlock from '$lib/lesson/EscriureBlock.svelte';
-	import CausidaBlock from '$lib/lesson/CausidaBlock.svelte';
-	import CartaBlock from '$lib/lesson/CartaBlock.svelte';
-	import FotosBlock from '$lib/lesson/FotosBlock.svelte';
-	import CartaTitol from '$lib/lesson/CartaTitol.svelte';
-	import Remarcas from '$lib/lesson/Remarcas.svelte';
-	import { rich, insecable } from '$lib/lesson/rich.js';
-	import { demarrerCarnet, noterExercice } from '$lib/carnet/carnet.svelte.js';
+	import { browser } from '$app/env';
+	import { page } from '$app/state';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import FougasseIcon from '#lib/components/FougasseIcon.svelte';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { session, authReady } from '#lib/authStore.js';
+	import { esAdmin } from '#lib/adminStore.js';
+	import { PALETAS } from '#lib/apren/teulas.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { moduls, ordre } from '#lib/lesson/moduls/index.js';
+	import { playTick, playChime } from '#lib/lesson/sounds.js';
+	import { jogarEfiech } from '#lib/efiech/efiech.js';
+	import QcmBlock from '#lib/lesson/QcmBlock.svelte';
+	import RevealBlock from '#lib/lesson/RevealBlock.svelte';
+	import OrderBlock from '#lib/lesson/OrderBlock.svelte';
+	import DialogueBlock from '#lib/lesson/DialogueBlock.svelte';
+	import ChunksBlock from '#lib/lesson/ChunksBlock.svelte';
+	import TableBlock from '#lib/lesson/TableBlock.svelte';
+	import NoteBlock from '#lib/lesson/NoteBlock.svelte';
+	import ChecklistBlock from '#lib/lesson/ChecklistBlock.svelte';
+	import EscriureBlock from '#lib/lesson/EscriureBlock.svelte';
+	import CausidaBlock from '#lib/lesson/CausidaBlock.svelte';
+	import CartaBlock from '#lib/lesson/CartaBlock.svelte';
+	import FotosBlock from '#lib/lesson/FotosBlock.svelte';
+	import CartaTitol from '#lib/lesson/CartaTitol.svelte';
+	import Remarcas from '#lib/lesson/Remarcas.svelte';
+	import { rich, insecable } from '#lib/lesson/rich.js';
+	import { demarrerCarnet, noterExercice } from '#lib/carnet/carnet.svelte.js';
 
-	let modul = $derived(moduls[$page.params.modulId]);
-	let posicion = $derived(ordre.indexOf($page.params.modulId));
+	let modul = $derived(moduls[page.params.modulId]);
+	let posicion = $derived(ordre.indexOf(page.params.modulId));
 	let precedent = $derived(posicion > 0 ? ordre[posicion - 1] : null);
 	let seguent = $derived(posicion >= 0 && posicion < ordre.length - 1 ? ordre[posicion + 1] : null);
 	// Le fil ne montre que les modules de la même unité (tout l'A1 compte
@@ -307,7 +307,7 @@
 			<!-- Les quatre modules de l'unité, pour voir où l'on est -->
 			<nav class="fil" aria-label="Modules de l’unité">
 				{#each filUnitat as id}
-					<a href="/aprene/modul/{id}" class:actual={id === $page.params.modulId} aria-current={id === $page.params.modulId ? 'page' : undefined}>
+					<a href="/aprene/modul/{id}" class:actual={id === page.params.modulId} aria-current={id === page.params.modulId ? 'page' : undefined}>
 						{#if numeroDe(id)}<b>{numeroDe(id)}</b>{/if}<span lang="oc">{insecable(moduls[id].oc)}</span>
 					</a>
 				{/each}
@@ -385,9 +385,9 @@
 							{:else if block.type === 'carta'}
 								<CartaBlock {block} {onCorrect} onResult={noterReconnais} onComplete={() => (blockDone[bi] = true)} />
 							{:else if block.type === 'dialogue'}
-								<DialogueBlock {block} modulId={$page.params.modulId} />
+								<DialogueBlock {block} modulId={page.params.modulId} />
 							{:else if block.type === 'chunks'}
-								<ChunksBlock {block} modulId={$page.params.modulId} />
+								<ChunksBlock {block} modulId={page.params.modulId} />
 							{:else if block.type === 'table'}
 								<TableBlock {block} />
 							{:else if block.type === 'note'}

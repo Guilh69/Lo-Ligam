@@ -10,12 +10,12 @@
 	// ondule ; immobile si l'appareil demande moins d'animations. Le tèma calme
 	// (épuré, immobile) a été retiré le 07-11 (Romain : « tu peux supprimer le
 	// thème calme »). Catalogue : cataleg.js.
-	import { tria, lang } from '$lib/stores/lang.svelte.js';
+	import { tria, lang } from '#lib/stores/lang.svelte.js';
 	import { CAPACITATS, FAMILHAS, jocsDe } from './cataleg.js';
 	import Illustracion from './Illustracion.svelte';
 	import Emblema from './Emblema.svelte';
-	import MencionIA from '$lib/components/MencionIA.svelte';
-	import { PUCES } from '$lib/styles/palette.js';
+	import MencionIA from '#lib/components/MencionIA.svelte';
+	import { PUCES } from '#lib/styles/palette.js';
 	import { onMount } from 'svelte';
 
 	const T = {

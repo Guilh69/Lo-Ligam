@@ -5,7 +5,7 @@
 	// téléphone montre une fiche par ligne. Un petit tableau de formes courtes
 	// (je, tu, il × trois verbes) reste un tableau : on y lit le motif en
 	// colonne. `block.fiches` (vrai ou faux) tranche à la main si besoin.
-	import { rich } from '$lib/lesson/rich.js';
+	import { rich } from '#lib/lesson/rich.js';
 
 	let { block } = $props();
 	const etiqueta = (ci) => (block.head[ci] ?? '').replace(/\*/g, '');

@@ -2,12 +2,12 @@
 // choisie par Romain le 2026-10-25) : journal à pages, mis à jour seul (en
 // une les coups de cœur et les dernières sorties, puis tous les artistes de A
 // à Z). La liste est celle que Romain trie sur /admin/musica ; photo et
-// dernier album sont relus chez Deezer chaque jour ($lib/server/deezer.js).
-// Tant que rien n'est trié, les exemples de $lib/musica.js.
-import candidats from '$lib/data/musica-candidats.json';
-import { legirElements } from '$lib/server/elements.js';
-import { fichasMusica } from '$lib/server/deezer.js';
-import { PAGINA, LISTA, CÒRS, EXEMPLES, CÒRS_EXEMPLES, idsDe, fotoVuèja } from '$lib/musica.js';
+// dernier album sont relus chez Deezer chaque jour (#lib/server/deezer.js).
+// Tant que rien n'est trié, les exemples de #lib/musica.js.
+import candidats from '#lib/data/musica-candidats.json';
+import { legirElements } from '#lib/server/elements.js';
+import { fichasMusica } from '#lib/server/deezer.js';
+import { PAGINA, LISTA, CÒRS, EXEMPLES, CÒRS_EXEMPLES, idsDe, fotoVuèja } from '#lib/musica.js';
 
 const PER_PAGINA = 6;
 const semenças = Object.fromEntries(candidats.map((a) => [a.id, a]));

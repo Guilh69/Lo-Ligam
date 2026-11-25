@@ -8,7 +8,7 @@
 // restablit, suprimit) ; le droit d'écouter est vérifié une fois, à
 // l'ouverture du canal. La liste tient ainsi ses non-lus à jour sans
 // redemander quoi que ce soit au serveur.
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '#lib/supabaseClient.js';
 
 // Les groupes restent fermés au public jusqu'à la charte et à la page
 // Confidentialité (séance 4) ; l'administrateur les voit pour les essayer.

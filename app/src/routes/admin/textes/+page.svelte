@@ -5,7 +5,7 @@
 	// nulle part, en supprimer un ferait retomber le site sur sa valeur de
 	// secours sans prévenir.
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '#lib/supabaseClient.js';
 
 	// L'aperçu ne touche pas la base : le brouillon est gardé dans CE
 	// navigateur (localStorage), et la page d'accueil ouverte avec

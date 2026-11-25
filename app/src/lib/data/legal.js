@@ -19,7 +19,7 @@ export const editor = {
 	tva: 'TVA non applicable, art. 293 B du CGI',
 	// Obligatoire et public. L'alias du site (Romain, 2026-10-24) : c'est la
 	// seule adresse affichée, jamais l'adresse personnelle. Reçoit aussi le
-	// formulaire de contact de Mon istòria ($lib/server/contacte.js).
+	// formulaire de contact de Mon istòria (#lib/server/contacte.js).
 	email: 'lo_ligam@proton.me',
 	// Directeur de la publication : la personne responsable du contenu.
 	directeurPublication: 'Romain Perier',

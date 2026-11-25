@@ -8,7 +8,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/state';
 	import 'leaflet/dist/leaflet.css';
-	import { crearColaPapier, MODES } from '$lib/carta/papier.js';
+	import { crearColaPapier, MODES } from '#lib/carta/papier.js';
 
 	const Q = page.url.searchParams;
 	let mode = $state(MODES.includes(Q.get('mode')) ? Q.get('mode') : 'costura');

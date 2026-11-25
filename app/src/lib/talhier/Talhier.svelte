@@ -15,15 +15,15 @@
 	// visiteur ne télécharge rien de tout ça.
 	import { onMount, tick, untrack } from 'svelte';
 	import { page } from '$app/state';
-	import Icona from '$lib/components/Icona.svelte';
-	import { edicion, activar, desactivar } from '$lib/edicion/edicion.svelte.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import { edicion, activar, desactivar } from '#lib/edicion/edicion.svelte.js';
 	import { notas, cargarNotas, comptePerTu, mandarNota, bon, pasEncara, respondre, sòrta, trobar, linha, tèxteDe, SELECTOR_TÈXTE } from './notas.svelte.js';
 	import { validacions, cargarValidacions, validar, validarTot } from './pila.svelte.js';
 	import { estatElement } from './pila.js';
 	import { tèxteElement, tèxteFicha, empremta } from './empremtas.js';
 	import { dictadaPossibla, dictar } from './dictada.js';
 	// Colors (2026-11-13) : régler les couleurs du site depuis la page (lib/colors)
-	import { colors, dobrir as dobrirColors, tampar as tamparColors, eraDubert as colorsEraDubert } from '$lib/colors/colors.svelte.js';
+	import { colors, dobrir as dobrirColors, tampar as tamparColors, eraDubert as colorsEraDubert } from '#lib/colors/colors.svelte.js';
 
 	let camin = $derived(page.url.pathname);
 	// dans les leçons, les remarques ont leur propre outil, qui garde l'étape et
@@ -167,7 +167,7 @@
 		vEstats = res;
 		vFicha = null;
 		if (surFicha) {
-			const { ficha } = await import('$lib/gramatica/index.js');
+			const { ficha } = await import('#lib/gramatica/index.js');
 			const f = ficha(page.params.ficha);
 			if (f) vFicha = { f, empremta: await empremta(tèxteFicha(f)) };
 		}
@@ -608,7 +608,7 @@
 	{/if}
 
 	{#if colors.dubert}
-		{#await import('$lib/colors/ColorsPanel.svelte') then m}
+		{#await import('#lib/colors/ColorsPanel.svelte') then m}
 			<m.default />
 		{/await}
 	{/if}

@@ -3,7 +3,7 @@
 	// supprimer. L'accès est filtré par admin/+layout.svelte, mais ce qui
 	// protège réellement, ce sont les politiques RLS de la base.
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '#lib/supabaseClient.js';
 	import {
 		redimensionar,
 		slug,
@@ -12,14 +12,14 @@
 		pes,
 		LARGOR_MINI,
 		LARGOR_GRAND
-	} from '$lib/imatges';
+	} from '#lib/imatges.js';
 	import {
 		PLAFON_VIDEO,
 		esVideoStorage,
 		caminVideoStorage,
 		ligamCanvaEmbed,
 		menaVideo
-	} from '$lib/videos';
+	} from '#lib/videos.js';
 
 	let temas = $state([]);
 	let fichas = $state([]);

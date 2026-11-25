@@ -6,12 +6,12 @@
 	// site. N'importe qui peut lire ce fichier et appeler la base directement.
 	// Ce qui protège, ce sont les politiques RLS, qui refusent l'écriture à qui
 	// n'est pas administrateur — quoi que fasse le navigateur.
-	import { supabase } from '$lib/supabaseClient';
-	import { session, authReady } from '$lib/authStore';
-	import AppHeader from '$lib/components/AppHeader.svelte';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { session, authReady } from '#lib/authStore.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
 	import { page } from '$app/state';
-	import { TALHIÈRS, LARGEURS } from '$lib/talhier/talhiers.js';
-	import { simulacion } from '$lib/talhier/notas.svelte.js';
+	import { TALHIÈRS, LARGEURS } from '#lib/talhier/talhiers.js';
+	import { simulacion } from '#lib/talhier/notas.svelte.js';
 
 	let { children } = $props();
 

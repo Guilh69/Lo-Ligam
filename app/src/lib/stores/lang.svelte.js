@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 
 // Langue d'interface partagée par tout le site (avant, chaque page avait
 // la sienne — seul l'accueil en avait une en réalité). Le choix est

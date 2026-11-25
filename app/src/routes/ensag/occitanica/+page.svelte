@@ -3,10 +3,10 @@
 	// d'Occitanica, ceux qu'il a retenus sur la page de recensement. Pas de copie
 	// des fichiers : une vignette légère, le titre, l'auteur, la date, la mention
 	// de source exigée par le CIRDÒC, et un lien vers la fiche d'origine.
-	// Page de travail, non indexée. Données : $lib/cultura/occitanica.js.
-	import PaginaSimpla from '$lib/components/PaginaSimpla.svelte';
-	import { FAMILHAS, IU, SOURCE, urlFiche, urlVignette } from '$lib/cultura/occitanica.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	// Page de travail, non indexée. Données : #lib/cultura/occitanica.js.
+	import PaginaSimpla from '#lib/components/PaginaSimpla.svelte';
+	import { FAMILHAS, IU, SOURCE, urlFiche, urlVignette } from '#lib/cultura/occitanica.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
 
 	let lang = $derived(langStore.current);
 </script>

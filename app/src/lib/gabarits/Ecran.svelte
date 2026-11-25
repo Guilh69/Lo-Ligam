@@ -16,10 +16,10 @@
 	// « Teula », choisie par Romain le 18-11 face à « Papièr » (tête sur le fond
 	// du site, numéro en or), retirée ce jour-là.
 	import { getContext } from 'svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { animat } from '$lib/actions/animarText.js';
-	import { colorUnitat, tintaPer } from '$lib/parcors/colors.js';
-	import { insecable } from '$lib/lesson/rich.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import { animat } from '#lib/actions/animarText.js';
+	import { colorUnitat, tintaPer } from '#lib/parcors/colors.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	/**
 	 * avança : 0 à 1 ; consigna : { oc, fr } ; retorn : null ou { just, titol, explic } ;

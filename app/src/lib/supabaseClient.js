@@ -1,9 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
-import { browser } from '$app/environment';
-import { env } from '$env/dynamic/public';
+import { browser } from '$app/env';
+import * as env from '$app/env/public';
 
-// Lecture au DÉMARRAGE et non à la construction ($env/dynamic et non
-// $env/static). Deux raisons :
+// Lecture au DÉMARRAGE et non à la construction (src/env.js, variables non
+// « static »). Deux raisons :
 //   - l'image du conteneur se construit sans accès aux réglages ; en statique,
 //     la construction échouerait ;
 //   - la même image peut ainsi pointer vers une autre base sans être

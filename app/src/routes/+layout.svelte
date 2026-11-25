@@ -1,24 +1,24 @@
 <script>
 	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
+	import favicon from '#lib/assets/favicon.svg';
 	import { page } from '$app/state';
-	import { ambianca, armonizada } from '$lib/stores/ambianca.svelte.js';
-	import SiteFooter from '$lib/components/SiteFooter.svelte';
-	import TornarAmont from '$lib/components/TornarAmont.svelte';
+	import { ambianca, armonizada } from '#lib/stores/ambianca.svelte.js';
+	import SiteFooter from '#lib/components/SiteFooter.svelte';
+	import TornarAmont from '#lib/components/TornarAmont.svelte';
 	// l'édition sur place (bouton, barre, panneau) : ne montre rien tant
 	// qu'une page ne s'y est pas branchée (2026-10-24)
-	import Edicion from '$lib/components/Edicion.svelte';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { esAdmin } from '$lib/adminStore';
-	import { browser, dev } from '$app/environment';
+	import Edicion from '#lib/components/Edicion.svelte';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { esAdmin } from '#lib/adminStore.js';
+	import { browser, dev } from '$app/env';
 	import { onMount } from 'svelte';
-	import { confetisSurPage } from '$lib/flotants/pages.js';
-	import Flotants from '$lib/flotants/Flotants.svelte';
-	import { efiechSurRoute } from '$lib/efiech/emplacaments.js';
-	import { edicion } from '$lib/edicion/edicion.svelte.js';
+	import { confetisSurPage } from '#lib/flotants/pages.js';
+	import Flotants from '#lib/flotants/Flotants.svelte';
+	import { efiechSurRoute } from '#lib/efiech/emplacaments.js';
+	import { edicion } from '#lib/edicion/edicion.svelte.js';
 	// le signal des couleurs (2026-11-13) : les pages suivent quand Romain change une couleur depuis le site
-	import '$lib/colors/senhal.svelte.js';
-	import { adminSabut } from '$lib/adminStore';
+	import '#lib/colors/senhal.svelte.js';
+	import { adminSabut } from '#lib/adminStore.js';
 
 	let { children } = $props();
 
@@ -118,7 +118,7 @@
 {/if}
 
 {#if efiech}
-	{#await import('$lib/efiech/EfiechsSite.svelte') then m}
+	{#await import('#lib/efiech/EfiechsSite.svelte') then m}
 		<m.default />
 	{/await}
 {/if}
@@ -134,7 +134,7 @@
 <Edicion />
 
 {#if talhièr}
-	{#await import('$lib/talhier/Talhier.svelte') then m}
+	{#await import('#lib/talhier/Talhier.svelte') then m}
 		<m.default />
 	{/await}
 {/if}

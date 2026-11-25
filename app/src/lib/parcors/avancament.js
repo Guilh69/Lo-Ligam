@@ -5,8 +5,8 @@
 // lo-ligam-<id du module>-progress). La ligne « module-1 » et la clé
 // lo-ligam-module-1-done de l'ancien essai ne servent plus.
 import { get } from 'svelte/store';
-import { supabase } from '$lib/supabaseClient';
-import { session, authReady } from '$lib/authStore';
+import { supabase } from '#lib/supabaseClient.js';
+import { session, authReady } from '#lib/authStore.js';
 import { comptarBits } from './parcors.js';
 
 async function sesilhaPrèsta() {

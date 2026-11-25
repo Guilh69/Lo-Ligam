@@ -6,8 +6,8 @@
 // des modules (rien n'est recopié) et décrit la bibliothèque.
 // Occitan des libellés passé par l'API de lo Congrès le 2026-11-16 : bastir,
 // matèria, modalitat, leiçon, apondre, legir, jogar, veire, bibliotèca.
-import { moduls, ordre } from '$lib/lesson/moduls/index.js';
-import { colorUnitat, tintaPer } from '$lib/parcors/colors.js';
+import { moduls, ordre } from '#lib/lesson/moduls/index.js';
+import { colorUnitat, tintaPer } from '#lib/parcors/colors.js';
 
 /**
  * Le cadre du nombre de mots, tiré de la recherche (synthèse du 2026-11-16) :

@@ -1,5 +1,5 @@
 <script>
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 
 	// Trois rangées d'illustrations qui défilent lentement en fond, floutées,
 	// avec une « loupe » nette qui suit la souris sur la vignette survolée.

@@ -3,7 +3,7 @@
 	// plutôt dans apprendre la langue ») : les notions dans l'ordre où l'élève
 	// les rencontre dans le parcours, pas dans celui d'un livre ; sous chaque
 	// notion, ses fiches en cases de couleur. Une fiche ajoutée dans
-	// $lib/gramatica/fichas/ apparaît ici d'elle-même (mode d'emploi :
+	// #lib/gramatica/fichas/ apparaît ici d'elle-même (mode d'emploi :
 	// LEGIR-ME.md).
 	// Depuis le 2026-11-04, chaque case prend la couleur de son thème, et le
 	// filtre du haut ne garde qu'un thème, toujours dans l'ordre du parcours
@@ -19,15 +19,15 @@
 	// « FLIP » : on mesure avant, on change, on mesure après, on anime l'écart).
 	// Moins de 1 s en tout ; avec « moins d'animation », le filtre est immédiat.
 	import { onMount, tick } from 'svelte';
-	import { replaceState } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import PaginaSimpla from '$lib/components/PaginaSimpla.svelte';
-	import Bulla from '$lib/components/Bulla.svelte';
-	import { PARTS, TEMAS, fichasDe } from '$lib/gramatica/index.js';
-	import { FICHAS_LENGAS, IU } from '$lib/gramatica/lengas.js';
-	import { marcar } from '$lib/gramatica/marcar.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
+	import PaginaSimpla from '#lib/components/PaginaSimpla.svelte';
+	import Bulla from '#lib/components/Bulla.svelte';
+	import { PARTS, TEMAS, fichasDe } from '#lib/gramatica/index.js';
+	import { FICHAS_LENGAS, IU } from '#lib/gramatica/lengas.js';
+	import { marcar } from '#lib/gramatica/marcar.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '#lib/edicion/edicion.svelte.js';
 
 	// Le titre et la phrase du haut sont modifiables sur place (2026-11-15, page « gramatica »)
 	let { data } = $props();
@@ -36,7 +36,7 @@
 
 	// Les langues (Romain, 2026-11-04) : tout suit la langue choisie ; en
 	// occitan, la bulle de survol donne des exemples ; dans une autre langue,
-	// le nom occitan (et ses exemples). Textes : $lib/gramatica/lengas.js et
+	// le nom occitan (et ses exemples). Textes : #lib/gramatica/lengas.js et
 	// capitols.js.
 	let lang = $derived(langStore.current);
 	let esOc = $derived(lang === 'oc');
@@ -80,7 +80,7 @@
 		if (nou === filtre) return;
 		if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
 			filtre = nou;
-			replaceState(url, {});
+			goto(url, { shallow: true, replace: true, state: {} });
 			return;
 		}
 		enCors = true;
@@ -121,7 +121,7 @@
 		// 3. la liste change ; 4. ce qui reste glisse de son ancienne place,
 		// ce qui arrive apparaît, l'un après l'autre
 		filtre = nou;
-		replaceState(url, {});
+		goto(url, { shallow: true, replace: true, state: {} });
 		await tick();
 		let arrivee = 0;
 		for (const el of blocs()) {

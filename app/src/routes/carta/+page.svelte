@@ -1,27 +1,27 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import { onMount, tick } from 'svelte';
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { fly } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import CartaOccitania from '$lib/components/CartaOccitania.svelte';
-	import RailJaces from '$lib/components/RailJaces.svelte';
-	import CargamentCarta from '$lib/components/CargamentCarta.svelte';
-	import Guida from '$lib/components/Guida.svelte';
-	import LegendaLocutors from '$lib/components/LegendaLocutors.svelte';
-	import InfoIcon from '$lib/components/InfoIcon.svelte';
-	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { estatCarta, ecranCarta } from '$lib/carta/estatCarta.svelte.js';
-	import { sonAcabat } from '$lib/carta/sons.js';
-	import { LENGAS } from '$lib/carta/lengas.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import { cargarColas } from '$lib/carta/colasBasa.js';
-	import { esAdmin } from '$lib/adminStore';
-	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { CATALOGUE, fusionarCatalogue, JACES_FONS } from '$lib/carta/catalogue.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import CartaOccitania from '#lib/components/CartaOccitania.svelte';
+	import RailJaces from '#lib/components/RailJaces.svelte';
+	import CargamentCarta from '#lib/components/CargamentCarta.svelte';
+	import Guida from '#lib/components/Guida.svelte';
+	import LegendaLocutors from '#lib/components/LegendaLocutors.svelte';
+	import InfoIcon from '#lib/components/InfoIcon.svelte';
+	import { tampaDefòra } from '#lib/tampaDefora.js';
+	import { estatCarta, ecranCarta } from '#lib/carta/estatCarta.svelte.js';
+	import { sonAcabat } from '#lib/carta/sons.js';
+	import { LENGAS } from '#lib/carta/lengas.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import { cargarColas } from '#lib/carta/colasBasa.js';
+	import { esAdmin } from '#lib/adminStore.js';
+	import { ambianca } from '#lib/stores/ambianca.svelte.js';
+	import { CATALOGUE, fusionarCatalogue, JACES_FONS } from '#lib/carta/catalogue.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('carta', data.elements);
@@ -294,7 +294,7 @@
 
 	let showInfo = $state(false);
 	// la pancarta se tampa d'un clic defòra o amb Escapar (principi del site,
-	// $lib/tampaDefora.js)
+	// #lib/tampaDefora.js)
 	$effect(() => {
 		if (!showInfo) return;
 		const lèva = tampaDefòra((t) => !!t.closest('.info-card, .ed-panel, .ed-barra'), () => (showInfo = false));

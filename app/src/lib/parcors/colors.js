@@ -3,8 +3,8 @@
 // logique des cases et des couleurs voisines »). Le texte d'une case est
 // crème ou encre, celui des deux qui contraste le plus (WCAG, 4,5:1 au moins
 // pour toutes les teintes ci-dessous, mesuré le 2026-11-02).
-import { PALETAS } from '$lib/apren/teulas.js';
-import { quandCambia } from '$lib/styles/palette.js';
+import { PALETAS } from '#lib/apren/teulas.js';
+import { quandCambia } from '#lib/styles/palette.js';
 
 export const CREMA = '#fbf1e1';
 export const TINTA = '#2a1a10';

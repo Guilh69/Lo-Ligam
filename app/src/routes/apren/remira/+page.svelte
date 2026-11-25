@@ -14,20 +14,20 @@
 	// se chargent que si on les demande ; le son est fabriqué dans le navigateur
 	// (aucun fichier audio) et ne démarre que si on le demande.
 	import { onMount } from 'svelte';
-	import { tria, lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
-	import Icona from '$lib/components/Icona.svelte';
-	import { iniciar, txt, ligam, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import MencionIA from '$lib/components/MencionIA.svelte';
-	import { SCENAS, GROPS, QUASERNET, motsDelQuasernet, fotoCamin, fotoSrcset, fotoSizes } from '$lib/plueja/scenas.js';
-	import { crearSonPlueja } from '$lib/plueja/sonPlueja.js';
-	import Polsa from '$lib/plueja/Polsa.svelte';
-	import Paisatges from '$lib/paisatges/Paisatges.svelte';
-	import { TEMAS, deTema } from '$lib/paisatges/paisatges.js';
-	import { GARDATS } from '$lib/paisatges/releu.js';
-	import { dev } from '$app/environment';
-	import { carnet, demarrerCarnet } from '$lib/carnet/carnet.svelte.js';
-	import { aRevoir } from '$lib/carnet/regles.js';
+	import { tria, lang as langStore, LENGAS, SEGONDAS } from '#lib/stores/lang.svelte.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import { iniciar, txt, ligam, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import MencionIA from '#lib/components/MencionIA.svelte';
+	import { SCENAS, GROPS, QUASERNET, motsDelQuasernet, fotoCamin, fotoSrcset, fotoSizes } from '#lib/plueja/scenas.js';
+	import { crearSonPlueja } from '#lib/plueja/sonPlueja.js';
+	import Polsa from '#lib/plueja/Polsa.svelte';
+	import Paisatges from '#lib/paisatges/Paisatges.svelte';
+	import { TEMAS, deTema } from '#lib/paisatges/paisatges.js';
+	import { GARDATS } from '#lib/paisatges/releu.js';
+	import { dev } from '$app/env';
+	import { carnet, demarrerCarnet } from '#lib/carnet/carnet.svelte.js';
+	import { aRevoir } from '#lib/carnet/regles.js';
 
 	// Le titre et le lien de retour sont modifiables sur place (2026-11-15, page « remira »)
 	let { data } = $props();

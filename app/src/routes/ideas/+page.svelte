@@ -4,14 +4,14 @@
 	// réponse de Romain, et peut les supprimer. Rien n'est public. Ce qui
 	// protège, ce sont les règles d'accès de la base (supabase/supabase-ideas.sql,
 	// vérifiées par supabase/verificacion-ideas.sql), pas cette page.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { session, authReady } from '$lib/authStore';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { edicion, iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import { segments } from '$lib/edicion/marcat.js';
-	import Retour from '$lib/components/Retour.svelte';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { session, authReady } from '#lib/authStore.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { edicion, iniciar, txt, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import { segments } from '#lib/edicion/marcat.js';
+	import Retour from '#lib/components/Retour.svelte';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('ideas', data.elements);

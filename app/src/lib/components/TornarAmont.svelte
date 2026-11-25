@@ -2,7 +2,7 @@
 	// Bouton « remonter en haut » (cadre commun, 2026-10-07, demande Romain) :
 	// un chevron sans tige, en bas à droite, visible dès qu'on a défilé d'un
 	// écran. Défilement doux, sauf si « réduire les animations » est activé.
-	import { tria } from '$lib/stores/lang.svelte.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
 
 	let vist = $state(false);
 	let tèxt = $derived(

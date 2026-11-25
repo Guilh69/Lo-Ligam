@@ -1,5 +1,5 @@
 <script>
-	import AdminTete from '$lib/talhier/AdminTete.svelte';
+	import AdminTete from '#lib/talhier/AdminTete.svelte';
 	// Laboratòri : le registre des choix de design (2026-11-07, refait le même jour : Romain
 	// trouvait la première version « très mal organisée : on n'apprend pas la hiérarchie des
 	// éléments, les choses à faire, les options »). Trois idées :
@@ -8,15 +8,15 @@
 	//  2. les choses à faire : « À faire maintenant », les choix qui ne sont plus bloqués,
 	//     classés par le nombre de choix qu'ils débloquent ;
 	//  3. les options : toujours visibles en cartes, jamais cachées dans un menu replié.
-	// Données : $lib/labo/registre.js et registre-options.js. Séance 1 : lecture ; séance 2 :
+	// Données : #lib/labo/registre.js et registre-options.js. Séance 1 : lecture ; séance 2 :
 	// inspirations et validation depuis cette page, en base.
 	// Les liens « téléphone et tablette » ne s'affichent qu'en développement : l'aperçu est un
 	// fichier de static/ retiré au build (le vrai site interdit les cadres).
 	import { onMount, tick } from 'svelte';
-	import { dev } from '$app/environment';
-	import { replaceState } from '$app/navigation';
-	import { ETAGES, FAMILLES, STATUTS, OUVERTS, TOUS, compter, choix, bloquants, debloque, afaire } from '$lib/labo/registre.js';
-	import { ESSAIS, ESSAIS_CACHES, CODE_MORT } from '$lib/labo/registre-essais.js';
+	import { dev } from '$app/env';
+	import { goto } from '$app/navigation';
+	import { ETAGES, FAMILLES, STATUTS, OUVERTS, TOUS, compter, choix, bloquants, debloque, afaire } from '#lib/labo/registre.js';
+	import { ESSAIS, ESSAIS_CACHES, CODE_MORT } from '#lib/labo/registre-essais.js';
 
 	const n = compter();
 	const archives = TOUS.filter((c) => c.statut === 'archive');
@@ -66,7 +66,7 @@
 	function majAdresse(clau) {
 		const u = new URL(location.href);
 		u.hash = clau ?? '';
-		replaceState(u, {});
+		goto(u, { shallow: true, replace: true, state: {} });
 	}
 	async function ouvrir(clau) {
 		selection = clau;

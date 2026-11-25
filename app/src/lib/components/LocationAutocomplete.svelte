@@ -1,5 +1,5 @@
 <script>
-	import { occitanPlaces } from '$lib/data/occitanPlaces';
+	import { occitanPlaces } from '#lib/data/occitanPlaces.js';
 
 	let { value = $bindable('') } = $props();
 

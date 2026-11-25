@@ -1,10 +1,10 @@
 <script>
 	// Bastir : une unité et ses quatre leçons, en cases des nuances de sa couleur.
-	import TeulaBastir from '$lib/bastir/TeulaBastir.svelte';
-	import { UNITATS_A1, colorsUnitat, leiçon } from '$lib/bastir/bastir.js';
-	import { nuanças } from '$lib/parcors/colors.js';
-	import { cargarBrolhons } from '$lib/bastir/brolhon.js';
-	import { simulacion } from '$lib/talhier/notas.svelte.js';
+	import TeulaBastir from '#lib/bastir/TeulaBastir.svelte';
+	import { UNITATS_A1, colorsUnitat, leiçon } from '#lib/bastir/bastir.js';
+	import { nuanças } from '#lib/parcors/colors.js';
+	import { cargarBrolhons } from '#lib/bastir/brolhon.js';
+	import { simulacion } from '#lib/talhier/notas.svelte.js';
 	import { onMount } from 'svelte';
 
 	let { data } = $props();

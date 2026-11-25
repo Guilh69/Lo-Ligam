@@ -10,7 +10,7 @@
 	import { prefersReducedMotion } from 'svelte/motion';
 	import Ecran from './Ecran.svelte';
 	import { barrejarTot } from './barrejar.js';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { parelhs, avança = 0.6, oncontunhar } = $props();
 

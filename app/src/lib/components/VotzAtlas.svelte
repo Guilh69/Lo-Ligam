@@ -6,8 +6,8 @@
 	// la voix voisine à écouter ensuite. Les sons sont lus sur le site de
 	// l'Atlas. Un clic ailleurs ferme (principe du site), un autre point change
 	// de voix sans fermer.
-	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { ATLAS_LISN, sonDe, frasas, frasaAra, vesina, minutas, sonSol } from '$lib/carta/votz.js';
+	import { tampaDefòra } from '#lib/tampaDefora.js';
+	import { ATLAS_LISN, sonDe, frasas, frasaAra, vesina, minutas, sonSol } from '#lib/carta/votz.js';
 
 	let {
 		lang = 'oc',

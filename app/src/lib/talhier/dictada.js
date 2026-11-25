@@ -4,7 +4,7 @@
 // reconnaissance vocale du navigateur, en français : elle passe par le service
 // de l'éditeur du navigateur (Google pour Chrome, Microsoft pour Edge, Apple
 // pour Safari) ; Firefox ne l'a pas, le bouton n'apparaît alors pas.
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 
 const Reconeissença = browser ? (window.SpeechRecognition ?? window.webkitSpeechRecognition) : null;
 export const dictadaPossibla = !!Reconeissença;

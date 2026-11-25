@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { UNITATS, copar, letrasDe } from './serp-mots.js';
 import { novelaPartida, virar, pas, posicions, letraAttesa, escupir, coa, DIRS } from './serp.js';
-import { moduls, ordre } from '$lib/lesson/moduls/index.js';
+import { moduls, ordre } from '#lib/lesson/moduls/index.js';
 
 // Les choses des encadrés « À retenir » des unités 1 et 2, par id.
 function chosesUnitat(u) {

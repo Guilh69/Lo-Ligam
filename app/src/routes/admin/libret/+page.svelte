@@ -1,7 +1,7 @@
 <script>
 	// Livret technique : le plan du projet en dix briques, la fiche de la brique touchée en dessous.
-	// Données : $lib/libret/fichas.js (texte brut). Maquette validée par Romain, 2026-11-13.
-	import { FICHAS } from '$lib/libret/fichas.js';
+	// Données : #lib/libret/fichas.js (texte brut). Maquette validée par Romain, 2026-11-13.
+	import { FICHAS } from '#lib/libret/fichas.js';
 
 	const CLE = 'livret-brique';
 	let choix = $state('site');

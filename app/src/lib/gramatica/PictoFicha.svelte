@@ -2,7 +2,7 @@
 	// Les pictogrammes des fiches : ceux des cases du site (Pictograma : forum,
 	// wiki, grops…) et quelques-uns dessinés pour la grammaire, au même trait.
 	// Toujours décoratifs : le mot est écrit à côté.
-	import Pictograma from '$lib/apren/Pictograma.svelte';
+	import Pictograma from '#lib/apren/Pictograma.svelte';
 	import { PICTOS_PROPRES as PROPRES } from './listas.js';
 
 	let { nom, size = '100%' } = $props();

@@ -6,15 +6,15 @@
 	// Garden). Le direct se joue dans la page, seulement au clic, avec l'avis
 	// écrit à côté ; « Arrestar » coupe le flux (rien ne se télécharge en
 	// fond). Un bandeau en bas dit ce qui joue (comme Online Radio Box).
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { PALETAS } from '$lib/apren/teulas.js';
-	import { RADIOS } from '$lib/data/medias.js';
-	import { DIALECTES, LARG, NAUT, proj } from '$lib/data/carta-dialectes.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import Icona from '#lib/components/Icona.svelte';
+	import { PALETAS } from '#lib/apren/teulas.js';
+	import { RADIOS } from '#lib/data/medias.js';
+	import { DIALECTES, LARG, NAUT, proj } from '#lib/data/carta-dialectes.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('radios', data.elements);

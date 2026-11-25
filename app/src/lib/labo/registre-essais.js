@@ -31,7 +31,7 @@ export const ESSAIS = [
 		etat: 'actif',
 		pret: 'non',
 		raison: 'Romain (17-11) : l’interface de chaque exercice dans la charte, déclinée par typologie. Cadre commun (avancement, consigne, média, action, retour expliqué, un bouton) et cinq écrans vivants : écouter et répéter, dialogue en bulles, dialogue à trous, vrai ou faux, choix multiple. Deuxième version le même jour, avec les pièces de papier du site : deux têtes à comparer, « Papièr » et « Teula ». Le 18-11, Romain garde « Teula » (tête en aplat, à la couleur de l’unité) : « Papièr » est retirée, la page ne garde que la réglette des unités. Lot 2 le 18-11, huit écrans de plus dans le même cadre : remettre dans l’ordre (mots, puis lettres), relier les paires, écrire la réponse, carte de mot, texte à lire, bilan, audace.',
-		suppression: 'Quand les gabarits sont branchés dans Bastir et dans le moteur des leçons : on retire le dossier routes/ensag/gabarits et « /ensag/gabarits » des deux listes ARMONIZADAS ; les composants de $lib/gabarits restent.'
+		suppression: 'Quand les gabarits sont branchés dans Bastir et dans le moteur des leçons : on retire le dossier routes/ensag/gabarits et « /ensag/gabarits » des deux listes ARMONIZADAS ; les composants de #lib/gabarits restent.'
 	},
 	{
 		chemin: '/ensag/blanc',

@@ -1,9 +1,9 @@
 import { error } from '@sveltejs/kit';
-import { ficha } from '$lib/cultura/index.js';
-import { encart } from '$lib/cultura/encart.server.js';
-import { dessenh } from '$lib/cultura/dessenhs.server.js';
-import { foto, credit, extern, amples, srcset } from '$lib/cultura/imatges.js';
-import { PAISATGES } from '$lib/paisatges/paisatges.js';
+import { ficha } from '#lib/cultura/index.js';
+import { encart } from '#lib/cultura/encart.server.js';
+import { dessenh } from '#lib/cultura/dessenhs.server.js';
+import { foto, credit, extern, amples, srcset } from '#lib/cultura/imatges.js';
+import { PAISATGES } from '#lib/paisatges/paisatges.js';
 
 // Une fiche de Cultura : l'encart de sa leçon, lu côté serveur, avec sa photo
 // en grand (celle des paysages, déjà en ligne) ou son dessin au trait. Une

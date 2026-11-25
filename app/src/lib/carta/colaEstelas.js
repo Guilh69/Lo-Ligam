@@ -13,8 +13,8 @@
 // (scintillement, survol), recalé à chaque fin de déplacement, et mis à
 // l'échelle par transformation CSS pendant l'animation de zoom (même méthode
 // que le moteur de rendu canevas de Leaflet).
-import { LUOCS, RIUS, COSTA, dialDe, rencDe, SOTDIALECTES, SOBRENOMS } from '$lib/acuelh/carta-estelas.js';
-import { P, BRANCAS, ARCS } from '$lib/acuelh/simbol.js';
+import { LUOCS, RIUS, COSTA, dialDe, rencDe, SOTDIALECTES, SOBRENOMS } from '#lib/acuelh/carta-estelas.js';
+import { P, BRANCAS, ARCS } from '#lib/acuelh/simbol.js';
 import { nomTerritori, sotaTerritori } from './territoris.js';
 import { proj0, projectar, projPonch } from './projeccion.js';
 import { Z, KM, zDès, nivèlsDezoom, aDetalh } from './escalas.js';

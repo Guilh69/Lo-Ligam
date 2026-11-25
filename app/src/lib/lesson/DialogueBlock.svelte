@@ -1,14 +1,14 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	// Le dialogue d'entrée (Escota) : scènes, répliques, glossaire « ça sonne
 	// comme ». Quand un fichier audio existe (scene.audio) : lecture/pause de
 	// la scène entière, vitesse normale ou lente, et si une réplique porte ses
 	// repères temporels (t: [début, fin] en secondes), un toucher la joue et
 	// affiche sa prononciation en même temps.
 	import { onDestroy } from 'svelte';
-	import { rich, insecable } from '$lib/lesson/rich.js';
-	import { sonDe } from '$lib/voix/phrases.js';
-	import { jouer, prendre, liberer } from '$lib/voix/lecteur.js';
+	import { rich, insecable } from '#lib/lesson/rich.js';
+	import { sonDe } from '#lib/voix/phrases.js';
+	import { jouer, prendre, liberer } from '#lib/voix/lecteur.js';
 
 	// modulId : clé du module (ex. '1-1'), pour retrouver le son de chaque réplique.
 	let { block, modulId = '' } = $props();

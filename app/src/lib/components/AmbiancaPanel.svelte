@@ -2,9 +2,9 @@
 	// Bouton « soleil » + panneau de réglages d'ambiance (cadre commun,
 	// 2026-10-07, repris de l'esbòs de nuèch) : thème, couleurs adaptées au
 	// daltonisme, fond animé, fond léger. Les réglages vivent dans stores/ambianca.
-	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { tampaDefòra } from '$lib/tampaDefora.js';
+	import { ambianca } from '#lib/stores/ambianca.svelte.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { tampaDefòra } from '#lib/tampaDefora.js';
 
 	let lang = $derived(langStore.current);
 	let dobèrt = $state(false);
@@ -96,7 +96,7 @@
 	const ORDRE_FONS = [0, 1, 2, 3];
 
 	// un clic defòra tampa ; sus la carta, tampa sonque (principi del site,
-	// $lib/tampaDefora.js : abans, lo clic causissiá tanben un dialècte)
+	// #lib/tampaDefora.js : abans, lo clic causissiá tanben un dialècte)
 	$effect(() => {
 		if (!dobèrt) return;
 		const lèva = tampaDefòra((t) => !!(panel?.contains(t) || boton?.contains(t)), () => (dobèrt = false));

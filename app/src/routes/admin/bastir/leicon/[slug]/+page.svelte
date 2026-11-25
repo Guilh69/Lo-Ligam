@@ -3,11 +3,11 @@
 	// lu tel quel) ; à droite la place de construire : le thème, le nombre de mots
 	// (cadre tiré de la recherche), la suite des modalités choisies dans la
 	// bibliothèque. Chaque changement est rangé en brouillon dans la base (temps 2,
-	// $lib/bastir/brolhon.js), une seconde après le dernier geste ; rien ne se
+	// #lib/bastir/brolhon.js), une seconde après le dernier geste ; rien ne se
 	// publie. En simulation (développement sans compte), rien n'est rangé.
-	import { UNITATS_A1, MODALITATS, MODALITAT, FORQUILHA, SOURCES_FORQUILHA, estatModalitat, leiçon, unitatDe, colorsUnitat } from '$lib/bastir/bastir.js';
-	import { cargarBrolhon, gardarBrolhon } from '$lib/bastir/brolhon.js';
-	import { simulacion } from '$lib/talhier/notas.svelte.js';
+	import { UNITATS_A1, MODALITATS, MODALITAT, FORQUILHA, SOURCES_FORQUILHA, estatModalitat, leiçon, unitatDe, colorsUnitat } from '#lib/bastir/bastir.js';
+	import { cargarBrolhon, gardarBrolhon } from '#lib/bastir/brolhon.js';
+	import { simulacion } from '#lib/talhier/notas.svelte.js';
 
 	let { data } = $props();
 	const simular = simulacion();

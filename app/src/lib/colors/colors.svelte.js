@@ -14,9 +14,9 @@
 // ne télécharge que le signal (senhal.svelte.js), qui fait suivre les pages
 // quand la palette change.
 // Détail : revisions/2026-11-13-colors-sus-plaça.md
-import { browser, dev } from '$app/environment';
-import { supabase } from '$lib/supabaseClient';
-import { fixarColors, hexColor } from '$lib/styles/palette.js';
+import { browser, dev } from '$app/env';
+import { supabase } from '#lib/supabaseClient.js';
+import { fixarColors, hexColor } from '#lib/styles/palette.js';
 import { senhal } from './senhal.svelte.js';
 import { PAGINA, PER_ID, clauDe, surchargesDe, netejar, cssColors, valors } from './registre.js';
 

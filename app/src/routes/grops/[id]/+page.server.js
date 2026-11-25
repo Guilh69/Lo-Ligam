@@ -2,7 +2,7 @@
 // son nom et son nombre de membres (publics) pour l'aperçu du lien dans les
 // messageries et réseaux ; les messages, eux, se lisent dans le navigateur.
 import { error } from '@sveltejs/kit';
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '#lib/supabaseClient.js';
 
 export async function load({ params }) {
 	const [g, c] = await Promise.all([

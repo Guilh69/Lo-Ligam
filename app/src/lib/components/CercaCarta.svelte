@@ -1,12 +1,12 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	// Recherche d'un territoire sur la carte (demande de Romain, 2026-10-07) :
 	// un lieu (nom occitan, ou français pour les villes principales, sans tenir
 	// compte des accents), un département ou une région. Tout est cherché dans
 	// le site lui-même : aucun service extérieur, rien ne sort de la page.
-	import { LUOCS, dialDe, rencDe } from '$lib/acuelh/carta-estelas.js';
-	import { NOMS_FRANCES } from '$lib/carta/nomsFrances.js';
-	import { TERRITORIS, NOMS_OC_TER, nomTerritori, sotaTerritori } from '$lib/carta/territoris.js';
+	import { LUOCS, dialDe, rencDe } from '#lib/acuelh/carta-estelas.js';
+	import { NOMS_FRANCES } from '#lib/carta/nomsFrances.js';
+	import { TERRITORIS, NOMS_OC_TER, nomTerritori, sotaTerritori } from '#lib/carta/territoris.js';
 
 	let { lang = 'oc', onCausir = () => {} } = $props();
 

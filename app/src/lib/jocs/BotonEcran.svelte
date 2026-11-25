@@ -7,7 +7,7 @@
 	// la fenêtre. Échap (sortie du plein écran par le navigateur) ou « Sortir »
 	// ramènent la page.
 	import { onMount } from 'svelte';
-	import { tria } from '$lib/stores/lang.svelte.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
 
 	let { actiu = $bindable(false), cibla } = $props();
 

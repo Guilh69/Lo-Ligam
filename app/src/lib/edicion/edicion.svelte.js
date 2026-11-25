@@ -4,14 +4,14 @@
 // un brouillon (table pagina_elements, estat = 'brolhon', écrit aussitôt dans
 // la base, visible de lui seul) ; « Publicar » le rend public, « Anullar » le
 // jette. Le public ne lit que l'état publié (politiques RLS), rendu côté
-// serveur avec le filet de secours de $lib/data/elements-filet.json.
+// serveur avec le filet de secours de #lib/data/elements-filet.json.
 //
 // Une page se branche avec iniciar(pagina, lignesPubliées) ; elle lit ses
 // éléments avec txt(clau), ligam(clau), imatge(clau), lista(clau) et pose
 // l'action `editar` (editar.svelte.js) sur chaque élément modifiable.
-import { browser } from '$app/environment';
-import { supabase } from '$lib/supabaseClient';
-import { session, authReady } from '$lib/authStore';
+import { browser } from '$app/env';
+import { supabase } from '#lib/supabaseClient.js';
+import { session, authReady } from '#lib/authStore.js';
 import { get } from 'svelte/store';
 
 const COLOMNAS = 'clau,estat,pagina,tipe,lista,ordre,oc,fr,es,en,ca,ligam,imatge,visible,suprimit';

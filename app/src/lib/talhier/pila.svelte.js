@@ -3,7 +3,7 @@
 // base. Les validations sont dans la table validacions (verrous :
 // supabase/supabase-validacions.sql) : l'administrateur seul les lit et les
 // écrit. Une validation garde l'empreinte du texte validé (empremtas.js).
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '#lib/supabaseClient.js';
 import { notas, cargarNotas, simulacion } from './notas.svelte.js';
 import { tèxteElement, tèxteFicha, empremta } from './empremtas.js';
 import { fargarCartas } from './pila.js';
@@ -50,7 +50,7 @@ async function cargarElements() {
 
 /** les fiches de grammaire pas encore marquées « validada » dans le code */
 async function cargarFichas() {
-	const { FICHAS } = await import('$lib/gramatica/index.js');
+	const { FICHAS } = await import('#lib/gramatica/index.js');
 	return Promise.all(FICHAS.filter((f) => !f.validada).map(async (f) => ({ f, empremta: await empremta(tèxteFicha(f)) })));
 }
 
@@ -126,7 +126,7 @@ export function gardarMaiTard(ids) {
 // --- mode d'essai (« ?edicion=simular », en développement seulement) -------
 async function exemplesElements() {
 	if (!import.meta.env.DEV) return [];
-	const { default: filet } = await import('$lib/data/elements-filet.json');
+	const { default: filet } = await import('#lib/data/elements-filet.json');
 	const lignes = [];
 	for (const [pagina, v] of Object.entries(filet)) {
 		if (pagina.startsWith('_')) continue;

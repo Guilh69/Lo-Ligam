@@ -5,9 +5,9 @@
 	// verrous réels sont dans la base (public.decidir_perfil, réservé à
 	// l'administration ; supabase/supabase-perfils.sql).
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { DIALECTES, NIVELS, CERCA, AGRADA, nomDe } from '$lib/grops/grops.svelte.js';
-	import { luòcAfichat } from '$lib/comunas.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { DIALECTES, NIVELS, CERCA, AGRADA, nomDe } from '#lib/grops/grops.svelte.js';
+	import { luòcAfichat } from '#lib/comunas.js';
 
 	let perfils = $state([]);
 	let cargant = $state(true);

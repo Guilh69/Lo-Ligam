@@ -6,7 +6,7 @@
 	import { prefersReducedMotion } from 'svelte/motion';
 	import Ecran from './Ecran.svelte';
 	import Causidas from './Causidas.svelte';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let {
 		foto = null,

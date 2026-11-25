@@ -15,7 +15,7 @@
 	// Les anciennes affiches de paysage (Afica.svelte) restent dans le code, et
 	// les tableaux peints dans design-stock/pinturas, pour un autre usage.
 	import { onMount } from 'svelte';
-	import { TEINTES } from '$lib/styles/palette.js';
+	import { TEINTES } from '#lib/styles/palette.js';
 
 	// Le serpent en couleurs (Romain, 2026-11-07 : « le serpent est trop blanc ») : des tuiles aux
 	// couleurs de la palette, [fond, lettre], dans l'ordre du serpent ; la tête reprend la première

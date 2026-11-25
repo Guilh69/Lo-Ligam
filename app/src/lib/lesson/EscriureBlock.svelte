@@ -6,8 +6,8 @@
 	// block.recap : à la fin, les phrases de l'élève sont rassemblées (sa
 	// présentation, sa liste…), à recopier ou à dire à voix haute.
 	import { tick } from 'svelte';
-	import { rich } from '$lib/lesson/rich.js';
-	import { corregir, remarca, LETRAS } from '$lib/lesson/escriure.js';
+	import { rich } from '#lib/lesson/rich.js';
+	import { corregir, remarca, LETRAS } from '#lib/lesson/escriure.js';
 
 	let { block, onCorrect = () => {}, onComplete = () => {}, onResult = () => {} } = $props();
 

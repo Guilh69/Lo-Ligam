@@ -4,10 +4,10 @@
 	// affiches et la scène, en cases dans les verts. Avant, une longue page
 	// avec la porte du café et la galerie d'affiches (partie sur
 	// /obras/afichas). Les textes et les cases se modifient sur la page.
-	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
-	import { PLAN } from '$lib/data/planSite.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar } from '$lib/edicion/edicion.svelte.js';
+	import PaginaTeulas from '#lib/apren/PaginaTeulas.svelte';
+	import { PLAN } from '#lib/data/planSite.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar } from '#lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('obras', data.elements);

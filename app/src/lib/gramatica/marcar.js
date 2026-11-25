@@ -1,7 +1,7 @@
 // Le petit balisage des textes des fiches de grammaire (mode d'emploi :
 // LEGIR-ME.md, à côté). Tout le reste est échappé : une fiche ne peut pas
 // glisser de HTML. On n'embarque pas de moteur Markdown (sobriété).
-import { insecable } from '$lib/lesson/rich.js';
+import { insecable } from '#lib/lesson/rich.js';
 
 const echapar = (s) =>
 	String(s ?? '')

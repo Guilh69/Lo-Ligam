@@ -3,7 +3,7 @@
 // En mode édition : l'élément se surligne au survol, un toucher ouvre le
 // panneau (sans suivre le lien), l'élément caché reste là, estompé.
 import { edicion, element, causir } from './edicion.svelte.js';
-import { inscrireElement } from '$lib/efiech/efiech.js';
+import { inscrireElement } from '#lib/efiech/efiech.js';
 
 export function editar(node, clau) {
 	// (la clé peut changer, par exemple quand une liste se réordonne)

@@ -4,10 +4,10 @@
 	// occitan, ce à quoi pourrait ressembler l'espace public avec de l'occitan… créer un imaginaire ». Ton du 22-10 :
 	// montrer par les faits, jamais militant au sens pesant. Cases : la Constitution (en ligne) et les rues
 	// (« Aviat »). Occitan nouveau à valider par Romain.
-	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
-	import { PLAN } from '$lib/data/planSite.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar } from '$lib/edicion/edicion.svelte.js';
+	import PaginaTeulas from '#lib/apren/PaginaTeulas.svelte';
+	import { PLAN } from '#lib/data/planSite.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar } from '#lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('imagina', data.elements);

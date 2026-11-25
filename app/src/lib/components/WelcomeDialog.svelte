@@ -1,8 +1,8 @@
 <script>
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { fade, scale } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
-	import { families } from '$lib/data/siteSections';
+	import { families } from '#lib/data/siteSections.js';
 
 	// Présentation au premier passage : un visiteur qui arrive ne sait pas
 	// ce qu'est Lo Ligam ni ce qu'il y trouvera. Montré une seule fois,

@@ -2,7 +2,7 @@
 	// Choix d'une commune par autocomplétion (API Adresse, communes seulement).
 	// On ne garde que le centre de la commune renvoyé par l'API, arrondi à deux
 	// décimales (environ 1 km) : jamais une position GPS ni une adresse.
-	// Même principe que $lib/components/LocationAutocomplete.svelte, mais ici on
+	// Même principe que #lib/components/LocationAutocomplete.svelte, mais ici on
 	// a besoin des coordonnées du centre, que ce composant-là ne renvoie pas.
 	let { value = $bindable(''), onchoose, id, placeholder = 'Commencer à taper le nom' } = $props();
 

@@ -6,14 +6,14 @@
 	// Même fond que le sommaire. Depuis le 2026-11-06, la case du titre porte
 	// la photo de la fiche passée dans cette couleur, comme sur le sommaire
 	// (ou son dessin au trait, ou la croix du logo).
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Bulla from '$lib/components/Bulla.svelte';
-	import Crotz from '$lib/components/Crotz.svelte';
-	import { rich } from '$lib/lesson/rich.js';
-	import { FICHAS, IU, ficha as trobar, tema as temaDe, nomModul } from '$lib/cultura/index.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import MencionIA from '$lib/components/MencionIA.svelte';
-	import Retour from '$lib/components/Retour.svelte';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Bulla from '#lib/components/Bulla.svelte';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import { rich } from '#lib/lesson/rich.js';
+	import { FICHAS, IU, ficha as trobar, tema as temaDe, nomModul } from '#lib/cultura/index.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import MencionIA from '#lib/components/MencionIA.svelte';
+	import Retour from '#lib/components/Retour.svelte';
 
 	let { data } = $props();
 	let f = $derived(trobar(data.id));

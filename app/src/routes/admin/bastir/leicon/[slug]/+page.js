@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { leiçon } from '$lib/bastir/bastir.js';
+import { leiçon } from '#lib/bastir/bastir.js';
 
 /** une leçon du registre des modules, sinon 404 */
 export function load({ params }) {

@@ -1,5 +1,5 @@
 <script>
-	import iconeMas from '$lib/assets/icone-mas.webp';
+	import iconeMas from '#lib/assets/icone-mas.webp';
 
 	let { size = 22 } = $props();
 </script>

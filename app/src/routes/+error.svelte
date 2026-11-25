@@ -3,8 +3,8 @@
 	// montrait la page par défaut de SvelteKit, en anglais et sans mise en
 	// page). Bilingue comme le reste ; occitan à valider par Romain.
 	import { page } from '$app/state';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
 
 	let lang = $derived(langStore.current);
 	let introbable = $derived(page.status === 404);

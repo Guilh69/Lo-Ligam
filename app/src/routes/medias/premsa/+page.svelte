@@ -4,15 +4,15 @@
 	// rythme) ; Romain a choisi le kiosque : les couvertures sur leurs rayons,
 	// comme dans les kiosques numériques. Les couvertures sont dessinées en
 	// lettres (aucune image de tiers) ; chaque titre mène à son site. Données
-	// dans $lib/data/medias.js.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { PALETAS } from '$lib/apren/teulas.js';
-	import { PREMSA, RITMES } from '$lib/data/medias.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	// dans #lib/data/medias.js.
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import Icona from '#lib/components/Icona.svelte';
+	import { PALETAS } from '#lib/apren/teulas.js';
+	import { PREMSA, RITMES } from '#lib/data/medias.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('premsa', data.elements);

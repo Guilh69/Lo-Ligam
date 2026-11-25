@@ -4,18 +4,18 @@
 	// droite ; sur téléphone, l'un puis l'autre. « Tots los grops » ouvre le
 	// catalogue (villes, dialectes, départements, passions). Fermé au public
 	// jusqu'à la charte (DOBÈRTS) : seul l'administrateur le voit.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Icona from '$lib/components/Icona.svelte';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import { page } from '$app/state';
-	import { browser } from '$app/environment';
-	import { supabase } from '$lib/supabaseClient';
-	import { session, authReady } from '$lib/authStore';
-	import { esAdmin, adminSabut } from '$lib/adminStore';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { iniciar } from '$lib/edicion/edicion.svelte.js';
-	import { grops, DOBÈRTS, cargarMevas, cargarIeu, cargarContactes, respondreContacte, tancar, ora } from '$lib/grops/grops.svelte.js';
-	import Avatar from '$lib/grops/Avatar.svelte';
-	import Tèxte from '$lib/grops/Tèxte.svelte';
+	import { browser } from '$app/env';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { session, authReady } from '#lib/authStore.js';
+	import { esAdmin, adminSabut } from '#lib/adminStore.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { iniciar } from '#lib/edicion/edicion.svelte.js';
+	import { grops, DOBÈRTS, cargarMevas, cargarIeu, cargarContactes, respondreContacte, tancar, ora } from '#lib/grops/grops.svelte.js';
+	import Avatar from '#lib/grops/Avatar.svelte';
+	import Tèxte from '#lib/grops/Tèxte.svelte';
 
 	let { data, children } = $props();
 	const lèvaEdicion = iniciar('grops', data.elements);

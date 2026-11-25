@@ -6,8 +6,8 @@
 // l'administrateur les lit. L'IA, Claude ou Mistral, les relève en début de
 // séance (cd app && node scripts/remarcas.mjs), répond, et peut poser des
 // questions à Romain. Les choix du tri (/admin/triar) restent à part.
-import { browser } from '$app/environment';
-import { supabase } from '$lib/supabaseClient';
+import { browser } from '$app/env';
+import { supabase } from '#lib/supabaseClient.js';
 
 export const PAGINA_TRIAR = '/admin/triar';
 // opcions : les réponses toutes prêtes d'une question de l'IA (lot 4)

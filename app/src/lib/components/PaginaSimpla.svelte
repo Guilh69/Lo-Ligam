@@ -2,11 +2,11 @@
 	// Le cadre d'une page simple (accueil du wiki, sommaire de la grammaire),
 	// sur le modèle des pages de rubrique (PaginaTeulas) : le titre en grand,
 	// une phrase, puis le contenu ; même fond de braise, même bandeau.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { txt, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { txt, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	/** titol : en occitan ; frasa : texte déjà balisé (marcar) ; parent : { href, nom } ;
 	    clauTitol : clé d'un élément modifiable sur place (la page a fait iniciar) qui remplace le titre ;

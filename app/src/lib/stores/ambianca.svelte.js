@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 
 // Réglages d'ambiance partagés par tout le site (cadre commun, 2026-10-07,
 // repris de l'esbòs de nuèch) : thème (sombre / clair / comme le système),

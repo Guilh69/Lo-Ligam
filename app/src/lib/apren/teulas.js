@@ -9,8 +9,8 @@
 // /apren?ensag=colors, tous pris dans la charte ou dérivés d'elle.
 // Les teintes viennent de lib/styles/palette.js (2026-11-07) : la palette
 // « charta » est CASES ; les camaïeux des sous-pages partent de la même teinte.
-import { CASES, TEINTES, TEINTES_DEFAUT } from '$lib/styles/palette.js';
-import { oklch, depuisOklch, contraste } from '$lib/palette/coherence.js';
+import { CASES, TEINTES, TEINTES_DEFAUT } from '#lib/styles/palette.js';
+import { oklch, depuisOklch, contraste } from '#lib/palette/coherence.js';
 
 // Un camaïeu suit sa teinte mère. Tant qu'elle a sa valeur d'origine, ses nuances sont celles choisies à la
 // main. Si Romain la change depuis le site (lib/colors, 2026-11-13), chaque nuance garde son écart à la

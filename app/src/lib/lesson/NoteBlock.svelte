@@ -1,9 +1,9 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	// Bloc de texte typé : son du jour, Los que parlan, culture, consigne de
 	// tâche… La variante choisit la couleur et l'icône, le contenu reste des
 	// paragraphes (et une liste optionnelle).
-	import { rich } from '$lib/lesson/rich.js';
+	import { rich } from '#lib/lesson/rich.js';
 
 	let { block } = $props();
 

@@ -11,7 +11,7 @@
 	// Les clés de données (la colonne `pagina` des remarques : '/admin/triar') ne changent pas :
 	// scripts/triar.mjs et scripts/remarcas.mjs les lisent.
 	import { page } from '$app/state';
-	import AdminTete from '$lib/talhier/AdminTete.svelte';
+	import AdminTete from '#lib/talhier/AdminTete.svelte';
 	import PilaCartes from './PilaCartes.svelte';
 	import TriarCartes from './TriarCartes.svelte';
 

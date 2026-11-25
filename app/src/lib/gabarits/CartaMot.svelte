@@ -6,7 +6,7 @@
 	import Ecran from './Ecran.svelte';
 	import BotonSon from './BotonSon.svelte';
 	import Causidas from './Causidas.svelte';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { mot, son = null, avança = 0.2, oncontunhar } = $props();
 

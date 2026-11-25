@@ -1,10 +1,10 @@
 <script>
 	// Un texte modifiable des groupes (édition sur place) : la langue choisie,
 	// le marquage or/italique, masquable par l'administrateur.
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { txt, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import { segments } from '$lib/edicion/marcat.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { txt, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import { segments } from '#lib/edicion/marcat.js';
 
 	let { clau, tag = 'p', class: classe = '' } = $props();
 	let v = $derived(txt(clau));

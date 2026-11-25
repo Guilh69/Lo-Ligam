@@ -5,23 +5,23 @@
 	// dessous (on voit d'emblée qu'on est dans l'A1), puis le chemin que dessine
 	// la page (children) et la note du compte. Romain, administrateur, voit les
 	// cadenas d'un élève mais tout s'ouvre pour lui.
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import FougasseIcon from '$lib/components/FougasseIcon.svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { session } from '$lib/authStore';
-	import { esAdmin } from '$lib/adminStore';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
-	import { insecable } from '$lib/lesson/rich.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Icona from '#lib/components/Icona.svelte';
+	import FougasseIcon from '#lib/components/FougasseIcon.svelte';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { session } from '#lib/authStore.js';
+	import { esAdmin } from '#lib/adminStore.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { moduls, ordre } from '#lib/lesson/moduls/index.js';
+	import { insecable } from '#lib/lesson/rich.js';
 	import { camin, estatParcors, simular, NIVELS } from './parcors.js';
 	import { legirAvancament } from './avancament.js';
 	import { T, NOTA_COMPTE } from './textes.js';
-	import Retour from '$lib/components/Retour.svelte';
-	import { txt } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	import Retour from '#lib/components/Retour.svelte';
+	import { txt } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	/** essai : ?simul=n simule l'avancement (pages /ensag/parcors)
 	 *  unPas : la version « une action par écran » (charte §5quater, 2026-11-16) :
@@ -35,7 +35,7 @@
 	let prèst = $state(false);
 	let ambCompte = $state(false);
 	const parcors = $derived(estatParcors(etapas, fachas));
-	const simul = $derived(essai ? $page.url.searchParams.get('simul') : null);
+	const simul = $derived(essai ? page.url.searchParams.get('simul') : null);
 
 	// Le mot occitan garde la vedette ; la glose suit la langue choisie
 	const glosa = (v) => (langStore.current === 'oc' ? v.fr : (v[langStore.current] || v.fr));

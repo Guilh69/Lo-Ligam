@@ -5,7 +5,7 @@
 	// écriture (Romain, 18-11 : « des incohérences de taille et de forme entre
 	// deux boutons côte à côte »). La pièce est pétrole ; elle passe à l'or tant
 	// que le geste est en cours, et « alen » la fait respirer pendant ce temps.
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 
 	let { icona, label, glosa, actiu = false, alen = false, onclick } = $props();
 </script>

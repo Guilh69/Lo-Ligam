@@ -1,11 +1,11 @@
 // « Corses en visio » : ses éléments modifiables, publiés seulement, avec le
-// filet de secours ($lib/server/elements.js), et le questionnaire d'avant le
+// filet de secours (#lib/server/elements.js), et le questionnaire d'avant le
 // premier cours (Romain, 2026-10-24), qui part par courriel vers l'alias
-// ($lib/server/contacte.js : mêmes garde-fous que le contact) et marche
+// (#lib/server/contacte.js : mêmes garde-fous que le contact) et marche
 // aussi sans JavaScript. Le site n'en garde rien.
 import { fail } from '@sveltejs/kit';
-import { legirElements } from '$lib/server/elements.js';
-import { geton, getonValid, plafonat, linha, corrièlValid, mandarCorrièl } from '$lib/server/contacte.js';
+import { legirElements } from '#lib/server/elements.js';
+import { geton, getonValid, plafonat, linha, corrièlValid, mandarCorrièl } from '#lib/server/contacte.js';
 
 export async function load() {
 	return { elements: await legirElements('visio'), geton: geton() };

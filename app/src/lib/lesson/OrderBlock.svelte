@@ -2,7 +2,7 @@
 	// « Remets dans l'ordre » : des tuiles de mots à taper dans le bon ordre,
 	// même mécanique que les lettres de l'essai libre. Mauvaise tuile → elle
 	// tremble ; bonne tuile → elle rejoint la phrase.
-	import { rich } from '$lib/lesson/rich.js';
+	import { rich } from '#lib/lesson/rich.js';
 
 	// onResult(item, reussi) : une fois la phrase remise, réussi sans aucune
 	// tuile tremblante (le carnet de révision note les choses qu'elle teste).

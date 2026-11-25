@@ -4,7 +4,7 @@
 	// bascule de lecture Territòri / Uèi / Reviscolada, retirée par Romain le
 	// 2026-10-23 (« ça fait doublon avec tout le reste » : les couches sont dans
 	// le rail) ; elle s'affiche désormais quand la couche est allumée.
-	import { CLASSAS, FONT_LOCUTORS, gamaLocutors, alfaLocutors } from '$lib/carta/locutors.js';
+	import { CLASSAS, FONT_LOCUTORS, gamaLocutors, alfaLocutors } from '#lib/carta/locutors.js';
 
 	let { lang = 'oc', clar = false, dalt = false, onNaut = () => {} } = $props();
 

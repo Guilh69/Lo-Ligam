@@ -1,13 +1,13 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { get } from 'svelte/store';
-	import { supabase } from '$lib/supabaseClient';
-	import { session, authReady } from '$lib/authStore';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import LocationAutocomplete from '$lib/components/LocationAutocomplete.svelte';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { session, authReady } from '#lib/authStore.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import LocationAutocomplete from '#lib/components/LocationAutocomplete.svelte';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
 
 	let lang = $derived(langStore.current);
 

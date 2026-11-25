@@ -5,14 +5,14 @@
 	// ou Recommencer. L'avancement vient du listing du dossier, pas d'une table.
 	// L'accès est filtré par admin/+layout.svelte ; ce qui protège vraiment, ce
 	// sont les règles de supabase/supabase-voix.sql.
-	// La logique est hors de l'écran : $lib/voix/enregistreur.js et studio.js.
+	// La logique est hors de l'écran : #lib/voix/enregistreur.js et studio.js.
 	import { onMount, onDestroy, tick } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { simulacion } from '$lib/talhier/notas.svelte.js';
-	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
-	import { frasasDe } from '$lib/voix/phrases.js';
-	import { jouer } from '$lib/voix/lecteur.js';
-	import { creerEnregistreur, DUREE_MAX_MS, MESSAGES } from '$lib/voix/enregistreur.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { simulacion } from '#lib/talhier/notas.svelte.js';
+	import { moduls, ordre } from '#lib/lesson/moduls/index.js';
+	import { frasasDe } from '#lib/voix/phrases.js';
+	import { jouer } from '#lib/voix/lecteur.js';
+	import { creerEnregistreur, DUREE_MAX_MS, MESSAGES } from '#lib/voix/enregistreur.js';
 	import {
 		depotSupabase,
 		depotMemoire,
@@ -21,7 +21,7 @@
 		suivanteAFaire,
 		garderPrise,
 		messageErreur
-	} from '$lib/voix/studio.js';
+	} from '#lib/voix/studio.js';
 
 	const MODULES = ordre.map((slug) => ({ slug, modul: moduls[slug], frasas: frasasDe(moduls[slug]) }));
 

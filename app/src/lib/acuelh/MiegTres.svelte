@@ -8,14 +8,14 @@
 	//   - 'chapitres' : chaque entité sur un écran, visuel immersif (piste 5)
 	// Prototypes : les phrases sous les titres sont des exemples descriptifs.
 	import { onMount } from 'svelte';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { PLAN } from '$lib/data/planSite.js';
-	import PastilleAviat from '$lib/components/PastilleAviat.svelte';
-	import { AMASSA } from '$lib/acuelh/amassa.js';
-	import CaminCrotz from '$lib/acuelh/CaminCrotz.svelte';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { PLAN } from '#lib/data/planSite.js';
+	import PastilleAviat from '#lib/components/PastilleAviat.svelte';
+	import { AMASSA } from '#lib/acuelh/amassa.js';
+	import CaminCrotz from '#lib/acuelh/CaminCrotz.svelte';
 	import { ESTELAS, VISTA, COSTA_D } from '../../routes/ensag/blanc/donadas.js';
-	import { txt, lista } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	import { txt, lista } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	const [PARLA, APREN, VIU] = PLAN;
 	const DINTRAR = { oc: 'Dintrar', fr: 'Entrer', es: 'Entrar', en: 'Enter', ca: 'Entrar', ar: 'ادخل' };

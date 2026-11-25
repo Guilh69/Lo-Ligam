@@ -4,16 +4,16 @@
 	// signaler un message reçu ; bloquer depuis l'en-tête. Les messages
 	// arrivent par le canal « ieu:<id> » (grops.svelte.js) ; la base refuse
 	// tout message hors contact accepté.
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import { tick } from 'svelte';
 	import { page } from '$app/state';
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/supabaseClient';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { grops, escotar, blocar, marcarLegitPrivat, clauError, ora } from '$lib/grops/grops.svelte.js';
-	import { X_ERRORS } from '$lib/grops/textes.js';
-	import Avatar from '$lib/grops/Avatar.svelte';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { grops, escotar, blocar, marcarLegitPrivat, clauError, ora } from '#lib/grops/grops.svelte.js';
+	import { X_ERRORS } from '#lib/grops/textes.js';
+	import Avatar from '#lib/grops/Avatar.svelte';
 
 	const X = {
 		oc: {

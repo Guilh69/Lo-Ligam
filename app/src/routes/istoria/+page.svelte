@@ -8,14 +8,14 @@
 	// Occitan de l'interface vérifié par l'API de lo Congrès : À VALIDER par Romain.
 	import { onDestroy } from 'svelte';
 	import { enhance } from '$app/forms';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import { editor } from '$lib/data/legal.js';
-	import CartaIstoria from '$lib/istoria/CartaIstoria.svelte';
-	import { ETAPAS } from '$lib/istoria/etapas.js';
-	import Retour from '$lib/components/Retour.svelte';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import { editor } from '#lib/data/legal.js';
+	import CartaIstoria from '#lib/istoria/CartaIstoria.svelte';
+	import { ETAPAS } from '#lib/istoria/etapas.js';
+	import Retour from '#lib/components/Retour.svelte';
 
 	let { data, form } = $props();
 

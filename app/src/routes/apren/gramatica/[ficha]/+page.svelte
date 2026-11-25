@@ -1,9 +1,9 @@
 <script>
 	// Une fiche de grammaire (/apren/gramatica/<id>), lue dans
-	// $lib/gramatica/fichas/<id>.js ; même fond que le sommaire.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import FichaGramatica from '$lib/gramatica/FichaGramatica.svelte';
-	import { ficha } from '$lib/gramatica/index.js';
+	// #lib/gramatica/fichas/<id>.js ; même fond que le sommaire.
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import FichaGramatica from '#lib/gramatica/FichaGramatica.svelte';
+	import { ficha } from '#lib/gramatica/index.js';
 
 	let { data } = $props();
 </script>

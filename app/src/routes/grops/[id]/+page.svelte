@@ -4,16 +4,16 @@
 	// pseudo et heure. Pas de réponses ni de réactions, pas d'images, pas de
 	// modification après envoi. Les messages arrivent par le direct
 	// (grops.svelte.js) ; les règles de la base décident de tout le reste.
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import { tick } from 'svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/supabaseClient';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { grops, escotar, rejonher, quitar, marcarLegit, clauError, ora } from '$lib/grops/grops.svelte.js';
-	import { X_ERRORS } from '$lib/grops/textes.js';
-	import Tèxte from '$lib/grops/Tèxte.svelte';
-	import Avatar from '$lib/grops/Avatar.svelte';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { grops, escotar, rejonher, quitar, marcarLegit, clauError, ora } from '#lib/grops/grops.svelte.js';
+	import { X_ERRORS } from '#lib/grops/textes.js';
+	import Tèxte from '#lib/grops/Tèxte.svelte';
+	import Avatar from '#lib/grops/Avatar.svelte';
 
 	let { data } = $props();
 	let grop = $derived(data.grop);

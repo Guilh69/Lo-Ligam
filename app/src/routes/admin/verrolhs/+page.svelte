@@ -1,7 +1,7 @@
 <script>
 	// Contrôle des verrous de sécurité, à refaire à volonté.
 	// L'accès à cette page est filtré par admin/+layout.svelte.
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '#lib/supabaseClient.js';
 
 	let proves = $state([]);
 	let testejant = $state(false);

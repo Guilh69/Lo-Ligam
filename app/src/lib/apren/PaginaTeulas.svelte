@@ -5,17 +5,17 @@
 	// première est la grande. Tous les textes et les cases se modifient sur la
 	// page (édition sur place) : clés `<pagina>.titol`, `<pagina>.frasa` et la
 	// liste `<pagina>.teulas`. La couleur et le pictogramme suivent la place de
-	// la case et l'endroit où elle mène ($lib/apren/teulas.js).
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Pictograma from '$lib/apren/Pictograma.svelte';
-	import { PALETAS, PALETA_PER_DEFAUT, pictoPer } from '$lib/apren/teulas.js';
-	import PastilleAviat from '$lib/components/PastilleAviat.svelte';
-	import { estAviat, estRetirat } from '$lib/data/planSite.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { edicion, txt, ligam, lista, amagat, apondre } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import { segments } from '$lib/edicion/marcat.js';
-	import Retour from '$lib/components/Retour.svelte';
+	// la case et l'endroit où elle mène (#lib/apren/teulas.js).
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Pictograma from '#lib/apren/Pictograma.svelte';
+	import { PALETAS, PALETA_PER_DEFAUT, pictoPer } from '#lib/apren/teulas.js';
+	import PastilleAviat from '#lib/components/PastilleAviat.svelte';
+	import { estAviat, estRetirat } from '#lib/data/planSite.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { edicion, txt, ligam, lista, amagat, apondre } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import { segments } from '#lib/edicion/marcat.js';
+	import Retour from '#lib/components/Retour.svelte';
 
 	/** pagina : 'apren', 'amassa'… ; rubrica : l'entrée du PLAN ; etiqueta : {oc, fr, es…} de la liste */
 	let { pagina, rubrica, etiqueta, paleta = PALETA_PER_DEFAUT } = $props();

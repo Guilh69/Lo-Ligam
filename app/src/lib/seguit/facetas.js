@@ -166,7 +166,7 @@ export const RUBRIQUES = [
 			),
 			vie: M(
 				'La carte charge des fonds de carte et une aide à la saisie de lieux hébergés ailleurs : l’adresse IP du visiteur leur est transmise (c’est dit dans la page de confidentialité).',
-				'app/svelte.config.js (img-src, connect-src) ; app/src/routes/confidencialitat/+page.svelte'
+				'app/vite.config.js (img-src, connect-src) ; app/src/routes/confidencialitat/+page.svelte'
 			),
 			fai: E(),
 			cou: E('Héberger soi-même les photos satellite (environ 6 Go) est une question ouverte, non chiffrée.')

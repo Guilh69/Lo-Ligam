@@ -68,7 +68,7 @@ export const JOCS_SALA = [
 	},
 	{
 		// chantier 33, 07-11 : d'abord dans les leçons de tâche, passé dans la
-		// salle le jour même (Romain) ; séries dans $lib/jocs/intrus-series.js
+		// salle le jour même (Romain) ; séries dans #lib/jocs/intrus-series.js
 		id: 'intrus',
 		familha: 'mots',
 		disponible: true,

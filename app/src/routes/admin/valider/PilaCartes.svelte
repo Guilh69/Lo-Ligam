@@ -9,11 +9,11 @@
 	//   ↑ : Demandar (une question à l'IA, sur l'élément) ; ↓ : Mai tard (au bout de la pile) ;
 	//   1 à 6 : une réponse toute prête ; Ctrl+Z : revenir sur le dernier geste.
 	import { onMount, tick, untrack } from 'svelte';
-	import { bon, pasEncara, respondre, restablir, suprimir, mandarNotaId, ligamNota } from '$lib/talhier/notas.svelte.js';
-	import { pila, cargarPila, cartas, validar, legirMaiTard, gardarMaiTard } from '$lib/talhier/pila.svelte.js';
-	import { nomPagina } from '$lib/talhier/pila.js';
-	import { dictadaPossibla, dictar } from '$lib/talhier/dictada.js';
-	import { segments } from '$lib/edicion/marcat.js';
+	import { bon, pasEncara, respondre, restablir, suprimir, mandarNotaId, ligamNota } from '#lib/talhier/notas.svelte.js';
+	import { pila, cargarPila, cartas, validar, legirMaiTard, gardarMaiTard } from '#lib/talhier/pila.svelte.js';
+	import { nomPagina } from '#lib/talhier/pila.js';
+	import { dictadaPossibla, dictar } from '#lib/talhier/dictada.js';
+	import { segments } from '#lib/edicion/marcat.js';
 
 	const LLINDAR = 110; // px à glisser pour décider
 	const LOTS = [

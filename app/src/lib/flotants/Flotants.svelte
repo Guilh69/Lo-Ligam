@@ -17,7 +17,7 @@
 	import { flotter, INTERACTIU } from './moteur.js';
 	import { OBJETS } from './objets.js';
 	import { MOTS } from './mots.js';
-	import { TEINTES as T } from '$lib/styles/palette.js';
+	import { TEINTES as T } from '#lib/styles/palette.js';
 
 	// fond : monté une fois dans le gabarit racine (routes/+layout.svelte), VRAIMENT derrière tout le contenu
 	// (z-index -1) : texte, photos, carte, illustrations, tuiles de couleur les cachent (Romain, 08-11 : « il faut

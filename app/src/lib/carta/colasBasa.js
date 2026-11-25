@@ -1,7 +1,7 @@
 // Las jaces de la basa (taula carta_colas) : una sola demanda per visita, que
 // la pagina (lo catalògue del rail) e la carta (colors, zònas) partejan
 // (abans, doas demandas identicas ; audit de la carta, 2026-10-23).
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '#lib/supabaseClient.js';
 
 let promesa = null;
 export function cargarColas() {

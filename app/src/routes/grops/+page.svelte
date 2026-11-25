@@ -1,8 +1,8 @@
 <script>
 	// L'accueil des groupes, à droite sur grand écran (sur téléphone, la liste
 	// prend toute la place) : l'esprit des groupes, avant d'en choisir un.
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import Tèxte from '$lib/grops/Tèxte.svelte';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import Tèxte from '#lib/grops/Tèxte.svelte';
 </script>
 
 <svelte:head>

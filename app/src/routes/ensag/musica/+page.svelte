@@ -8,8 +8,8 @@
 	// de cet album s'ouvre dessous (lecteur B). Pagina de trabalh, pas indexada.
 	import { tick } from 'svelte';
 	import { page } from '$app/state';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
 
 	let { data } = $props();
 	let fr = $derived(langStore.current === 'fr');

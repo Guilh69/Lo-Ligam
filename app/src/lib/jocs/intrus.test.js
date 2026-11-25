@@ -2,7 +2,7 @@
 import { describe, it, expect } from 'vitest';
 import { SERIAS, UNITATS_INTRUS } from './intrus-series.js';
 import { UNITATS } from './serp-mots.js';
-import { choses } from '$lib/carnet/choses.js';
+import { choses } from '#lib/carnet/choses.js';
 
 const ids = new Set(choses.map((c) => c.id));
 const series = Object.entries(SERIAS).flatMap(([u, s]) => s.map((item) => ({ u, item })));

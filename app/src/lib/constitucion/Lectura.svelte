@@ -3,7 +3,7 @@
 	// l'environnement) : l'occitan seul, le français seul, ou les deux face à face, article par article.
 	// Mise en page par la typographie : pas de cadre, des filets fins. Le français ne se charge que si on le
 	// demande (poids de la page). Occitan de la page à valider par Romain ; es/en/ca/ar retombent sur l'occitan.
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
 	import { TEXTES, blocsOc, blocsFr, ancre, etiqueta, morceaux, typo } from './textes.js';
 
 	let { texte } = $props();

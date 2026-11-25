@@ -5,7 +5,7 @@
 	// lit, on touche ce qu'on veut, on continue quand on veut.
 	import Ecran from './Ecran.svelte';
 	import BotonSon from './BotonSon.svelte';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { intro = '', paragrafs, signatura = '', son = null, avança = 0.8, oncontunhar } = $props();
 

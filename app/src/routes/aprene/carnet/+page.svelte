@@ -4,10 +4,10 @@
 	// l'écran des élèves : la séance du jour et le bilan des haltes viendront
 	// ensuite. Intitulés en français tant que Romain n'a pas choisi l'occitan.
 	import { onMount } from 'svelte';
-	import { moduls, ordre } from '$lib/lesson/moduls/index.js';
-	import { choses } from '$lib/carnet/choses.js';
-	import { carnet, demarrerCarnet } from '$lib/carnet/carnet.svelte.js';
-	import { etatCarte, idCarte, aRevoir } from '$lib/carnet/regles.js';
+	import { moduls, ordre } from '#lib/lesson/moduls/index.js';
+	import { choses } from '#lib/carnet/choses.js';
+	import { carnet, demarrerCarnet } from '#lib/carnet/carnet.svelte.js';
+	import { etatCarte, idCarte, aRevoir } from '#lib/carnet/regles.js';
 
 	onMount(demarrerCarnet);
 

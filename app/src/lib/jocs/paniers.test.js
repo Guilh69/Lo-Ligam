@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { TEMAS, bonPanier, formaVista } from './paniers-mots.js';
-import { moduls, ordre } from '$lib/lesson/moduls/index.js';
+import { moduls, ordre } from '#lib/lesson/moduls/index.js';
 
 // Les choses des encadrés « À retenir » des unités 1 à n, par id.
 function choses(maxUnitat) {

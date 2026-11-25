@@ -11,12 +11,12 @@
 	// « Plus tard ». Une réponse que l'IA n'a pas encore appliquée reste visible dans
 	// « Pas encore appliqué » jusqu'à ce que l'IA la range (remarcas.mjs --legida).
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { notas, cargarNotas, sòrta, bon, pasEncara, respondre, suprimir, tèxteACopiar, simulacion, ligamNota } from '$lib/talhier/notas.svelte.js';
-	import { dictadaPossibla, dictar } from '$lib/talhier/dictada.js';
-	import { TALHIÈRS, VERROLHS } from '$lib/talhier/talhiers.js';
-	import { pila, cargarPila, cartas } from '$lib/talhier/pila.svelte.js';
-	import { ESSAIS } from '$lib/labo/registre-essais.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { notas, cargarNotas, sòrta, bon, pasEncara, respondre, suprimir, tèxteACopiar, simulacion, ligamNota } from '#lib/talhier/notas.svelte.js';
+	import { dictadaPossibla, dictar } from '#lib/talhier/dictada.js';
+	import { TALHIÈRS, VERROLHS } from '#lib/talhier/talhiers.js';
+	import { pila, cargarPila, cartas } from '#lib/talhier/pila.svelte.js';
+	import { ESSAIS } from '#lib/labo/registre-essais.js';
 
 	// les essais encore en cours (Romain, 2026-11-08 : « voir à cet endroit-là tous les essais, mais juste le
 	// temps qu'ils durent ») : la liste vient du registre du Laboratòri, un essai adopté ou retiré en sort seul

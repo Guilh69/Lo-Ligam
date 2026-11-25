@@ -11,7 +11,7 @@
 	// rien de punitif ; après deux essais pour un mot, sa case respire. Toutes
 	// les cases pleines : la photo est faite. Cinq photos par partie, le thème
 	// choisi à l'entrée (une vignette par thème). Les mêmes paysages et points
-	// que Remira : $lib/paisatges/paisatges.js ; la place des cases :
+	// que Remira : #lib/paisatges/paisatges.js ; la place des cases :
 	// pausa-casas.js. Niveau « Amb ajuda » : le français sous chaque tuile ;
 	// « Sens ajuda » : il vient une fois le mot posé (ces mots de nature ont
 	// toujours leur traduction, Romain 05-11).
@@ -19,12 +19,12 @@
 	// (titre, mots, réglages) à côté ; sur téléphone, les mots sous la photo,
 	// les réglages derrière un bouton.
 	import { onMount, tick } from 'svelte';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { PAISATGES, MOTS, TEMAS, camin, srcset } from '$lib/paisatges/paisatges.js';
-	import { playTick, playNota, playArpegi, playChime } from '$lib/lesson/sounds.js';
-	import { plaçarCasas, casaDe } from '$lib/jocs/pausa-casas.js';
-	import Reglatges from '$lib/jocs/Reglatges.svelte';
-	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { PAISATGES, MOTS, TEMAS, camin, srcset } from '#lib/paisatges/paisatges.js';
+	import { playTick, playNota, playArpegi, playChime } from '#lib/lesson/sounds.js';
+	import { plaçarCasas, casaDe } from '#lib/jocs/pausa-casas.js';
+	import Reglatges from '#lib/jocs/Reglatges.svelte';
+	import BotonEcran from '#lib/jocs/BotonEcran.svelte';
 
 	// Occitan passé à lo Congrès le 06-11 (pausa et lisa : vèrb'Òc ; casa
 	// pour la case, puèi, seguenta ; cada déjà dans les leçons, l'API plante

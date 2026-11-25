@@ -3,14 +3,14 @@
 	// actuels (× → ↗ ▶ 🔊 ⚙…) face à Phosphor et Iconoir, à côté des icônes
 	// maison pour juger la parenté. Page de travail, non indexée.
 	import { ICONES } from './icones.js';
-	import CrossIcon from '$lib/components/CrossIcon.svelte';
-	import QuillIcon from '$lib/components/QuillIcon.svelte';
-	import BookIcon from '$lib/components/BookIcon.svelte';
-	import CommunityIcon from '$lib/components/CommunityIcon.svelte';
-	import LayersIcon from '$lib/components/LayersIcon.svelte';
-	import EnvelopeIcon from '$lib/components/EnvelopeIcon.svelte';
-	import MenuIcon from '$lib/components/MenuIcon.svelte';
-	import InfoIcon from '$lib/components/InfoIcon.svelte';
+	import CrossIcon from '#lib/components/CrossIcon.svelte';
+	import QuillIcon from '#lib/components/QuillIcon.svelte';
+	import BookIcon from '#lib/components/BookIcon.svelte';
+	import CommunityIcon from '#lib/components/CommunityIcon.svelte';
+	import LayersIcon from '#lib/components/LayersIcon.svelte';
+	import EnvelopeIcon from '#lib/components/EnvelopeIcon.svelte';
+	import MenuIcon from '#lib/components/MenuIcon.svelte';
+	import InfoIcon from '#lib/components/InfoIcon.svelte';
 
 	const MAISON = [
 		[CrossIcon, 'Croix'], [QuillIcon, 'Plume'], [BookIcon, 'Livre'], [CommunityIcon, 'Communauté'],

@@ -5,27 +5,27 @@
 	// s'effacent, celles du thème se rangent l'une après l'autre ; immédiat
 	// avec « moins d'animation »). Le thème choisi reste dans l'adresse
 	// (?tema=noms) : on le retrouve en revenant d'une fiche. Données :
-	// $lib/cultura/index.js.
+	// #lib/cultura/index.js.
 	//
 	// Allure « photo teintée » (Romain, 2026-11-06, trois allures comparées sur
 	// /cultura/ensag ; « pas ouf » avant) : chaque case montre une photo de
 	// Romain passée dans la couleur de son thème ; la couleur n'est que là. Le
 	// filtre est neutre, le thème choisi prend sa couleur. Sans photo : un
 	// dessin au trait de Remira, la croix du logo, ou l'aplat seul. Photos et
-	// dessins : $lib/cultura/imatges.js.
+	// dessins : #lib/cultura/imatges.js.
 	import { onMount, tick } from 'svelte';
-	import { replaceState } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import PaginaSimpla from '$lib/components/PaginaSimpla.svelte';
-	import Bulla from '$lib/components/Bulla.svelte';
-	import Crotz from '$lib/components/Crotz.svelte';
-	import MencionIA from '$lib/components/MencionIA.svelte';
-	import { flip } from '$lib/components/flip.js';
-	import { FICHAS, TEMAS, IU, nomModul } from '$lib/cultura/index.js';
-	import { foto, srcset, COMMONS } from '$lib/cultura/imatges.js';
-	import { IU as IU_G } from '$lib/gramatica/lengas.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar } from '$lib/edicion/edicion.svelte.js';
+	import PaginaSimpla from '#lib/components/PaginaSimpla.svelte';
+	import Bulla from '#lib/components/Bulla.svelte';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import MencionIA from '#lib/components/MencionIA.svelte';
+	import { flip } from '#lib/components/flip.js';
+	import { FICHAS, TEMAS, IU, nomModul } from '#lib/cultura/index.js';
+	import { foto, srcset, COMMONS } from '#lib/cultura/imatges.js';
+	import { IU as IU_G } from '#lib/gramatica/lengas.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar } from '#lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('cultura', data.elements);
@@ -70,14 +70,14 @@
 		if (nou === filtre) return;
 		if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
 			filtre = nou;
-			replaceState(url, {});
+			goto(url, { shallow: true, replace: true, state: {} });
 			return;
 		}
 		enCors = true;
 		try {
 			await flip(lista, new Set(triadas(nou).map((x) => x.id)), async () => {
 				filtre = nou;
-				replaceState(url, {});
+				goto(url, { shallow: true, replace: true, state: {} });
 				await tick();
 			});
 		} finally {

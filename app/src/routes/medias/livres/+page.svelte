@@ -2,13 +2,13 @@
 	// Livres (2026-10-29, Romain : une rubrique « Livres » dans Médias, pour
 	// consulter des livres anciens libres de droits, avec les pages qui
 	// tournent). Un livre pour commencer : Louis Pastre, 1913. Données dans
-	// $lib/data/livres.js.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import { LIVRES } from '$lib/data/livres.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	// #lib/data/livres.js.
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import { LIVRES } from '#lib/data/livres.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('livres', data.elements);

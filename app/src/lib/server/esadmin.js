@@ -2,7 +2,7 @@
 // la base.) Sorti de la route de recherche pour servir aussi à la route de
 // vérification mot à mot (Revirar, 2026-11-13) : les clés de lo Congrès sont
 // celles de Romain, elles ne servent pas aux visiteurs.
-import { env } from '$env/dynamic/public';
+import * as env from '$app/env/public';
 
 export async function esAdmin(request) {
 	const jeton = request.headers.get('authorization')?.match(/^Bearer (\S{20,4000})$/)?.[1];

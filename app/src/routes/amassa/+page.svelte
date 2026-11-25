@@ -6,10 +6,10 @@
 	// carte, le forum, la boîte à idées, Instagram. Ce que deviennent le forum,
 	// les groupes et la boîte à idées reste à trancher (options du 24-10). Le forum n'est
 	// pas ouvert au lancement : sa case est retirée par le code (RETIRATS, planSite.js, 2026-11-07).
-	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
-	import { PLAN } from '$lib/data/planSite.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar } from '$lib/edicion/edicion.svelte.js';
+	import PaginaTeulas from '#lib/apren/PaginaTeulas.svelte';
+	import { PLAN } from '#lib/data/planSite.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar } from '#lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('amassa', data.elements);

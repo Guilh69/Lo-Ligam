@@ -9,8 +9,8 @@
 	// traça e l'etiqueta de Romain apareis (crotz + occitan, votz, francés).
 	// Zònas aproximativas (ellipsas) : la règla que tèn per 200 visuals.
 	// Pagina de trabalh, pas indexada. Coordenadas dins l'espaci 860 × 860.
-	import Icona from '$lib/components/Icona.svelte';
-	import CrossIcon from '$lib/components/CrossIcon.svelte';
+	import Icona from '#lib/components/Icona.svelte';
+	import CrossIcon from '#lib/components/CrossIcon.svelte';
 
 	// zona = [cx, cy, rx, ry] ; sageta = [partença, contraròtle, arribada]
 	const VISUALS = [

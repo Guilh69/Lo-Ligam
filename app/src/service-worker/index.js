@@ -7,8 +7,9 @@
 // mesa en linha càmbia la version : la memòria vièlha es levada, las donadas
 // novèlas se tornan cargar un còp. Las paginas e lo compte demòran sul ret
 // (pas de donadas personalas dins la memòria).
-/// <reference types="@sveltejs/kit" />
-import { build, version } from '$service-worker';
+// (SvelteKit 3, 2026-11-25 : $service-worker a disparu ; la version vient de
+// $app/env, et les fichiers de _app/immutable sont déjà pris par A_GARDAR.)
+import { version } from '$app/env';
 
 const MEMÒRIA = `lo-ligam-${version}`;
 // çò que se garda a son primièr usatge
@@ -33,7 +34,7 @@ self.addEventListener('fetch', (ev) => {
 	const u = new URL(r.url);
 	// (en desvolopament, res de gardat : las donadas càmbian a cada moment)
 	if (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(self.location.hostname)) return;
-	if (u.origin !== self.location.origin || !(A_GARDAR.test(u.pathname) || build.includes(u.pathname))) return;
+	if (u.origin !== self.location.origin || !(A_GARDAR.test(u.pathname))) return;
 	ev.respondWith(
 		caches.open(MEMÒRIA).then(async (c) => {
 			const gardat = await c.match(r);

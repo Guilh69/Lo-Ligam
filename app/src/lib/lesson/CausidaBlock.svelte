@@ -9,7 +9,7 @@
 	// block = { title, intro, personatge, tours: [{ situacion?, ditz?,
 	//   options: [{ oc, bon?, reaccion? }], choses?, explain? }], fin? }
 	import { tick } from 'svelte';
-	import { rich, insecable } from '$lib/lesson/rich.js';
+	import { rich, insecable } from '#lib/lesson/rich.js';
 
 	let { block, onCorrect = () => {}, onComplete = () => {}, onResult = () => {} } = $props();
 

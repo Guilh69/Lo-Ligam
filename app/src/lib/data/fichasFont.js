@@ -9,7 +9,7 @@
 // pause après environ une semaine sans activité. Sans filet, la bibliothèque
 // s'afficherait vide ce jour-là.
 
-import { supabase } from '$lib/supabaseClient';
+import { supabase } from '#lib/supabaseClient.js';
 import { categories as categoriasGeladas, fichas as fichasGeladas } from './fichas';
 
 // Au-delà, on n'attend plus : mieux vaut le catalogue gelé tout de suite qu'une

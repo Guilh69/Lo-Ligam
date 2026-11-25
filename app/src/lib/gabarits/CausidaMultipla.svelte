@@ -3,8 +3,8 @@
 	// toucher suffit, le retour explique la réponse choisie et montre la bonne.
 	// Les réponses sont des pièces de papier (.pc-rep), comme dans le QCM du site.
 	import Ecran from './Ecran.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { insecable } from '$lib/lesson/rich.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { question, opcions, foto = null, avança = 0.9, oncontunhar } = $props();
 	let causit = $state(null); // index de la réponse touchée

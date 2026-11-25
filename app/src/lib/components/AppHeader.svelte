@@ -1,5 +1,5 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	// Bandeau commun à toutes les pages (cadre commun, refonte 2026-10-07 dans
 	// la charte de l'esbòs de nuèch). Depuis le 2026-10-15 (cahier §11, d'après
 	// le site de l'Alliance des collectivités pour la qualité de l'air) : une
@@ -12,14 +12,14 @@
 	import Crotz from './Crotz.svelte';
 	import AmbiancaPanel from './AmbiancaPanel.svelte';
 	import MenuVel from './MenuVel.svelte';
-	import { lang as langStore, LENGAS, SEGONDAS } from '$lib/stores/lang.svelte.js';
-	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { LANGUES } from '$lib/styles/palette.js';
-	import { VISIO, PLAN } from '$lib/data/planSite.js';
-	import { esAdmin } from '$lib/adminStore';
-	import { session, authReady, pseudoCompte } from '$lib/authStore';
+	import { lang as langStore, LENGAS, SEGONDAS } from '#lib/stores/lang.svelte.js';
+	import { tampaDefòra } from '#lib/tampaDefora.js';
+	import { LANGUES } from '#lib/styles/palette.js';
+	import { VISIO, PLAN } from '#lib/data/planSite.js';
+	import { esAdmin } from '#lib/adminStore.js';
+	import { session, authReady, pseudoCompte } from '#lib/authStore.js';
 	import { page } from '$app/state';
-	import Avatar from '$lib/grops/Avatar.svelte';
+	import Avatar from '#lib/grops/Avatar.svelte';
 
 	let { children } = $props();
 	let lang = $derived(langStore.current);

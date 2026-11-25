@@ -16,7 +16,6 @@
 //   GET /api/comuna?i=69123&l=frp&nl=Liyon
 //   GET /api/comuna?i=64102&l=eu&nl=Baiona
 //   GET /api/comuna?nom=Montreux&lat=46.43&lon=6.91&l=frp   (fòra de França)
-import { json } from '@sveltejs/kit';
 
 // las Wikipèdias de las lengas de la carta (e lo còdi de lor etiqueta Wikidata)
 const WIKIS = ['ca', 'frp', 'eu', 'br', 'als', 'lb', 'pfl', 'ksh', 'li', 'vls', 'nl', 'co', 'pcd', 'wa', 'nrm'];
@@ -210,5 +209,5 @@ export async function GET({ url, setHeaders }) {
 		cache.set(clau, c);
 	}
 	setHeaders({ 'cache-control': 'public, max-age=86400' });
-	return json(c.d ?? { id: null });
+	return Response.json(c.d ?? { id: null });
 }

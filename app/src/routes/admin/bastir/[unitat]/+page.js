@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { UNITATS_A1 } from '$lib/bastir/bastir.js';
+import { UNITATS_A1 } from '#lib/bastir/bastir.js';
 
 /** une unité de l'A1 (1 à 8), sinon 404 */
 export function load({ params }) {

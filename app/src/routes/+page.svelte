@@ -18,28 +18,28 @@
 	//     reste dans l'historique Git, commit 614ff3c et avant).
 	//
 	// Le mouvement (fond vivant, constellation, carte en étoiles, défilement)
-	// vit dans $lib/acuelh/motor.js, chargé après coup pour que la page
+	// vit dans #lib/acuelh/motor.js, chargé après coup pour que la page
 	// s'affiche vite.
 	//
 	// Édition sur place (2026-10-24, revisions/2026-10-24-edicion-sus-plaça.md) :
 	// les textes, liens, images et listes de la page viennent des éléments
-	// publiés (+page.server.js : base, sinon filet $lib/data/elements-filet.json)
+	// publiés (+page.server.js : base, sinon filet #lib/data/elements-filet.json)
 	// et se lisent par txt(), ligam(), imatge(), lista() ; chaque élément porte
 	// l'action `editar` avec sa clé. Romain les change lui-même, connecté avec
 	// son compte administrateur : Claude ne retouche plus ces textes ici.
 	import { onMount } from 'svelte';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre, cambiar } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import { segments } from '$lib/edicion/marcat.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { ambianca } from '#lib/stores/ambianca.svelte.js';
+	import { edicion, iniciar, txt, ligam, imatge, lista, amagat, apondre, cambiar } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import { segments } from '#lib/edicion/marcat.js';
 	// La réservation passe par la page qui explique le cours (comme le bandeau et le menu),
 	// jamais droit au calendrier (décision du 24-10). Le texte du bouton final reste
 	// modifiable sur place ; sa destination, elle, est fixée ici.
-	import { VISIO } from '$lib/data/planSite.js';
-	import MiegTres from '$lib/acuelh/MiegTres.svelte';
-	import '$lib/acuelh/acuelh.css';
+	import { VISIO } from '#lib/data/planSite.js';
+	import MiegTres from '#lib/acuelh/MiegTres.svelte';
+	import '#lib/acuelh/acuelh.css';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('acuelh', data.elements);
@@ -114,7 +114,7 @@
 		ambianca.fonsPresent = true;
 		let quitada = false;
 		const lèvaIndici = noteIndici();
-		import('$lib/acuelh/motor.js').then(({ lancarAcuelh }) => {
+		import('#lib/acuelh/motor.js').then(({ lancarAcuelh }) => {
 			if (quitada) return;
 			motor = lancarAcuelh(racina, { clar: ambianca.clar, dalt: ambianca.dalt, fons: ambianca.fons, leugier: ambianca.leugier });
 		});

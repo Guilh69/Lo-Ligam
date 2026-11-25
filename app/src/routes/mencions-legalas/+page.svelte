@@ -1,11 +1,11 @@
 <script>
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { editor, hebergeur, dataMiseAJour } from '$lib/data/legal';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt, ligam } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import { segments } from '$lib/edicion/marcat.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { editor, hebergeur, dataMiseAJour } from '#lib/data/legal.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt, ligam } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import { segments } from '#lib/edicion/marcat.js';
 
 	let { data } = $props();
 

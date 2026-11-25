@@ -8,10 +8,10 @@
 	// d'or là où l'on est passé, en pointillé ensuite. Relecture de Joan : sur
 	// téléphone les cases ne montrent que leur numéro, alors l'unité du jour
 	// se déplie en quatre grandes cases, avec le nom et la glose.
-	import Icona from '$lib/components/Icona.svelte';
-	import { PALETAS } from '$lib/apren/teulas.js';
-	import { insecable } from '$lib/lesson/rich.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import { PALETAS } from '#lib/apren/teulas.js';
+	import { insecable } from '#lib/lesson/rich.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
 	import { AUR, PRUNA, teula } from './colors.js';
 	import { T, nomEtapa, acabaPer, motEstat, ACABA_MISSION, A2_EN_PREPARACION } from './textes.js';
 	import { seguentaClavada, glosaCorta } from './parcors.js';

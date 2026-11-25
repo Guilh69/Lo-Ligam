@@ -5,10 +5,10 @@
 // dont la graphie a été rétablie (Plòu, Jòia, Còr, Nèu) sont passés par
 // l'API de lo Congrès le 22-10, à valider par Romain. Ce qui n'existe pas
 // est écrit « [a escriure per Romain] » ou « [a causir per Romain] ».
-import { LUOCS, COSTA } from '$lib/acuelh/carta-estelas.js';
+import { LUOCS, COSTA } from '#lib/acuelh/carta-estelas.js';
 
-export { RESERVAR, MANIFEST } from '$lib/acuelh/donadas.js';
-export { LO_LIGAM } from '$lib/data/planSite.js';
+export { RESERVAR, MANIFEST } from '#lib/acuelh/donadas.js';
+export { LO_LIGAM } from '#lib/data/planSite.js';
 
 export const ESCRIURE = '[a escriure per Romain]';
 export const CAUSIR = '[a causir per Romain]';

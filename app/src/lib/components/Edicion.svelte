@@ -4,8 +4,8 @@
 	// Anullar, Sortir) et le panneau flottant de l'élément touché. Posée dans
 	// le cadre commun ; ne montre rien tant qu'une page n'a pas appelé
 	// iniciar(). Les mots sont dans la langue du site (Òc / Fr).
-	import { lang, LENGAS } from '$lib/stores/lang.svelte.js';
-	import Icona from '$lib/components/Icona.svelte';
+	import { lang, LENGAS } from '#lib/stores/lang.svelte.js';
+	import Icona from '#lib/components/Icona.svelte';
 	import {
 		edicion,
 		element,
@@ -23,9 +23,9 @@
 		brolhonsInvalids,
 		MARCATS,
 		lista
-	} from '$lib/edicion/edicion.svelte.js';
-	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { etiqueta, SOLA_LENGA } from '$lib/edicion/etiquetas.js';
+	} from '#lib/edicion/edicion.svelte.js';
+	import { tampaDefòra } from '#lib/tampaDefora.js';
+	import { etiqueta, SOLA_LENGA } from '#lib/edicion/etiquetas.js';
 
 	const T = {
 		oc: {

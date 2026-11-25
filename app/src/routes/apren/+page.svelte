@@ -3,13 +3,13 @@
 	// l'accueil, qui dit COMMENT apprendre (trois façons) : ici, tout ce qui
 	// s'apprend, en cases de couleur bien visibles, « un peu comme les objectifs
 	// de l'ONU » (Romain). Les cases elles-mêmes sont dans le gabarit commun
-	// des pages de rubrique ($lib/apren/PaginaTeulas.svelte, 2026-10-25).
-	import { browser } from '$app/environment';
-	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
-	import { PALETAS, NOMS_PALETAS, PALETA_PER_DEFAUT } from '$lib/apren/teulas.js';
-	import { PLAN } from '$lib/data/planSite.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar } from '$lib/edicion/edicion.svelte.js';
+	// des pages de rubrique (#lib/apren/PaginaTeulas.svelte, 2026-10-25).
+	import { browser } from '$app/env';
+	import PaginaTeulas from '#lib/apren/PaginaTeulas.svelte';
+	import { PALETAS, NOMS_PALETAS, PALETA_PER_DEFAUT } from '#lib/apren/teulas.js';
+	import { PLAN } from '#lib/data/planSite.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar } from '#lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('apren', data.elements);

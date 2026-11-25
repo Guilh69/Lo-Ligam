@@ -8,10 +8,10 @@
 	// Visible pour l'administrateur, et pour ses proches quand ils ont ouvert
 	// un lien de relecture (?relectura) : le mode reste ensuite allumé dans ce
 	// navigateur. Table et verrous : supabase/supabase-remarcas.sql.
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { tick } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { esAdmin } from '$lib/adminStore';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { esAdmin } from '#lib/adminStore.js';
 
 	let { modul, etapa = null } = $props();
 

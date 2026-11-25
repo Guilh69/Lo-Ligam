@@ -21,7 +21,7 @@
 	// prêt à être remplacé) et « un plein écran pour voir mieux » (la photo
 	// aussi grande que l'écran, la recherche à côté ou dessous).
 	import { tick, untrack } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '#lib/supabaseClient.js';
 	import { camin, srcset, MOTS } from './paisatges.js';
 
 	let { foto, mots = [], viu = true, onmots = () => {} } = $props();

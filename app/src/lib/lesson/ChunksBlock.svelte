@@ -1,13 +1,13 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
-	import { rich } from '$lib/lesson/rich.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import { rich } from '#lib/lesson/rich.js';
 	// Les expressions à retenir : le mot, « ça sonne comme », le sens
 	// (l'intro et le sens acceptent l'italique *…* comme les autres blocs).
 	// Le bouton audio s'active dès qu'un fichier existe : c.audio d'abord, sinon
 	// le son de la phrase (lib/voix, retrouvé par sa clé).
 	import { onDestroy } from 'svelte';
-	import { sonDe } from '$lib/voix/phrases.js';
-	import { jouer } from '$lib/voix/lecteur.js';
+	import { sonDe } from '#lib/voix/phrases.js';
+	import { jouer } from '#lib/voix/lecteur.js';
 	let { block, modulId = '' } = $props();
 
 	let playing = $state(null);

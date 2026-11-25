@@ -5,17 +5,17 @@
 	// la source sous chaque écran tiré du livre, toutes les sources à la fin.
 	// Né de l'essai /ensag/gramatica du 2026-11-03 (inspiration : la grammaire
 	// cognitive du CPNL, habillée à la manière de Lo Ligam).
-	import { dev } from '$app/environment';
+	import { dev } from '$app/env';
 	import { fly } from 'svelte/transition';
-	import Pictograma from '$lib/apren/Pictograma.svelte';
-	import NoteBlock from '$lib/lesson/NoteBlock.svelte';
-	import { insecable } from '$lib/lesson/rich.js';
+	import Pictograma from '#lib/apren/Pictograma.svelte';
+	import NoteBlock from '#lib/lesson/NoteBlock.svelte';
+	import { insecable } from '#lib/lesson/rich.js';
 	import PictoFicha from './PictoFicha.svelte';
 	import Relacionar from './Relacionar.svelte';
 	import { marcar, copa, classeColor } from './marcar.js';
 	import { FICHAS_LENGAS, IU, paginas } from './lengas.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import Retour from '$lib/components/Retour.svelte';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import Retour from '#lib/components/Retour.svelte';
 
 	let { ficha } = $props();
 	// l'habillage suit la langue choisie (lengas.js) ; les explications de la

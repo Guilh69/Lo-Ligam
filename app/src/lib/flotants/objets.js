@@ -2,7 +2,7 @@
 // des pièces pleines aux couleurs de la palette, sans trait ni dégradé (l'ombre courte est posée par le CSS).
 // Chaque mot occitan est passé à l'API de lo Congrès (verificar-oc.mjs, 07-11, variété languedocienne) ;
 // l'usage et le sens restent à valider par Romain. Dessinés dans un carré de 48 sur 48.
-import { TEINTES as T } from '$lib/styles/palette.js';
+import { TEINTES as T } from '#lib/styles/palette.js';
 
 /** une étoile à n branches, centrée en (cx, cy) */
 const etoile = (cx, cy, R, r, n = 5) => {

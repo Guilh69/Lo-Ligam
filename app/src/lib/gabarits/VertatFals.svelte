@@ -4,7 +4,7 @@
 	// réponses sont des pièces de papier (.pc-rep) : verte pour la bonne, brique
 	// qui tremble pour celle qu'on a choisie à tort.
 	import Ecran from './Ecran.svelte';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { foto, afirmacion, responsa, explic, avança = 0.75, oncontunhar } = $props();
 	let causit = $state(null); // true | false | null

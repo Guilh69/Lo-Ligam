@@ -18,14 +18,14 @@
 	// petit carillon (Web Audio, aucun fichier) tient la place.
 	// Quatrième coin depuis le 2026-11-05 : L'ostal, la maison à toucher (choix
 	// de Romain parmi trois fiches proposées), composant ScenaTocar, données
-	// dans $lib/anem/scenas.js ; le corps suivra de la même façon.
+	// dans #lib/anem/scenas.js ; le corps suivra de la même façon.
 	import { onMount, untrack } from 'svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import ScenaTocar from '$lib/anem/ScenaTocar.svelte';
-	import { OSTAL } from '$lib/anem/scenas.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import ScenaTocar from '#lib/anem/ScenaTocar.svelte';
+	import { OSTAL } from '#lib/anem/scenas.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	// Le petit mot sous le titre est modifiable sur place (2026-11-15, page « anem »)
 	let { data } = $props();

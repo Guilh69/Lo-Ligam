@@ -112,7 +112,7 @@ Ces règles viennent de trois mois de travail ensemble (fin juillet à début no
 - **Déploiement automatique** : un `git push` sur `master` qui touche `app/**` (hors `.md`) lance `.github/workflows/desplegar.yml` : GitHub construit l'image (Node 22), l'envoie au registre Scaleway, redéploie le conteneur `lo-ligam` et vérifie que le site répond. Romain n'a rien à faire.
 - Application installable sur téléphone (PWA, 2026-10-26) : `app/static/manifest.webmanifest`, icônes faites par `outils/icones-pwa.py`.
 - Courriels du compte et du formulaire de contact par **Scaleway Transactional Email** (2026-10-25) : domaine validé (SPF, DMARC, MX), SMTP réglé dans Supabase, variables `SCW_PROJECTE` et `SCW_TEM_CLAU` posées dans le conteneur.
-- Sécurité : politique de sécurité du contenu stricte (`app/svelte.config.js`), règles d'accès RLS sur toutes les tables (`supabase/`, contrôle `npm run verificar:rls`), mot de passe de 10 caractères avec complexité, mot de passe actuel exigé (et vérifié par le serveur) pour le changer ou supprimer le compte. Mise à jour des dépendances du 2026-11-02 : 7 alertes faibles restantes, qui demandent SvelteKit 3 (changement cassant, laissé de côté).
+- Sécurité : politique de sécurité du contenu stricte (`app/vite.config.js`), règles d'accès RLS sur toutes les tables (`supabase/`, contrôle `npm run verificar:rls`), mot de passe de 10 caractères avec complexité, mot de passe actuel exigé (et vérifié par le serveur) pour le changer ou supprimer le compte. Passage à SvelteKit 3 le 2026-11-25 : plus aucune alerte de sécurité npm.
 
 ### 4.2 Accueil, ambiance et charte (barreaux 1 et 2 de l'échelle)
 - Thème sombre « Éclat » avec les « Venas d'aur » par défaut, thème clair « Plâtre » au choix (`app/src/lib/stores/ambianca.svelte.js`, liste des pages sombres tenue identique dans `app/src/app.html`).
@@ -245,7 +245,7 @@ C:\Users\perie\Depots\Lo_Ligam\
 │   ├── src/lib/stores/       langue (lang.svelte.js), thème (ambianca.svelte.js)
 │   ├── src/lib/carta/, grops/, apren/, acuelh/, components/, data/ …
 │   ├── src/hooks.server.js   redirections, en-têtes, non-indexation
-│   ├── svelte.config.js      politique de sécurité du contenu (CSP)
+│   ├── vite.config.js        configuration de SvelteKit et politique de sécurité du contenu (CSP)
 │   ├── scripts/              outils de vérification et de maintenance (§8)
 │   ├── static/               images (presque toutes en WebP), données, manifeste
 │   ├── Dockerfile            lance npm test puis npm run build
@@ -266,7 +266,7 @@ C:\Users\perie\Depots\Lo_Ligam\
 - **Commandes** (dans `app/`) : `npm run dev` (site en local), `npm test` (Vitest), `npm run build`, `npm run check`, `npm run verificar:rls`, `npm run verificar:oc`.
 - **Le Dockerfile lance `npm test` avant `npm run build`** : un test rouge bloque la mise en ligne. Les deux doivent passer en local avant tout envoi.
 - **Vérifier une mise en ligne** : le dépôt est privé et `gh` n'est pas installé, les journaux de GitHub Actions ne se lisent pas d'ici. On cherche une chaîne du dernier changement dans les fichiers JS du site en ligne. Un déploiement qui n'arrive pas se relance en poussant un petit changement dans `app/` (le workflow ne se déclenche que sur `app/**`).
-- **CSP stricte** (`app/svelte.config.js`, `script-src 'self'`) : tout script ou ressource extérieure ajouté sans passer par elle sera bloqué par le navigateur. Un bloc `application/ld+json` est une donnée, il n'est pas bloqué.
+- **CSP stricte** (`app/vite.config.js`, `script-src 'self'`) : tout script ou ressource extérieure ajouté sans passer par elle sera bloqué par le navigateur. Un bloc `application/ld+json` est une donnée, il n'est pas bloqué.
 - **Balises de tête** (titre, description, partage) : page par page, dans chaque route. Une balise dans `+layout.svelte` s'appliquerait à toutes les pages, essais non indexés compris.
 - **`sharp`** est un outil de développement côté serveur (scripts d'images), jamais dans le code envoyé au navigateur.
 - **Images** : sobriété d'abord ; ne jamais recompresser en écrasant des fichiers sans copie de départ et sans comparer le rendu. Presque toutes les images de `app/static/` sont déjà en WebP : le gain restant est faible.

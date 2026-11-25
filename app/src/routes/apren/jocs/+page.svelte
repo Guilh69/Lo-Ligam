@@ -10,21 +10,21 @@
 	// Romain le 05-11 avec la palette crème : mise en page éditoriale (titre
 	// géant, aplats, filets), mots et lettres en tuiles, ni verre fumé, ni
 	// halo, ni lueur. Le rouge reste ce qui se clique, l'or ce qui est choisi.
-	// Les jeux : $lib/jocs/. Depuis le 06-11 (Romain : « arriver dans une salle
+	// Les jeux : #lib/jocs/. Depuis le 06-11 (Romain : « arriver dans une salle
 	// de jeu… dans la logique du café pour la musique »), sans ?joc= on entre
-	// dans la salle de jeux ($lib/jocs/sala/) : les familles de jeux, leurs
+	// dans la salle de jeux (#lib/jocs/sala/) : les familles de jeux, leurs
 	// illustrations, ce que chaque jeu fait travailler, en couleurs (le tèma
 	// calme a été retiré le 07-11 à la demande de Romain). Dans un jeu,
 	// « ‹ Sala de jòcs » y ramène.
 	import { page } from '$app/state';
-	import Serp from '$lib/jocs/Serp.svelte';
-	import Paniers from '$lib/jocs/Paniers.svelte';
-	import PausaMots from '$lib/jocs/PausaMots.svelte';
-	import Intrus from '$lib/jocs/Intrus.svelte';
-	import Sala from '$lib/jocs/sala/Sala.svelte';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt, ligam, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	import Serp from '#lib/jocs/Serp.svelte';
+	import Paniers from '#lib/jocs/Paniers.svelte';
+	import PausaMots from '#lib/jocs/PausaMots.svelte';
+	import Intrus from '#lib/jocs/Intrus.svelte';
+	import Sala from '#lib/jocs/sala/Sala.svelte';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt, ligam, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	// Le titre et le lien de retour sont modifiables sur place (2026-11-15, page « jocs »)
 	let { data } = $props();

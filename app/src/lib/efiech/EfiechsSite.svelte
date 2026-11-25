@@ -14,11 +14,11 @@
 	// d'animations (prefers-reduced-motion, géré par la bibliothèque).
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '#lib/supabaseClient.js';
 	import { emplacamentsDeRoute, clauDe, PAGINA, PREFIXE_ELEMENT } from './emplacaments.js';
 	import { legir, couleursSite } from './legida.js';
 	import { escotarEfiech, noeudsDe, escotarInscriccions } from './efiech.js';
-	import { edicion } from '$lib/edicion/edicion.svelte.js';
+	import { edicion } from '#lib/edicion/edicion.svelte.js';
 
 	let zonaPagina = $state();
 	let zonaEvenement = $state();

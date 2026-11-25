@@ -8,7 +8,7 @@
 	// 2026-11-01 (Romain) : plein écran, flèches du clavier sur toute la page,
 	// son plus doux, recherche dans le livre (Ctrl+F).
 	import { onMount, tick } from 'svelte';
-	import { tria } from '$lib/stores/lang.svelte.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
 
 	let { base, total, titol = '' } = $props();
 

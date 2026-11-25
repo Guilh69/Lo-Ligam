@@ -1,7 +1,7 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
-	import { PLAJAS, zPlaja } from '$lib/carta/escalas.js';
-	import { estatCarta, SELECCIONABLAS, activar } from '$lib/carta/estatCarta.svelte.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import { PLAJAS, zPlaja } from '#lib/carta/escalas.js';
+	import { estatCarta, SELECCIONABLAS, activar } from '#lib/carta/estatCarta.svelte.js';
 	// Rail de las jaces (causida de Romain, 2026-10-07, « panèl C ») : un rail
 	// totjorn visible al bòrd de la carta, una icòna nomenada per familha. Un
 	// clic dobrís lo tirador de la familha ; un segond clic sus la meteissa
@@ -10,17 +10,17 @@
 	// (fons « Contorns », occitan, natural, satellit, e colors) ; los elements
 	// (vilas, noms, rius, relèu) son de jaces dins lors familhas.
 	import { untrack, tick } from 'svelte';
-	import { sonPapièr, sonsActius, gardarSons } from '$lib/carta/sons.js';
+	import { sonPapièr, sonsActius, gardarSons } from '#lib/carta/sons.js';
 	import { fly, slide } from 'svelte/transition';
-	import { LENGAS, esOccitan } from '$lib/carta/lengas.js';
-	import { COLORS as COLORS_DIAL } from '$lib/carta/colaDonadas.js';
-	import { CARTE, CASES } from '$lib/styles/palette.js';
-	import { ICONAS } from '$lib/carta/iconas.js';
-	import { FICHAS, VITALITAT } from '$lib/carta/fichas-lengas.js';
-	import { gamaLocutors } from '$lib/carta/locutors.js';
+	import { LENGAS, esOccitan } from '#lib/carta/lengas.js';
+	import { COLORS as COLORS_DIAL } from '#lib/carta/colaDonadas.js';
+	import { CARTE, CASES } from '#lib/styles/palette.js';
+	import { ICONAS } from '#lib/carta/iconas.js';
+	import { FICHAS, VITALITAT } from '#lib/carta/fichas-lengas.js';
+	import { gamaLocutors } from '#lib/carta/locutors.js';
 	import { quintOut } from 'svelte/easing';
-	import { tampaDefòra } from '$lib/tampaDefora.js';
-	import { cargarFranca, lengasEstrangièr, dialèctesFranca } from '$lib/carta/franca.js';
+	import { tampaDefòra } from '#lib/tampaDefora.js';
+	import { cargarFranca, lengasEstrangièr, dialèctesFranca } from '#lib/carta/franca.js';
 
 	let {
 		familhas = [],
@@ -1221,7 +1221,7 @@
 		for (const j of totas) if (visibility[j.id]) visibility[j.id] = false;
 		causits = [];
 	}
-	// Un clic defòra tampa (principi del site, $lib/tampaDefora.js) : lo
+	// Un clic defòra tampa (principi del site, #lib/tampaDefora.js) : lo
 	// tirador, e las bullas d'informacion
 	$effect(() => {
 		if (!dobert) return;

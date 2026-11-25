@@ -11,10 +11,10 @@
 	// Ses propres couleurs sont fixes (--o-*) : il reste lisible quelle que soit la
 	// palette qu'on est en train d'essayer. Chargé pour l'administrateur seulement.
 	import { onMount } from 'svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { ambianca } from '$lib/stores/ambianca.svelte.js';
-	import { contraste } from '$lib/palette/coherence.js';
-	import { hexColor } from '$lib/styles/palette.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import { ambianca } from '#lib/stores/ambianca.svelte.js';
+	import { contraste } from '#lib/palette/coherence.js';
+	import { hexColor } from '#lib/styles/palette.js';
 	import { GROPS, LISTA, PER_ID } from './registre.js';
 	import { colors, valorsVista, cambiar, restablir, cambiada, nombreCambiaments, publicar, anullar, tampar, tornarEnrèire, totRestablir } from './colors.svelte.js';
 

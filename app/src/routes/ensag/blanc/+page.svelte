@@ -10,15 +10,15 @@
 	// Max Rouquette seul ; une seule chose bouge par écran, en CSS seul ;
 	// aucun occitan inventé : textes du site, sinon « [a escriure per Romain] ».
 	// Page de travail, pas indexée.
-	import Crotz from '$lib/components/Crotz.svelte';
-	import Icona from '$lib/components/Icona.svelte';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import {
 		RESERVAR, MANIFEST, LO_LIGAM, ESCRIURE, CAUSIR, MOT_SETMANA, BANDEL, BIAIS, TEULAS,
 		VISTA, ESTELAS, COSTA_D
 	} from './donadas.js';
 
 	import { page } from '$app/state';
-	import { replaceState } from '$app/navigation';
+	import { goto } from '$app/navigation';
 
 	const href = (h) => (h === 'RESERVAR' ? RESERVAR : h);
 	// Essai de l'ouverture (Romain, 2026-10-22 : « la carte est vraiment une pièce
@@ -32,7 +32,7 @@
 	let dobertura = $state(DOBERTURAS.some(([v]) => v === demandada) ? demandada : 'carta');
 	function causir(v) {
 		dobertura = v;
-		replaceState('?dobertura=' + v, {});
+		goto('?dobertura=' + v, { shallow: true, replace: true, state: {} });
 	}
 	// La croix aux couleurs de Romain sur fond clair (app.css, 2026-10-21) : ocre et rouge
 	const CROTZ = { traç: '#b53d17', ponch: '#eeaf34', moieu: '#b53d17' };

@@ -3,12 +3,12 @@
 	// y cherche autant qu'on y ouvre) : le catalogue (villes, niveaux, dialectes,
 	// départements, passions). Un groupe proposé ouvre avec sa première
 	// personne : la base s'en charge (rejonher_grop), il n'y a rien à remplir.
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/supabaseClient';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { grops, MENAS, rejonher, nomLigne } from '$lib/grops/grops.svelte.js';
-	import { X_ERRORS } from '$lib/grops/textes.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { grops, MENAS, rejonher, nomLigne } from '#lib/grops/grops.svelte.js';
+	import { X_ERRORS } from '#lib/grops/textes.js';
 
 	let fr = $derived(langStore.current === 'fr');
 	const X = {

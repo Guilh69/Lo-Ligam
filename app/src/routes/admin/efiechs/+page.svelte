@@ -11,14 +11,14 @@
 	// déposé n'est jamais rangé tel quel : la bibliothèque n'en garde que la
 	// géométrie (nettoyerSvg), et le relit avec la même rigueur (legida.js).
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { simulacion } from '$lib/talhier/notas.svelte.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { simulacion } from '#lib/talhier/notas.svelte.js';
 	import { page } from '$app/state';
-	import { EMPLACAMENTS, PAGINA, clauDe, PREFIXE_ELEMENT, idElement, elementDeId, clauElementValida, paginaDeClau, DECLENCHEURS } from '$lib/efiech/emplacaments.js';
-	import { CAMINS } from '$lib/talhier/pila.js';
-	import { etiqueta } from '$lib/edicion/etiquetas.js';
-	import { escriure, legir, couleursSite } from '$lib/efiech/legida.js';
-	import { MOUVEMENTS, APPARITIONS, reglagesDe, configPropre, nettoyerSvg, versSvg, couleursDessin, LIMITES, lancer } from '$lib/efiech/biblio/index.js';
+	import { EMPLACAMENTS, PAGINA, clauDe, PREFIXE_ELEMENT, idElement, elementDeId, clauElementValida, paginaDeClau, DECLENCHEURS } from '#lib/efiech/emplacaments.js';
+	import { CAMINS } from '#lib/talhier/pila.js';
+	import { etiqueta } from '#lib/edicion/etiquetas.js';
+	import { escriure, legir, couleursSite } from '#lib/efiech/legida.js';
+	import { MOUVEMENTS, APPARITIONS, reglagesDe, configPropre, nettoyerSvg, versSvg, couleursDessin, LIMITES, lancer } from '#lib/efiech/biblio/index.js';
 
 	const simular = simulacion();
 

@@ -1,6 +1,6 @@
 <script>
-	import AdminTete from '$lib/talhier/AdminTete.svelte';
-	import Revirar from '$lib/revirar/Revirar.svelte';
+	import AdminTete from '#lib/talhier/AdminTete.svelte';
+	import Revirar from '#lib/revirar/Revirar.svelte';
 	// Traduire sans aide (2026-11-13) : un entraînement personnel pour Romain.
 	// L'accès est filtré par admin/+layout.svelte ; rien n'est enregistré en base.
 	// Libellé en français : pas de mot d'occitan nouveau sans vérification.

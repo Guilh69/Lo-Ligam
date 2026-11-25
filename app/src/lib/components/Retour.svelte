@@ -6,8 +6,8 @@
 	// Le chemin se lit dans l'adresse (lib/data/fil.js) : une rubrique ou l'accueil n'affichent rien.
 	// `actuelle` : le nom de la page, si le plan du site ne le donne pas (une œuvre, un livre, une fiche).
 	import { page } from '$app/state';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { fil } from '$lib/data/fil.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { fil } from '#lib/data/fil.js';
 
 	let { actuelle = null, chemin = null } = $props();
 

@@ -1,11 +1,11 @@
 <script>
 	// Bastir, l'atelier des leçons (2026-11-16) : les huit unités de l'A1 en cases de
-	// couleur ; une case mène à ses quatre leçons. Voir $lib/bastir/bastir.js.
-	import AdminTete from '$lib/talhier/AdminTete.svelte';
-	import TeulaBastir from '$lib/bastir/TeulaBastir.svelte';
-	import { UNITATS_A1, AUTRAS, colorsUnitat, leiçon } from '$lib/bastir/bastir.js';
-	import { cargarBrolhons } from '$lib/bastir/brolhon.js';
-	import { simulacion } from '$lib/talhier/notas.svelte.js';
+	// couleur ; une case mène à ses quatre leçons. Voir #lib/bastir/bastir.js.
+	import AdminTete from '#lib/talhier/AdminTete.svelte';
+	import TeulaBastir from '#lib/bastir/TeulaBastir.svelte';
+	import { UNITATS_A1, AUTRAS, colorsUnitat, leiçon } from '#lib/bastir/bastir.js';
+	import { cargarBrolhons } from '#lib/bastir/brolhon.js';
+	import { simulacion } from '#lib/talhier/notas.svelte.js';
 	import { onMount } from 'svelte';
 
 	const nElements = (u) => u.slugs.reduce((t, s) => t + (leiçon(s)?.elements.length ?? 0), 0);

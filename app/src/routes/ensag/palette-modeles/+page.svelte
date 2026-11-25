@@ -1,5 +1,5 @@
 <script>
-	import ModelesPages from '$lib/palette/ModelesPages.svelte';
+	import ModelesPages from '#lib/palette/ModelesPages.svelte';
 </script>
 
 <ModelesPages />

@@ -13,8 +13,8 @@
 // variété) ; PoS « N1210 » : N = nom, 3e signe 1 = masculin / 2 = féminin,
 // 4e signe 1 = singulier / 2 = pluriel. On garde le languedocien et l'occitan
 // commun (var « lengadoc » et « oc »).
-import { env } from '$env/dynamic/private';
-import { esAssumida } from '$lib/data/formas-assumidas.js';
+import * as env from '$app/env/private';
+import { esAssumida } from '#lib/data/formas-assumidas.js';
 
 const API = 'https://api.locongres.org/basic.php';
 const VARIETATS = ['lengadoc', 'oc'];

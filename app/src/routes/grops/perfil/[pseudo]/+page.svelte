@@ -4,16 +4,16 @@
 	// publics, et les groupes que l'on a en commun, pas tous les siens.
 	// Depuis le 2026-10-25, le lien avec la personne (supabase-contactes.sql) :
 	// demander le contact, répondre, écrire, retirer, bloquer.
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import { page } from '$app/state';
-	import { browser } from '$app/environment';
-	import { supabase } from '$lib/supabaseClient';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, nomDe, demandarContacte, respondreContacte, quitarContacte, blocar, desblocar } from '$lib/grops/grops.svelte.js';
-	import { X_ERRORS } from '$lib/grops/textes.js';
-	import Avatar from '$lib/grops/Avatar.svelte';
-	import Crotz from '$lib/components/Crotz.svelte';
-	import { luòcAfichat } from '$lib/comunas.js';
+	import { browser } from '$app/env';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { grops, DIALECTES, NIVELS, CERCA, AGRADA, nomDe, demandarContacte, respondreContacte, quitarContacte, blocar, desblocar } from '#lib/grops/grops.svelte.js';
+	import { X_ERRORS } from '#lib/grops/textes.js';
+	import Avatar from '#lib/grops/Avatar.svelte';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import { luòcAfichat } from '#lib/comunas.js';
 
 	let fr = $derived(langStore.current === 'fr');
 	const X = {

@@ -5,7 +5,7 @@
 // letras aria-hidden) ; las letras tòrnan un tèxt simple a la fin.
 // Sens movement (preferéncia del sistèma) : lo tèxt apareis sol.
 //
-//   import { animarText } from '$lib/actions/animarText.js';
+//   import { animarText } from '#lib/actions/animarText.js';
 //   animarText(el, 'decalatge');                       // un element ja escrich
 //   animarText(el, 'clarificar', { tèxt: 'Baiona' });  // remplaça son tèxt
 //   <h2 {@attach animat('rebond')}>…</h2>              // en Svelte

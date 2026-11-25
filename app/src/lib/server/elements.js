@@ -1,11 +1,11 @@
 // Les éléments modifiables d'une page (édition sur place, 2026-10-24) : lus
 // côté serveur, à l'état publié seulement, en une demande, gardés en mémoire
 // vingt secondes. Si Supabase ne répond pas (ou si la table n'existe pas
-// encore), le filet de secours de $lib/data/elements-filet.json prend le
+// encore), le filet de secours de #lib/data/elements-filet.json prend le
 // relais : le site public ne dépend jamais de la base pour s'afficher.
 // Commun à l'accueil et à Mon istòria (2026-10-24).
-import { supabase } from '$lib/supabaseClient';
-import filet from '$lib/data/elements-filet.json';
+import { supabase } from '#lib/supabaseClient.js';
+import filet from '#lib/data/elements-filet.json';
 
 const DURADA = 20_000;
 const memòria = new Map();

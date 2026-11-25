@@ -13,15 +13,15 @@
 	// rien (trois fiches, à combler).
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-	import { replaceState } from '$app/navigation';
-	import PaginaSimpla from '$lib/components/PaginaSimpla.svelte';
-	import Bulla from '$lib/components/Bulla.svelte';
-	import Crotz from '$lib/components/Crotz.svelte';
-	import { FICHAS, TEMAS, IU, nomModul, ficha as trobar } from '$lib/cultura/index.js';
-	import { foto, srcset } from '$lib/cultura/imatges.js';
-	import { PAISATGES } from '$lib/paisatges/paisatges.js';
-	import { IU as IU_G } from '$lib/gramatica/lengas.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
+	import { goto } from '$app/navigation';
+	import PaginaSimpla from '#lib/components/PaginaSimpla.svelte';
+	import Bulla from '#lib/components/Bulla.svelte';
+	import Crotz from '#lib/components/Crotz.svelte';
+	import { FICHAS, TEMAS, IU, nomModul, ficha as trobar } from '#lib/cultura/index.js';
+	import { foto, srcset } from '#lib/cultura/imatges.js';
+	import { PAISATGES } from '#lib/paisatges/paisatges.js';
+	import { IU as IU_G } from '#lib/gramatica/lengas.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
 
 	let { data } = $props();
 
@@ -54,7 +54,7 @@
 		v = id;
 		const url = new URL(page.url);
 		url.searchParams.set('v', id);
-		replaceState(url, {});
+		goto(url, { shallow: true, replace: true, state: {} });
 	}
 
 	let filtre = $state(null);

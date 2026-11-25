@@ -12,11 +12,11 @@
 	// revisions/2026-11-06-illustrations-ia-cagnotte.md
 	// Occitan passé à lo Congrès le 06-11 (canhòta, prètzfach, budgèt…), à
 	// relire par Romain ; es, en, ca, ar par Aran (06-11).
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import { tria, lang } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
-	import { segments } from '$lib/edicion/marcat.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import { tria, lang } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
+	import { segments } from '#lib/edicion/marcat.js';
 
 	let { data } = $props();
 

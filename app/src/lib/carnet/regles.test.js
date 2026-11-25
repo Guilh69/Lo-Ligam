@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { carnetVide, noter, etatCarte, aRevoir, fusionner, relire, jourLocal } from './regles.js';
 import { listerChoses } from './choses.js';
-import { moduls, ordre } from '$lib/lesson/moduls/index.js';
+import { moduls, ordre } from '#lib/lesson/moduls/index.js';
 
 const jour1 = new Date(2026, 9, 24, 10, 0);
 const jour1soir = new Date(2026, 9, 24, 22, 0);

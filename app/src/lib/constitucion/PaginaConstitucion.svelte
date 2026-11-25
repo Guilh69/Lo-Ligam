@@ -2,9 +2,9 @@
 	// Le cadre d'une page de la Constitution en occitan : bandeau, retour, titre, une phrase, puis la lecture.
 	// Même cadre que les autres pages intérieures (PaginaSimpla), avec un titre moins grand : les noms des
 	// quatre textes sont longs. Occitan de la page à valider par Romain.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
 	import Lectura from './Lectura.svelte';
 
 	let { texte } = $props();

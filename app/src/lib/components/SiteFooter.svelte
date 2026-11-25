@@ -1,17 +1,17 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	// Pied de page commun (cadre commun, refonte 2026-10-07 dans la charte de
 	// l'esbòs de nuèch) : présent sur toutes les pages via le layout, plus
 	// seulement sur l'accueil. Colonnes texte sur le même plan que le menu
 	// (2026-10-15 : Se parla, S'apren, Se viu, Lo Ligam, comme le pied de page
 	// de l'Alliance répète son menu ; source commune data/planSite.js), puis
 	// les ressources et le grand nom « Lo Ligam » en terracotta. Couleurs de thème.
-	import { scramble } from '$lib/actions/scramble';
+	import { scramble } from '#lib/actions/scramble.js';
 	// Le texte est écrit dans le HTML du serveur (lisible sans JavaScript et
 	// par les lecteurs d'écran) ; l'action scramble le remplace au montage.
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { externalLinks } from '$lib/data/siteSections';
-	import { PLAN, LO_LIGAM } from '$lib/data/planSite.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { externalLinks } from '#lib/data/siteSections.js';
+	import { PLAN, LO_LIGAM } from '#lib/data/planSite.js';
 	import PastilleAviat from './PastilleAviat.svelte';
 
 	const PER_DEFAUT = { oc: 'Fach amb amor en Occitània.', fr: 'Fait avec amour en Occitanie.', es: 'Hecho con amor en Occitania.', en: 'Made with love in Occitania.', ca: 'Fet amb amor a Occitània.', ar: 'صُنع بكلّ حبّ في أوكسيتانيا.' };

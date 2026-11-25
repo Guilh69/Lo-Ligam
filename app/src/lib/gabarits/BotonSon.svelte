@@ -1,13 +1,13 @@
 <script>
 	// Écouter un son dans un gabarit : un geste, lecture ou arrêt ; un seul son à
-	// la fois sur la page ($lib/voix/lecteur.js). Une pièce de papier pétrole, qui
+	// la fois sur la page (#lib/voix/lecteur.js). Une pièce de papier pétrole, qui
 	// passe à l'or tant que le son joue. « gran » : la pièce porte son nom (le
 	// geste principal d'un écran d'écoute), sinon une petite pièce carrée ;
 	// « pila » : la pièce carrée des gestes (BotonGest), la même que le micro
 	// posé à côté.
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	import BotonGest from './BotonGest.svelte';
-	import { jouer } from '$lib/voix/lecteur.js';
+	import { jouer } from '#lib/voix/lecteur.js';
 
 	let { src, gran = false, pila = false, label = 'Escota', glosa = 'écoute', onfin = null } = $props();
 	let arret = $state(null);

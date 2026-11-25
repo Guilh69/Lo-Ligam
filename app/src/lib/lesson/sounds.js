@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 
 // Sons de retour partagés par les leçons. Ce sont les sons validés à
 // l'oreille par Romain sur /aprene/essai : le « whoosh » d'air pour une

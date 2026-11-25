@@ -1,14 +1,14 @@
 <script>
-	import AdminTete from '$lib/talhier/AdminTete.svelte';
+	import AdminTete from '#lib/talhier/AdminTete.svelte';
 	// Ont ne sèm : le suivi des chantiers, pour Romain (point d'étape du
-	// 2026-11-06 au soir). Données : $lib/seguit/seguit.js, tenues par Claude ;
+	// 2026-11-06 au soir). Données : #lib/seguit/seguit.js, tenues par Claude ;
 	// les décisions à trancher sont en cartes sur /admin/triar (lot « decisions »).
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { GROPS, ESTATS, MESA_A_JORN, comptes } from '$lib/seguit/seguit.js';
-	import GrilhaFacetas from '$lib/seguit/GrilhaFacetas.svelte';
-	import { DECISIONS } from '$lib/triar/decisions.js';
-	import { PAGINA, estatDe } from '$lib/triar/triar.js';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { GROPS, ESTATS, MESA_A_JORN, comptes } from '#lib/seguit/seguit.js';
+	import GrilhaFacetas from '#lib/seguit/GrilhaFacetas.svelte';
+	import { DECISIONS } from '#lib/triar/decisions.js';
+	import { PAGINA, estatDe } from '#lib/triar/triar.js';
 
 	const n = comptes();
 	let filtre = $state('tot'); // tot | romain

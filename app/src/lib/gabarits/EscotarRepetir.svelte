@@ -10,8 +10,8 @@
 	import Ecran from './Ecran.svelte';
 	import BotonSon from './BotonSon.svelte';
 	import BotonGest from './BotonGest.svelte';
-	import { creerEnregistreur } from '$lib/voix/enregistreur.js';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { creerEnregistreur } from '#lib/voix/enregistreur.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { foto, frasa, son, avança = 0.2, oncontunhar } = $props();
 

@@ -10,7 +10,7 @@
 // sans jamais révéler QUI sont les administrateurs.
 
 import { writable, get } from 'svelte/store';
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 import { supabase } from './supabaseClient';
 import { session, authReady } from './authStore';
 

@@ -5,17 +5,17 @@
 	// (ses pages, changer de mot de passe, se déconnecter, supprimer son compte,
 	// supabase-compte.sql). Textes dans la langue choisie, au style du site.
 	import { page } from '$app/state';
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
-	import { supabase } from '$lib/supabaseClient';
-	import { session, authReady, pseudoCompte, cargarPseudo } from '$lib/authStore';
-	import { esAdmin } from '$lib/adminStore';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { DOBÈRTS } from '$lib/grops/grops.svelte.js';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Avatar from '$lib/grops/Avatar.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import Retour from '$lib/components/Retour.svelte';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { session, authReady, pseudoCompte, cargarPseudo } from '#lib/authStore.js';
+	import { esAdmin } from '#lib/adminStore.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { DOBÈRTS } from '#lib/grops/grops.svelte.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Avatar from '#lib/grops/Avatar.svelte';
+	import Icona from '#lib/components/Icona.svelte';
+	import Retour from '#lib/components/Retour.svelte';
 
 	const X = {
 		oc: {

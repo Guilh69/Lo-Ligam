@@ -4,10 +4,10 @@
 // connectée. Les règles (FSRS, deux cartes, acquise en deux jours) sont dans
 // regles.js. Lecture et écriture protégées : sans mémoire du navigateur
 // (navigation privée…) ou sans réseau, la leçon marche quand même.
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 import { get } from 'svelte/store';
-import { supabase } from '$lib/supabaseClient';
-import { session, authReady } from '$lib/authStore';
+import { supabase } from '#lib/supabaseClient.js';
+import { session, authReady } from '#lib/authStore.js';
 import { carnetVide, noter, relire, fusionner } from './regles.js';
 
 const CLE = 'lo-ligam-carnet';

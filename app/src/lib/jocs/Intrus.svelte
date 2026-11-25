@@ -9,17 +9,17 @@
 	// rangent ensemble (glissement sans rebond, immobile si l'appareil demande
 	// moins d'animations), un filet d'or se trace sous eux avec le nom de la
 	// famille, et l'intrus reste à l'écart. Quatre séries par unité, de 1 à 8
-	// ($lib/jocs/intrus-series.js) ; l'ordre des mots est mêlé à chaque
+	// (#lib/jocs/intrus-series.js) ; l'ordre des mots est mêlé à chaque
 	// partie. Composant affiché par la page /apren/jocs (?joc=intrus).
 	import { onMount, tick } from 'svelte';
 	import { flip } from 'svelte/animate';
-	import { tria, lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { SERIAS, UNITATS_INTRUS } from '$lib/jocs/intrus-series.js';
-	import { UNITATS } from '$lib/jocs/serp-mots.js';
-	import { rich, insecable } from '$lib/lesson/rich.js';
-	import { playNota, playSorda, playArpegi } from '$lib/lesson/sounds.js';
-	import Reglatges from '$lib/jocs/Reglatges.svelte';
-	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
+	import { tria, lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { SERIAS, UNITATS_INTRUS } from '#lib/jocs/intrus-series.js';
+	import { UNITATS } from '#lib/jocs/serp-mots.js';
+	import { rich, insecable } from '#lib/lesson/rich.js';
+	import { playNota, playSorda, playArpegi } from '#lib/lesson/sounds.js';
+	import Reglatges from '#lib/jocs/Reglatges.svelte';
+	import BotonEcran from '#lib/jocs/BotonEcran.svelte';
 
 	// Occitan passé à lo Congrès le 2026-11-07 (intrús, quatre, tres, fan,
 	// una, familha, tòca, tièra, seguenta), à valider par Romain ; le reste

@@ -1,5 +1,5 @@
-import { dev } from '$app/environment';
-import { colorsPublicadas } from '$lib/server/colors.js';
+import { dev } from '$app/env';
+import { colorsPublicadas } from '#lib/server/colors.js';
 
 // Une seule adresse pour le site (2026-10-15) : www.loligam.eu et l'adresse
 // technique de Scaleway (…scw.cloud) renvoient vers loligam.eu, même page.
@@ -34,7 +34,7 @@ const ANCIANAS = {
 };
 
 // En-têtes de sécurité posés sur chaque réponse. Scaleway ne les met pas
-// tout seul, et la politique de contenu (définie dans svelte.config.js)
+// tout seul, et la politique de contenu (définie dans vite.config.js)
 // ne couvre pas ces aspects-là.
 export async function handle({ event, resolve }) {
 	const redirection = versAdresse(event);
@@ -78,7 +78,7 @@ export async function handle({ event, resolve }) {
 	// navigateurs qui ignorent cette directive.
 	// En développement seulement, les pages du site peuvent l'encadrer
 	// (maquettes posées sur la vraie carte). Fait ici et pas dans
-	// svelte.config.js : une compilation réécrit la configuration partagée
+	// la configuration : une compilation réécrit la configuration partagée
 	// avec le serveur local et remettait 'none' (2026-10-10).
 	response.headers.set('X-Frame-Options', dev ? 'SAMEORIGIN' : 'DENY');
 	const csp = dev && response.headers.get('content-security-policy');

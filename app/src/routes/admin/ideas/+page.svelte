@@ -5,7 +5,7 @@
 	// À chaque visite, les idées de plus de deux ans sont effacées
 	// (public.purgar_ideas, promesse de la page Confidentialité).
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '#lib/supabaseClient.js';
 
 	const ESTATS = [
 		['nòva', 'Nòva', 'Nouvelle'],

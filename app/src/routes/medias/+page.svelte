@@ -3,10 +3,10 @@
 	// place aux médias) : une case par sorte de média, dans les ors (Romain :
 	// « dans les médias, du jaune »). Les textes et les cases se modifient sur
 	// la page.
-	import PaginaTeulas from '$lib/apren/PaginaTeulas.svelte';
-	import { PLAN } from '$lib/data/planSite.js';
-	import { tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar } from '$lib/edicion/edicion.svelte.js';
+	import PaginaTeulas from '#lib/apren/PaginaTeulas.svelte';
+	import { PLAN } from '#lib/data/planSite.js';
+	import { tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar } from '#lib/edicion/edicion.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('medias', data.elements);

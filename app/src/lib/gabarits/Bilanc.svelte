@@ -4,8 +4,8 @@
 	// noté, et l'on continue quoi qu'on ait coché. La case cochée est une petite
 	// pièce d'or posée dans son creux.
 	import Ecran from './Ecran.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { insecable } from '$lib/lesson/rich.js';
+	import Icona from '#lib/components/Icona.svelte';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { intro = '', items, avança = 1, oncontunhar } = $props();
 	const uid = $props.id();

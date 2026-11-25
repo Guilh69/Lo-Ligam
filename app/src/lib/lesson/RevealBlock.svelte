@@ -2,7 +2,7 @@
 	// Question ouverte : on répond dans sa tête (ou à voix haute), puis on
 	// révèle le corrigé avec son explication. Sert au Rappel, aux traductions
 	// et au mini-test — la récupération active avant la relecture.
-	import { rich } from '$lib/lesson/rich.js';
+	import { rich } from '#lib/lesson/rich.js';
 
 	let { block, onCorrect = () => {}, onComplete = () => {} } = $props();
 

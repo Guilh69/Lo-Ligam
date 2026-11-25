@@ -10,13 +10,13 @@
 	// féminin (unité 2), question ou réponse (unités 1 et 2). Composant affiché
 	// par la page /apren/jocs, à côté de la sèrp (Serp.svelte). Aucun fichier.
 	import { onMount } from 'svelte';
-	import { tria, lang as langStore } from '$lib/stores/lang.svelte.js';
-	import { TEMAS, bonPanier, formaVista } from '$lib/jocs/paniers-mots.js';
-	import { rengs, DECOPA, VB, FONS, insecable } from '$lib/jocs/paniers-pila.js';
-	import { playNota, playSorda, playArpegi } from '$lib/lesson/sounds.js';
-	import { UNITATS } from '$lib/jocs/serp-mots.js';
-	import Reglatges from '$lib/jocs/Reglatges.svelte';
-	import BotonEcran from '$lib/jocs/BotonEcran.svelte';
+	import { tria, lang as langStore } from '#lib/stores/lang.svelte.js';
+	import { TEMAS, bonPanier, formaVista } from '#lib/jocs/paniers-mots.js';
+	import { rengs, DECOPA, VB, FONS, insecable } from '#lib/jocs/paniers-pila.js';
+	import { playNota, playSorda, playArpegi } from '#lib/lesson/sounds.js';
+	import { UNITATS } from '#lib/jocs/serp-mots.js';
+	import Reglatges from '#lib/jocs/Reglatges.svelte';
+	import BotonEcran from '#lib/jocs/BotonEcran.svelte';
 
 	// Occitan passé à lo Congrès le 2026-11-05, à valider par Romain.
 	const T = {

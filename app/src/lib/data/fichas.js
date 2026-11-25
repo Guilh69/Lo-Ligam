@@ -4,7 +4,7 @@
 // modifiable depuis l'espace d'administration. Ce fichier ne sert plus que de
 // FILET DE SECOURS : il est lu uniquement si Supabase ne répond pas — par
 // exemple quand le projet gratuit se met en pause après une semaine
-// d'inactivité. Voir $lib/data/fichasFont.js et le §11 du cahier des charges.
+// d'inactivité. Voir #lib/data/fichasFont.js et le §11 du cahier des charges.
 //
 // Le modifier ici ne changera RIEN sur le site tant que la base répond, et
 // créerait deux vérités contradictoires. Pour corriger une fiche : passer par

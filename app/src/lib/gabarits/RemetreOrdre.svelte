@@ -7,7 +7,7 @@
 	// puis verte si elle est à sa place, brique sinon.
 	import Ecran from './Ecran.svelte';
 	import { barrejar } from './barrejar.js';
-	import { insecable } from '$lib/lesson/rich.js';
+	import { insecable } from '#lib/lesson/rich.js';
 
 	let { enonciat, responsa, sona = '', indici = '', explic = '', letras = false, avança = 0.4, oncontunhar } = $props();
 

@@ -5,15 +5,15 @@
 	// de livre par entrée sur une étagère, la fiche du livre survolé à droite ;
 	// au téléphone, les livres couchés en pile. Deux groupes : les éditeurs,
 	// puis où trouver les livres. Chaque entrée mène à son site. Données dans
-	// $lib/data/arts.js.
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Retour from '$lib/components/Retour.svelte';
-	import Icona from '$lib/components/Icona.svelte';
-	import { PALETAS } from '$lib/apren/teulas.js';
-	import { LIBRES } from '$lib/data/arts.js';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	// #lib/data/arts.js.
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Retour from '#lib/components/Retour.svelte';
+	import Icona from '#lib/components/Icona.svelte';
+	import { PALETAS } from '#lib/apren/teulas.js';
+	import { LIBRES } from '#lib/data/arts.js';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import { iniciar, txt, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	let { data } = $props();
 	const lèvaEdicion = iniciar('literatura', data.elements);

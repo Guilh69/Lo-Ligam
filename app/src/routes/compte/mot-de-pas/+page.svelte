@@ -2,11 +2,11 @@
 	// Choisir un nouveau mot de passe (2026-10-25) : on arrive ici par le lien
 	// du courriel « mot de passe oublié » (resetPasswordForEmail, page /compte).
 	// Le lien ouvre une session ; sans elle, le lien a expiré ou déjà servi.
-	import { supabase } from '$lib/supabaseClient';
-	import { session, authReady } from '$lib/authStore';
-	import { lang as langStore } from '$lib/stores/lang.svelte.js';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import Icona from '$lib/components/Icona.svelte';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { session, authReady } from '#lib/authStore.js';
+	import { lang as langStore } from '#lib/stores/lang.svelte.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 
 	const X = {
 		oc: {

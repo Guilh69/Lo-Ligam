@@ -22,7 +22,7 @@ export function cargarComunas() {
 		fetch('/data/comunas/noms.json')
 			.then((r) => (r.ok ? r.json() : null))
 			.catch(() => null),
-		import('$lib/carta/nomsFrances.js')
+		import('#lib/carta/nomsFrances.js')
 			.then((m) => m.NOMS_FRANCES)
 			.catch(() => ({}))
 	]).then(([d, noms]) => {

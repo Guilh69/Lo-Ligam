@@ -2,7 +2,7 @@
 // des modules, une par ligne qui porte un `id`. Une seule source : le module.
 // Les questions auto-corrigées disent quelles choses elles testent par leur
 // champ `choses` (liste d'id).
-import { moduls, ordre } from '$lib/lesson/moduls/index.js';
+import { moduls, ordre } from '#lib/lesson/moduls/index.js';
 
 export function listerChoses(registre = moduls, cles = ordre) {
 	const choses = [];

@@ -5,7 +5,7 @@
 // Une seule source pour le menu-voile (MenuVel) et le pied de page.
 // Les rubriques à développer avant la diffusion du site ont déjà leur lien
 // (choix de Romain, 2026-10-15). Occitan nouveau : À VALIDER par Romain.
-import { RESERVAR } from '$lib/acuelh/donadas.js';
+import { RESERVAR } from '#lib/acuelh/donadas.js';
 
 // Les boutons « Reservar un cors » du bandeau et du menu mènent d'abord à la
 // page qui explique le cours ; c'est elle qui ouvre le calendrier (Romain,

@@ -2,8 +2,8 @@
 	// Gestion des groupes de designs (table `temas`).
 	// L'accès est filtré par admin/+layout.svelte ; les verrous réels sont RLS.
 	import { onMount } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { slug } from '$lib/imatges';
+	import { supabase } from '#lib/supabaseClient.js';
+	import { slug } from '#lib/imatges.js';
 
 	// La palette de la charte graphique. On ne laisse pas saisir une couleur
 	// libre : c'est ce qui fait dériver une identité visuelle.

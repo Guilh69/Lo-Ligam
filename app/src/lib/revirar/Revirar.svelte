@@ -6,7 +6,7 @@
 	// Rien n'est enregistré. Logique : mots.js, sesilha.js, accents.js,
 	// verificacion.js (tous testés) ; phrases : frasas.js.
 	import { tick } from 'svelte';
-	import { supabase } from '$lib/supabaseClient';
+	import { supabase } from '#lib/supabaseClient.js';
 	import { FRASAS, TEMAS } from './frasas.js';
 	import { decouper, raisonNonCherche, motsACercar, morceaux, memesMots } from './mots.js';
 	import { TOUCHES, NOM_TOUCHE, inserir } from './accents.js';

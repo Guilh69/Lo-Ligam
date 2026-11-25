@@ -1,5 +1,5 @@
 <script>
-	import Icona from '$lib/components/Icona.svelte';
+	import Icona from '#lib/components/Icona.svelte';
 	// Mots en imatges, harmonisée avec la charte de l'accueil (2026-10-07) :
 	// fond de thème (sombre, clair, daltonisme), titres en Limelight, repère
 	// « petit chiffre, grand titre ». Les 38 thèmes ne sont plus un nuage de
@@ -14,13 +14,13 @@
 	// en refermant. Sans cette fonction (vieux navigateurs) ou si l'on a
 	// demandé moins d'animations, le carrousel s'ouvre simplement.
 	import { tick } from 'svelte';
-	import AppHeader from '$lib/components/AppHeader.svelte';
-	import FichaTunnel from '$lib/components/FichaTunnel.svelte';
-	import FichaVideo from '$lib/components/FichaVideo.svelte';
-	import { lang as langStore, tria } from '$lib/stores/lang.svelte.js';
-	import Retour from '$lib/components/Retour.svelte';
-	import { iniciar, txt, amagat } from '$lib/edicion/edicion.svelte.js';
-	import { editar } from '$lib/edicion/editar.svelte.js';
+	import AppHeader from '#lib/components/AppHeader.svelte';
+	import FichaTunnel from '#lib/components/FichaTunnel.svelte';
+	import FichaVideo from '#lib/components/FichaVideo.svelte';
+	import { lang as langStore, tria } from '#lib/stores/lang.svelte.js';
+	import Retour from '#lib/components/Retour.svelte';
+	import { iniciar, txt, amagat } from '#lib/edicion/edicion.svelte.js';
+	import { editar } from '#lib/edicion/editar.svelte.js';
 
 	// Les fiches arrivent de la base via +page.js, qui se replie sur le
 	// catalogue gelé si elle ne répond pas.
