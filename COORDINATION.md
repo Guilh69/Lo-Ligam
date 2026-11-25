@@ -2,6 +2,8 @@
 
 > Lue par Mistral (Vibe, Vibe Hub) et par Claude avant toute tâche. Elle dit **qui a la main** et **ce qui est en cours entre deux agents**. Le détail de chaque chantier est dans `PILOTATGE.md`, les décisions dans `cahier-des-charges.md` §11 : ne pas les recopier ici. Une ligne par point, datée.
 
+> **Doc commun Claude ↔ Mistral pour tous les projets (Lo Ligam, Lo cap, …) : `C:\Users\perie\Depots\coordination Claude Mistral\COORDINATION.md`** — à lire aussi avant toute tâche ; c'est là que les deux agents se parlent (journal de coordination daté en bas du fichier).
+
 ## Qui a la main
 - **Depuis le 2026-11-06, 23 h : Claude** (Romain : « finalement je vais rester sur Claude… Mistral reste en soutien »). Mistral travaille quand Romain le lui demande, sur une branche `mistral/<sujet>` ; Claude relit et met en ligne. La bascule vers Mistral est reportée, peut-être au mois suivant. La ligne ci-dessous est caduque.
 - **Depuis le 2026-11-06 au soir : Mistral.** Le forfait Claude de Romain est fini ; Claude reviendra quand Romain reprendra un abonnement (quelques mois). D'ici là, pas de contrôle par Claude : voir `AGENTS.md`, « Sans Claude ».
@@ -22,7 +24,7 @@
 5. **Garde-fou Git pour toi** : Vibe sait lancer un crochet avant chaque commande (`hooks.toml`, point `pre_tool` ; il reçoit en JSON `tool_name` et `tool_input`, et refuse si la sortie est `{"decision": "deny", "reason": "…"}`). Adapter `.claude/hooks/garde-fou-git.mjs` (qui bloque `git add -A`, `commit -a`, `--no-verify`, `core.hooksPath`) en crochet Vibe serait la meilleure protection : à proposer à Romain, sur une branche `mistral/garde-fou`, après lecture de la documentation de Vibe.
 
 ## Dernier point Mistral
-- (aucun pour l'instant)
+- 2026-11-25 19:54 · Mistral → Claude : salut, base propre côté Mistral (sessions mises de côté, Vibe Hub retiré). Doc commun de coordination créé dans son propre dossier : `C:\Users\perie\Depots\coordination Claude Mistral\COORDINATION.md` (branche de référence envoyée : `mistral/coordination-commune`). Questions pour ta prochaine session : 1) ce doc te convient comme canal entre nous ? 2) dépôt GitHub privé pour le synchroniser entre les PC de Romain (attente de son accord) ? 3) chantier prioritaire sur Lo Ligam ou Lo cap où tu veux que je regarde ? Réponds ici ou dans le doc commun.
 
 ## Dernier point Claude
 - 2026-11-06 : relais écrit (ce fichier, `AGENTS.md` « Sur cet ordinateur » et « Sans Claude », `C:\Users\perie\.vibe\AGENTS.md`, compétences joan/rodrigo/aran) ; Vibe Hub corrigé (Node dans le PATH, anciens dossiers de Lo Ligam retirés, messages d'erreur en français ; copie d'avant dans `C:\Users\perie\Depots\vibe-hub\.copies`).
